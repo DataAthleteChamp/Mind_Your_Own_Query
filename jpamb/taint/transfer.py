@@ -36,6 +36,9 @@ class TaintTransfer:
         Returns:
             TaintedValue with concatenated value and propagated taint
 
+        Raises:
+            ValueError: If no values provided or values contain non-TaintedValue
+
         Example:
             >>> safe = TaintedValue.trusted("SELECT * FROM users WHERE id = ")
             >>> unsafe = TaintedValue.untrusted("1 OR 1=1")
@@ -45,6 +48,13 @@ class TaintTransfer:
             >>> result.value
             'SELECT * FROM users WHERE id = 1 OR 1=1'
         """
+        # Input validation
+        if not values:
+            raise ValueError("concat() requires at least one value")
+
+        if not all(isinstance(v, TaintedValue) for v in values):
+            raise TypeError("All arguments must be TaintedValue instances")
+
         # Concatenate all values
         result_value = "".join(str(v.value) for v in values)
 
@@ -69,11 +79,15 @@ class TaintTransfer:
 
         Args:
             value: The TaintedValue to extract from
-            start: Starting index
-            end: Ending index (None = to end of string)
+            start: Starting index (must be >= 0)
+            end: Ending index (None = to end of string, must be >= start if provided)
 
         Returns:
             TaintedValue with extracted substring, taint preserved
+
+        Raises:
+            TypeError: If value is not a TaintedValue
+            ValueError: If indices are invalid (start < 0 or end < start)
 
         Example:
             >>> tainted = TaintedValue.untrusted("admin' OR '1'='1")
@@ -83,6 +97,16 @@ class TaintTransfer:
             >>> substr.is_tainted  # Still tainted!
             True
         """
+        # Input validation
+        if not isinstance(value, TaintedValue):
+            raise TypeError("value must be a TaintedValue instance")
+
+        if start < 0:
+            raise ValueError(f"start index must be >= 0, got {start}")
+
+        if end is not None and end < start:
+            raise ValueError(f"end index ({end}) must be >= start index ({start})")
+
         str_value = str(value.value)
         if end is None:
             result_value = str_value[start:]
