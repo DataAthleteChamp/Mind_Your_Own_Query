@@ -25,3 +25,7 @@ build/
 leananalyzer
 
 result
+
+.idea/
+*docs/
+*./docs/.DS_Store
