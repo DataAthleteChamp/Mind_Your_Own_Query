@@ -1,12 +1,12 @@
-\# SQL Injection Test Suite - Character-Level Taint Analysis
+\# SQL Injection Test Suite - Variable-Level Taint Analysis
 
 
 
-\*\*Team:\*\* DTU Compute Group 4  
+\*\*Team:\*\* DTU Compute Group 4
 
-\*\*Project:\*\* Mind Your Own Query  
+\*\*Project:\*\* Mind Your Own Query
 
-\*\*Deadline:\*\* December 1, 2024
+\*\*Deadline:\*\* December 1, 2025
 
 
 
@@ -138,15 +138,15 @@ sqli-test-suite/
 
 
 
-\## 💡 Innovation: Character-Level Positive Tainting
+\## 💡 Innovation: Variable-Level Positive Tainting
 
 
 
-Our approach uses a \*\*bit-vector model\*\* where each character has a taint bit:
+Our approach uses a \*\*boolean flag model\*\* where each value has a taint flag:
 
-\- \*\*1 = Trusted\*\* (from string literal)
+\- \*\*true = Trusted\*\* (from string literal or sanitized source)
 
-\- \*\*0 = Untrusted\*\* (from user input)
+\- \*\*false = Untrusted\*\* (from user input)
 
 
 
@@ -156,11 +156,11 @@ Our approach uses a \*\*bit-vector model\*\* where each character has a taint bi
 
 String query = "SELECT \* FROM users WHERE id = " + userId;
 
-// Bit vector: \[111111111111111111111111111111] + \[00000]
+// Taint: (TRUSTED template) + (UNTRUSTED userId)
 
-//             (trusted template)                  (untrusted)
+// Result: UNTRUSTED
 
-// → Detection: SQL injection (untrusted in SQL syntax)
+// → Detection: SQL injection (untrusted value in SQL query)
 
 ```
 
@@ -250,7 +250,7 @@ String query = "SELECT \* FROM users WHERE name = '" + trimmed + "'";  // ✅ OK
 
 \### Evaluation Text
 
-> "We evaluated our character-level positive tainting approach on 25 SQL injection test cases spanning 5 categories. The analyzer achieved 100% detection rate (25/25 vulnerable methods) with only 4% false positive rate (1/25 safe methods), significantly outperforming the <30% target. Analysis completed in an average of 0.16 seconds per test case, demonstrating practical efficiency."
+> "We evaluated our variable-level positive tainting approach on 25 SQL injection test cases spanning 5 categories. The analyzer achieved 100% detection rate (25/25 vulnerable methods) with only 4% false positive rate (1/25 safe methods), significantly outperforming the <30% target. Analysis completed in an average of 0.16 seconds per test case, demonstrating practical efficiency."
 
 
 
@@ -363,6 +363,55 @@ pwd
 ls my\_analyzer.py test\_runner.py test\_cases.json
 
 ```
+
+\## ⚠️ Known Limitations
+
+Our analyzer achieves excellent results on the current test suite, but has some known limitations:
+
+\### 1. Single-Method Analysis Only
+\- \*\*What it means:\*\* The analyzer only examines one method at a time
+\- \*\*Impact:\*\* Cannot track taint flowing through method calls
+\- \*\*Example:\*\*
+```java
+String getUserInput() {
+    return request.getParameter("id");  // Tainted
+}
+
+void buildQuery() {
+    String id = getUserInput();  // Taint not tracked here
+    String query = "SELECT \* FROM users WHERE id = " + id;  // May not detect
+}
+```
+
+\### 2. Regex-Based Pattern Matching
+\- \*\*What it means:\*\* Uses regular expressions instead of full Java AST parsing
+\- \*\*Impact:\*\* May miss complex syntax patterns
+\- \*\*Examples that may be missed:\*\*
+  - Multi-line string concatenation
+  - Ternary expressions: `String x = condition ? "a" : "b";`
+  - Method return values: `String x = someMethod("literal");`
+
+\### 3. No Framework Understanding
+\- \*\*What it means:\*\* Doesn't understand ORM or framework abstractions
+\- \*\*Impact:\*\* Cannot analyze Spring, Hibernate, JPA, or other frameworks
+
+\### 4. No Prepared Statement Validation
+\- \*\*What it means:\*\* Doesn't verify correct usage of PreparedStatement
+\- \*\*Impact:\*\* Won't catch misuse of prepared statements
+
+\### 5. Limited to Current Test Complexity
+\- \*\*What it means:\*\* Test cases are 10-30 lines each
+\- \*\*Impact:\*\* Real production code (100+ lines) may behave differently
+\- \*\*100% detection rate may not hold for:\*\*
+  - Complex business logic
+  - Nested control flow
+  - Advanced obfuscation techniques
+
+\### Recommended Mitigations
+1\. \*\*Use in combination with other tools\*\* (e.g., FindBugs, SpotBugs)
+2\. \*\*Manual code review\*\* for complex inter-procedural flows
+3\. \*\*Runtime testing\*\* with actual SQL injection payloads
+4\. \*\*Consider upgrading to AST-based analysis\*\* for production use
 
 \## 🔗 References
 

@@ -83,6 +83,8 @@ class Opcode(ABC):
                         opr = InvokeInterface
                     case "special":
                         opr = InvokeSpecial
+                    case "dynamic":
+                        opr = InvokeDynamic
                     case access:
                         raise NotImplementedError(
                             f"Unhandled invoke access {access!r} (implement yourself)"
@@ -568,6 +570,42 @@ class InvokeSpecial(Opcode):
     def __str__(self):
         interface_str = " interface" if self.is_interface else ""
         return f"invoke special{interface_str} {self.method}"
+
+
+@dataclass(frozen=True, order=True)
+class InvokeDynamic(Opcode):
+    """The invoke dynamic opcode for dynamic method invocation.
+
+    According to the JVM spec, invokedynamic:
+    - Used for dynamic language support and lambda expressions
+    - In modern Java, often used for string concatenation (StringConcatFactory)
+    - Bootstrap method determines which actual method to call
+    """
+
+    method: jvm.AbsMethodID
+    bootstrap_index: int
+
+    @classmethod
+    def from_json(cls, json: dict) -> "Opcode":
+        assert json["opr"] == "invoke" and json["access"] == "dynamic"
+
+        return cls(
+            offset=json["offset"],
+            method=jvm.AbsMethodID.from_json(json["method"]),
+            bootstrap_index=json.get("bootstrap", 0),
+        )
+
+    def real(self) -> str:
+        return f"invokedynamic {self.method}"
+
+    def semantics(self) -> str | None:
+        return None
+
+    def mnemonic(self) -> str:
+        return "invokedynamic"
+
+    def __str__(self):
+        return f"invoke dynamic {self.method}"
 
 
 @dataclass(frozen=True, order=True)

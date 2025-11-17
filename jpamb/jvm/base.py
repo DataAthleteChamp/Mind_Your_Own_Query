@@ -104,6 +104,8 @@ class Type(ABC):
                     r = Float()
                 case "D":
                     r = Double()
+                case "A":
+                    r = Reference()
                 case "[":  # ]
                     stack.append(Array)
                     i += 1
@@ -143,12 +145,17 @@ class Type(ABC):
                     return Reference()
                 case "boolean":
                     return Boolean()
+                case "string":
+                    return Reference()  # String is an object type
         if "base" in json:
             return Type.from_json(json["base"])
         if "kind" in json:
             match json["kind"]:
                 case "array":
                     return Array(Type.from_json(json["type"]))
+                case "class":
+                    # Class types are object references (e.g., java/lang/String)
+                    return Reference()
                 case kind:
                     raise NotImplementedError(
                         f"Unknown kind {kind}, in Type.from_json: {json!r}"
@@ -541,8 +548,15 @@ class AbsMethodID(Absolute[MethodID]):
 
     @classmethod
     def from_json(cls, json: dict) -> "Self":
+        # For invokedynamic, there's no "ref" field, use a default classname
+        if "ref" in json:
+            classname = ClassName.decode(json["ref"]["name"])
+        else:
+            # invokedynamic doesn't have a ref - use method name as classname
+            classname = ClassName.decode(f"dynamic/{json['name']}")
+
         return cls(
-            classname=ClassName.decode(json["ref"]["name"]),
+            classname=classname,
             extension=MethodID(
                 name=json["name"],
                 params=ParameterType.from_json(json["args"]),

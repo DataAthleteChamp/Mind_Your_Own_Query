@@ -8,7 +8,7 @@ ext-modules = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["jpamb", "jpamb.jvm"]  
+include = ["jpamb", "jpamb.jvm", "jpamb.taint"]  
 
 
 [project]

@@ -7,28 +7,49 @@ Enhanced syntactic analysis with better literal detection
 import sys
 import re
 from pathlib import Path
+from typing import Tuple, Optional, Set
 
-def parse_method_signature(method_sig):
+def parse_method_signature(method_sig: str) -> Tuple[Optional[str], Optional[str]]:
     """
     Parse method signature like: jpamb.sqli.SQLi_DirectConcat.vulnerable
-    Returns: (class_path, method_name)
+
+    Args:
+        method_sig: Fully qualified method signature
+
+    Returns:
+        Tuple of (class_path, method_name) or (None, None) if invalid
     """
     parts = method_sig.rsplit('.', 1)
     if len(parts) == 2:
         return parts[0], parts[1]
     return None, None
 
-def get_source_file_path(class_path):
+def get_source_file_path(class_path: str) -> Path:
     """
     Convert class path to source file path
-    jpamb.sqli.SQLi_DirectConcat -> src/main/java/jpamb/sqli/SQLi_DirectConcat.java
+
+    Args:
+        class_path: Java class path (e.g., jpamb.sqli.SQLi_DirectConcat)
+
+    Returns:
+        Path to Java source file
+
+    Example:
+        jpamb.sqli.SQLi_DirectConcat -> src/main/java/jpamb/sqli/SQLi_DirectConcat.java
     """
     file_path = class_path.replace('.', '/') + '.java'
     return Path('src/main/java') / file_path
 
-def extract_method_body(source_code, method_name):
+def extract_method_body(source_code: str, method_name: str) -> Optional[str]:
     """
     Extract the body of a specific method from Java source code
+
+    Args:
+        source_code: Complete Java source code
+        method_name: Name of method to extract
+
+    Returns:
+        Method body as string, or None if not found
     """
     # Pattern to match method definition and body
     pattern = rf'public\s+static\s+\w+\s+{method_name}\s*\([^)]*\)\s*\{{'
@@ -52,13 +73,18 @@ def extract_method_body(source_code, method_name):
     
     return None
 
-def extract_literals(method_body):
+def extract_literals(method_body: str) -> Set[str]:
     """
     Extract all string literals and variables defined as literals
     Also tracks variables derived from operations on literals
-    Returns set of variable names that are trusted (literal strings)
+
+    Args:
+        method_body: Java method body source code
+
+    Returns:
+        Set of variable names that are trusted (literal strings)
     """
-    trusted_vars = set()
+    trusted_vars: Set[str] = set()
     
     # Find variable assignments to string literals
     # Pattern: varName = "literal";
@@ -108,10 +134,16 @@ def extract_literals(method_body):
     
     return trusted_vars
 
-def has_dangerous_concatenation(method_body, trusted_vars):
+def has_dangerous_concatenation(method_body: str, trusted_vars: Set[str]) -> bool:
     """
     Check if method has concatenation with untrusted variables
-    Returns True if dangerous concatenation found
+
+    Args:
+        method_body: Java method body source code
+        trusted_vars: Set of known safe variable names
+
+    Returns:
+        True if dangerous concatenation found
     """
     # Pattern 1: "string" + variable
     concat_matches = re.finditer(r'"[^"]*"\s*\+\s*(\w+)', method_body)
@@ -139,9 +171,16 @@ def has_dangerous_concatenation(method_body, trusted_vars):
     
     return False
 
-def has_dangerous_stringbuilder(method_body, trusted_vars):
+def has_dangerous_stringbuilder(method_body: str, trusted_vars: Set[str]) -> bool:
     """
     Check StringBuilder/StringBuffer for untrusted appends
+
+    Args:
+        method_body: Java method body source code
+        trusted_vars: Set of known safe variable names
+
+    Returns:
+        True if dangerous StringBuilder/StringBuffer usage found
     """
     if 'StringBuilder' not in method_body and 'StringBuffer' not in method_body:
         return False
@@ -156,10 +195,17 @@ def has_dangerous_stringbuilder(method_body, trusted_vars):
     
     return False
 
-def analyze_for_sql_injection(method_body, method_name):
+def analyze_for_sql_injection(method_body: str, method_name: str) -> Tuple[str, int]:
     """
     Improved syntactic analysis to detect SQL injection patterns
-    Returns (outcome, confidence)
+
+    Args:
+        method_body: Java method body source code
+        method_name: Name of the method being analyzed
+
+    Returns:
+        Tuple of (outcome, confidence) where outcome is 'SQL injection', 'ok', or 'error'
+        and confidence is 0-100
     """
     if not method_body:
         return "error", 0
