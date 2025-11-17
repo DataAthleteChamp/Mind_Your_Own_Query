@@ -134,6 +134,9 @@ class TaintTransfer:
         Returns:
             TaintedValue with replaced string, taint preserved
 
+        Raises:
+            TypeError: If value is not a TaintedValue or old/new are not strings
+
         Example:
             >>> tainted = TaintedValue.untrusted("admin'")
             >>> escaped = TaintTransfer.replace(tainted, "'", "''")
@@ -142,6 +145,14 @@ class TaintTransfer:
             >>> escaped.is_tainted  # Still tainted! SQL escaping doesn't sanitize
             True
         """
+        # Input validation
+        if not isinstance(value, TaintedValue):
+            raise TypeError("value must be a TaintedValue instance")
+        if not isinstance(old, str):
+            raise TypeError("old must be a string")
+        if not isinstance(new, str):
+            raise TypeError("new must be a string")
+
         result_value = str(value.value).replace(old, new)
 
         # Replace preserves taint (escaping doesn't sanitize!)
@@ -158,6 +169,9 @@ class TaintTransfer:
         Returns:
             TaintedValue with trimmed string, taint preserved
 
+        Raises:
+            TypeError: If value is not a TaintedValue
+
         Example:
             >>> tainted = TaintedValue.untrusted("  malicious  ")
             >>> trimmed = TaintTransfer.trim(tainted)
@@ -166,6 +180,10 @@ class TaintTransfer:
             >>> trimmed.is_tainted
             True
         """
+        # Input validation
+        if not isinstance(value, TaintedValue):
+            raise TypeError("value must be a TaintedValue instance")
+
         result_value = str(value.value).strip()
         return TaintedValue(result_value, value.is_tainted, value.source)
 
@@ -179,7 +197,14 @@ class TaintTransfer:
 
         Returns:
             TaintedValue with lowercase string, taint preserved
+
+        Raises:
+            TypeError: If value is not a TaintedValue
         """
+        # Input validation
+        if not isinstance(value, TaintedValue):
+            raise TypeError("value must be a TaintedValue instance")
+
         result_value = str(value.value).lower()
         return TaintedValue(result_value, value.is_tainted, value.source)
 
@@ -193,7 +218,14 @@ class TaintTransfer:
 
         Returns:
             TaintedValue with uppercase string, taint preserved
+
+        Raises:
+            TypeError: If value is not a TaintedValue
         """
+        # Input validation
+        if not isinstance(value, TaintedValue):
+            raise TypeError("value must be a TaintedValue instance")
+
         result_value = str(value.value).upper()
         return TaintedValue(result_value, value.is_tainted, value.source)
 
@@ -211,6 +243,9 @@ class TaintTransfer:
         Returns:
             List of TaintedValues, each with same taint as original
 
+        Raises:
+            TypeError: If value is not a TaintedValue or delimiter is not a string
+
         Example:
             >>> tainted = TaintedValue.untrusted("admin,user,guest")
             >>> parts = TaintTransfer.split(tainted, ",")
@@ -219,6 +254,12 @@ class TaintTransfer:
             >>> all(p.is_tainted for p in parts)
             True
         """
+        # Input validation
+        if not isinstance(value, TaintedValue):
+            raise TypeError("value must be a TaintedValue instance")
+        if not isinstance(delimiter, str):
+            raise TypeError("delimiter must be a string")
+
         parts = str(value.value).split(delimiter)
         return [
             TaintedValue(part, value.is_tainted, value.source)
@@ -239,6 +280,9 @@ class TaintTransfer:
         Returns:
             TaintedValue with joined string
 
+        Raises:
+            TypeError: If delimiter is not a TaintedValue or values contains non-TaintedValue
+
         Example:
             >>> safe_delim = TaintedValue.trusted(",")
             >>> parts = [TaintedValue.untrusted("admin"), TaintedValue.trusted("user")]
@@ -248,6 +292,14 @@ class TaintTransfer:
             >>> result.is_tainted  # Tainted because one part is tainted
             True
         """
+        # Input validation
+        if not isinstance(delimiter, TaintedValue):
+            raise TypeError("delimiter must be a TaintedValue instance")
+        if not isinstance(values, list):
+            raise TypeError("values must be a list")
+        if not all(isinstance(v, TaintedValue) for v in values):
+            raise TypeError("All values must be TaintedValue instances")
+
         delimiter_str = str(delimiter.value)
         value_strs = [str(v.value) for v in values]
         result_value = delimiter_str.join(value_strs)

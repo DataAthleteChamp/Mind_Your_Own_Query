@@ -1,6 +1,8 @@
 target/generated-sources/
 target/maven-status/
 target/test-classes/
+target/classes/
+target/decompiled/
 .jdtls
 .metadata
 .classpath
@@ -29,3 +31,5 @@ result
 .idea/
 *docs/
 *./docs/.DS_Store
+.DS_Store
+*.class

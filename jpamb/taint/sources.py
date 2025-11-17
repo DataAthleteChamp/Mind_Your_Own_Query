@@ -123,18 +123,21 @@ class SourceSinkDetector:
             >>> detector.get_source_type("javax.servlet.http.HttpServletRequest.getParameter")
             'http_request'
         """
-        if "HttpServletRequest" in method_name or "ServletRequest" in method_name:
-            return "http_request"
-        elif "File" in method_name or "Reader" in method_name:
-            return "file_io"
-        elif "Socket" in method_name or "URLConnection" in method_name:
-            return "network"
-        elif "System.getenv" in method_name or "System.getProperty" in method_name:
-            return "system_property"
-        elif "Scanner" in method_name or "Console" in method_name:
-            return "console_input"
-        else:
-            return "external_input"
+        # Define source type mappings (pattern -> type)
+        source_patterns = [
+            (["HttpServletRequest", "ServletRequest"], "http_request"),
+            (["File", "Reader"], "file_io"),
+            (["Socket", "URLConnection"], "network"),
+            (["System.getenv", "System.getProperty"], "system_property"),
+            (["Scanner", "Console"], "console_input"),
+        ]
+
+        # Check each pattern
+        for patterns, source_type in source_patterns:
+            if any(pattern in method_name for pattern in patterns):
+                return source_type
+
+        return "external_input"
 
     def get_sink_type(self, method_name: str) -> str:
         """
