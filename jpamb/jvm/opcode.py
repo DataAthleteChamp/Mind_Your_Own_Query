@@ -71,6 +71,8 @@ class Opcode(ABC):
                 opr = Goto
             case "return":
                 opr = Return
+            case "pop":
+                opr = Pop
             case "negate":
                 opr = Negate
             case "invoke":
@@ -270,7 +272,6 @@ class Dup(Opcode):
         -------------------------[dup1]
         (i, s + [v]) -> (i+1, s + [v, v])
         """
-
         return semantic
 
     def mnemonic(self) -> str:
@@ -278,6 +279,40 @@ class Dup(Opcode):
 
     def __str__(self):
         return f"dup {self.words}"
+
+
+@dataclass(frozen=True, order=True)
+class Pop(Opcode):
+    """The pop stack opcode"""
+
+    words: int
+
+    @classmethod
+    def from_json(cls, json: dict) -> Opcode:
+        return cls(
+            offset=json["offset"],
+            words=json.get("words", 1),
+        )
+
+    def real(self) -> str:
+        if self.words == 1:
+            return "pop"
+        return super().real()
+
+    def semantics(self) -> str | None:
+        semantic = """
+        bc[i].opr = 'pop'
+        bc[i].words = 1
+        -------------------------[pop1]
+        (i, s + [v]) -> (i+1, s)
+        """
+        return semantic
+
+    def mnemonic(self) -> str:
+        return self.real()
+
+    def __str__(self):
+        return f"pop {self.words}"
 
 
 @dataclass(frozen=True, order=True)

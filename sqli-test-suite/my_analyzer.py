@@ -85,12 +85,26 @@ def extract_literals(method_body: str) -> Set[str]:
         Set of variable names that are trusted (literal strings)
     """
     trusted_vars: Set[str] = set()
-    
+
     # Find variable assignments to string literals
     # Pattern: varName = "literal";
     literal_assignments = re.findall(r'(\w+)\s*=\s*"[^"]*"\s*;', method_body)
     trusted_vars.update(literal_assignments)
-    
+
+    # Find primitive type assignments (safe - not from user input)
+    # Pattern: int varName = 42; or boolean flag = true;
+    primitive_types = ['int', 'long', 'short', 'byte', 'float', 'double', 'boolean', 'char']
+    for ptype in primitive_types:
+        # Match: int x = 42; or boolean flag = true;
+        primitive_pattern = rf'\b{ptype}\s+(\w+)\s*='
+        primitive_vars = re.findall(primitive_pattern, method_body)
+        trusted_vars.update(primitive_vars)
+
+    # Find final constants (safe - immutable)
+    # Pattern: final String CONSTANT = ...
+    final_vars = re.findall(r'final\s+\w+\s+(\w+)\s*=', method_body)
+    trusted_vars.update(final_vars)
+
     # Find array initializations with literals
     # Pattern: String[] ids = {"1", "2", "3"};
     array_literals = re.findall(r'(\w+)\s*=\s*\{["\w\s,]*\}', method_body)
