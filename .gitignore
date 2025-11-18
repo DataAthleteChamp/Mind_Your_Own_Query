@@ -33,3 +33,6 @@ result
 *./docs/.DS_Store
 .DS_Store
 *.class
+.DS_Store
+.DS_Store
+target/

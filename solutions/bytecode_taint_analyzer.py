@@ -51,7 +51,17 @@ def resolve_method_id(method_signature: str, suite: Suite) -> Optional[jvm.AbsMe
         jpamb.sqli.SQLi_DirectConcat.vulnerable:(java.lang.String)void
     """
     # Parse the signature
-    parts = method_signature.rsplit('.', 1)
+    # Handle both formats:
+    #   1. "jpamb.sqli.SQLi_DirectConcat.vulnerable"
+    #   2. "jpamb.sqli.SQLi_DirectConcat.vulnerable:(A)V"
+
+    # Strip signature part if present
+    if ':' in method_signature:
+        base_signature = method_signature.split(':')[0]
+    else:
+        base_signature = method_signature
+
+    parts = base_signature.rsplit('.', 1)
     if len(parts) != 2:
         log.error(f"Invalid method signature format: {method_signature}")
         return None
@@ -157,9 +167,17 @@ class TaintValue:
     Taint value that can represent either a concrete value or a heap reference.
 
     This is what we track on the JVM stack and in local variables.
+
+    TAJ-Style String Carriers:
+    - StringBuilder/StringBuffer are treated as primitives (not heap objects)
+    - is_string_carrier flag marks these special values
+    - carrier_taint accumulates taint from all append() operations
     """
     tainted_value: TaintedValue
     heap_ref: Optional[int] = None  # Reference to HeapObject if this is an object
+    # TAJ-style string carrier support
+    is_string_carrier: bool = False
+    carrier_taint: Optional[TaintedValue] = None
 
     @classmethod
     def from_tainted(cls, tv: TaintedValue) -> "TaintValue":
@@ -181,6 +199,35 @@ class TaintValue:
     def untrusted(cls, value, source="user_input") -> "TaintValue":
         """Create untrusted value"""
         return cls(tainted_value=TaintedValue.untrusted(value, source=source))
+
+    @classmethod
+    def string_carrier(cls, initial_taint: TaintedValue) -> "TaintValue":
+        """
+        Create a TAJ-style string carrier (StringBuilder/StringBuffer).
+
+        String carriers are treated as primitives, not heap objects.
+        Taint accumulates in carrier_taint as values are appended.
+        """
+        return cls(
+            tainted_value=initial_taint,
+            heap_ref=None,
+            is_string_carrier=True,
+            carrier_taint=initial_taint
+        )
+
+    def accumulate_taint(self, new_taint: TaintedValue) -> None:
+        """
+        Accumulate taint for string carrier (TAJ approach).
+
+        This is used when append() is called on a StringBuilder/StringBuffer.
+        """
+        if self.is_string_carrier:
+            if self.carrier_taint:
+                self.carrier_taint = TaintTransfer.concat(self.carrier_taint, new_taint)
+            else:
+                self.carrier_taint = new_taint
+            # Also update tainted_value to keep it in sync
+            self.tainted_value = self.carrier_taint
 
     @property
     def is_tainted(self) -> bool:
@@ -404,16 +451,23 @@ def transfer_new(opcode: jvm.New, state: AbstractState) -> AbstractState:
     """
     Handle new instruction.
 
-    Allocate object in abstract heap, push reference onto stack.
+    TAJ-style: StringBuilder/StringBuffer are treated as string carriers (primitives).
+    Other objects are allocated in abstract heap.
     """
     class_name = str(opcode.classname)
     log.debug(f"  NEW {class_name}")
 
-    # Allocate in heap
-    addr = state.allocate_heap_object(class_name)
+    # TAJ-style: StringBuilder/StringBuffer are string carriers (not heap objects)
+    if "StringBuilder" in class_name or "StringBuffer" in class_name:
+        initial_taint = TaintedValue.trusted("empty", source="new_stringbuilder")
+        carrier = TaintValue.string_carrier(initial_taint)
+        log.debug(f"    → Created string carrier (TAJ-style)")
+        state.push(carrier)
+    else:
+        # Regular heap allocation for other objects
+        addr = state.allocate_heap_object(class_name)
+        state.push(TaintValue.from_heap_ref(addr, state.heap))
 
-    # Push reference onto stack
-    state.push(TaintValue.from_heap_ref(addr, state.heap))
     state.pc += 1
     return state
 
@@ -453,30 +507,44 @@ def transfer_invoke_virtual(opcode: jvm.InvokeVirtual, state: AbstractState) -> 
 
     # Handle different method types
 
-    # StringBuilder.append(String)
+    # StringBuilder.append(String) - TAJ-style string carrier approach
     if "StringBuilder.append" in method_str or "StringBuffer.append" in method_str:
-        if obj_ref.heap_ref is not None:
+        if obj_ref.is_string_carrier:
+            # TAJ-style: Accumulate taint directly in carrier
+            if args:
+                obj_ref.accumulate_taint(args[0].tainted_value)
+                log.debug(f"    → String carrier append: {args[0]} → {obj_ref.carrier_taint}")
+            # Push carrier back for chaining
+            state.push(obj_ref)
+        elif obj_ref.heap_ref is not None:
+            # Fallback: Old heap-based approach (for compatibility)
             heap_obj = state.heap[obj_ref.heap_ref]
             if args:
                 heap_obj.append(args[0].tainted_value)
-                log.debug(f"    → Appended {args[0]} to StringBuilder")
-            # Push the StringBuilder reference back (for chaining)
+                log.debug(f"    → Heap-based append: {args[0]}")
             state.push(obj_ref)
         else:
-            log.warning(f"    → StringBuilder.append on non-heap object!")
+            log.warning(f"    → StringBuilder.append on unknown object!")
             state.push(TaintValue.untrusted("unknown"))
 
-    # StringBuilder.toString()
+    # StringBuilder.toString() - TAJ-style string carrier approach
     elif MethodMatcher.is_string_builder_tostring(method):
-        if obj_ref.heap_ref is not None:
+        if obj_ref.is_string_carrier:
+            # TAJ-style: Return accumulated carrier_taint
+            result_taint = obj_ref.carrier_taint if obj_ref.carrier_taint else obj_ref.tainted_value
+            result = TaintValue.from_tainted(result_taint)
+            log.debug(f"    → String carrier toString() returns {result}")
+            state.push(result)
+        elif obj_ref.heap_ref is not None:
+            # Fallback: Old heap-based approach (for compatibility)
             heap_obj = state.heap[obj_ref.heap_ref]
             result = TaintValue.from_tainted(heap_obj.to_string())
-            log.debug(f"    → toString() returns {result}")
+            log.debug(f"    → Heap-based toString() returns {result}")
             state.push(result)
         else:
             state.push(TaintValue.untrusted("unknown"))
 
-    # String.concat, String.trim, etc. (taint-preserving)
+    # String.concat, String.trim, String.replaceAll, etc. (taint-preserving)
     elif MethodMatcher.is_taint_preserving(method):
         # If ANY argument or object is tainted, result is tainted
         all_values = [obj_ref] + args
@@ -615,6 +683,18 @@ def transfer_invoke_dynamic(opcode: jvm.InvokeDynamic, state: AbstractState) -> 
     return state
 
 
+def transfer_pop(opcode, state: AbstractState) -> AbstractState:
+    """
+    Handle pop instruction.
+
+    Pop value from stack and discard it.
+    """
+    value = state.pop()
+    log.debug(f"  POP {value}")
+    state.pc += 1
+    return state
+
+
 def transfer_return(opcode: jvm.Return, state: AbstractState) -> Optional[AbstractState]:
     """
     Handle return instruction.
@@ -671,6 +751,8 @@ def analyze_method(methodid: jvm.AbsMethodID) -> bool:
                     state = transfer_new(opcode, state)
                 case jvm.Dup():
                     state = transfer_dup(opcode, state)
+                case jvm.Pop():
+                    state = transfer_pop(opcode, state)
                 case jvm.InvokeVirtual():
                     state = transfer_invoke_virtual(opcode, state)
                 case jvm.InvokeStatic():
@@ -685,9 +767,15 @@ def analyze_method(methodid: jvm.AbsMethodID) -> bool:
                         break
                     state = result
                 case _:
-                    # Unhandled opcode - skip it (conservative)
-                    log.debug(f"  → Unhandled opcode type, skipping")
-                    state.pc += 1
+                    # Unhandled opcode - try to handle common ones manually
+                    opcode_str = str(opcode)
+                    if 'pop' in opcode_str.lower():
+                        # Pop opcode: discard top of stack
+                        state = transfer_pop(opcode, state)
+                    else:
+                        # Unknown opcode - skip it (conservative)
+                        log.debug(f"  → Unhandled opcode type, skipping")
+                        state.pc += 1
 
             if state is None:
                 break
