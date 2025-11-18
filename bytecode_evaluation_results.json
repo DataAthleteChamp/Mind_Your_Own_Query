@@ -1,15 +1,15 @@
 {
   "metrics": {
     "total": 50,
-    "correct": 42,
-    "tp": 19,
+    "correct": 44,
+    "tp": 21,
     "tn": 23,
     "fp": 2,
-    "fn": 6,
-    "accuracy": 84.0,
-    "precision": 90.47619047619048,
-    "recall": 76.0,
-    "f1": 82.60869565217392
+    "fn": 4,
+    "accuracy": 88.0,
+    "precision": 91.30434782608695,
+    "recall": 84.0,
+    "f1": 87.5
   },
   "results": [
     {
@@ -318,9 +318,9 @@
       "method_signature": "jpamb.sqli.SQLi_StringBuilder.vulnerable",
       "category": "stringbuilder",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": ""
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 16,
@@ -330,7 +330,7 @@
       "expected_vulnerable": false,
       "detected_vulnerable": false,
       "correct": true,
-      "actual_result": ""
+      "actual_result": "ok;90%"
     },
     {
       "test_id": 17,
@@ -340,7 +340,7 @@
       "expected_vulnerable": true,
       "detected_vulnerable": false,
       "correct": false,
-      "actual_result": ""
+      "actual_result": "ok;90%"
     },
     {
       "test_id": 17,
@@ -350,7 +350,7 @@
       "expected_vulnerable": false,
       "detected_vulnerable": false,
       "correct": true,
-      "actual_result": ""
+      "actual_result": "ok;90%"
     },
     {
       "test_id": 18,
@@ -358,9 +358,9 @@
       "method_signature": "jpamb.sqli.SQLi_StringBuilderMixed.vulnerable",
       "category": "stringbuilder",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": ""
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 18,
@@ -370,7 +370,7 @@
       "expected_vulnerable": false,
       "detected_vulnerable": false,
       "correct": true,
-      "actual_result": ""
+      "actual_result": "ok;90%"
     },
     {
       "test_id": 19,

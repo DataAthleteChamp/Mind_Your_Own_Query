@@ -84,8 +84,8 @@ class TestExtractLiterals(unittest.TestCase):
         self.assertIn("ids", trusted)
 
     def test_no_literals(self):
-        """Should return empty set when no literals"""
-        code = 'int x = 5;'
+        """Should return empty set when no string literals or primitives"""
+        code = 'System.out.println("test");'  # No variable assignment
         trusted = extract_literals(code)
         self.assertEqual(len(trusted), 0)
 
@@ -238,10 +238,135 @@ class TestEdgeCases(unittest.TestCase):
         String fullQuery = template + userId;
         '''
         outcome, confidence = analyze_for_sql_injection(code, "vulnerable")
-        # Note: This should detect SQL injection, but current analyzer
-        # may not catch all variable-to-variable concatenation patterns
-        # This test documents current behavior
+        # TODO: Make strict once inter-procedural analysis implemented
+        # Currently accepts both outcomes due to analyzer limitation
+        # Tracking issue: Variable-to-variable concat not always detected
         self.assertIn(outcome, ["SQL injection", "ok"])
+
+
+class TestNegativeCases(unittest.TestCase):
+    """Test that analyzer doesn't flag safe patterns (prevent false positives)"""
+
+    def test_no_false_positive_on_integer(self):
+        """Should NOT flag integer concatenation"""
+        code = '''
+        int id = 42;
+        String query = "SELECT * FROM users WHERE id = " + id;
+        '''
+        outcome, confidence = analyze_for_sql_injection(code, "safe")
+        # FIXED: Analyzer now recognizes primitive types as safe
+        self.assertEqual(outcome, "ok")
+
+    def test_no_false_positive_on_constant(self):
+        """Should NOT flag final constants"""
+        code = '''
+        final String QUERY = "SELECT * FROM users";
+        executeQuery(QUERY);
+        '''
+        outcome, confidence = analyze_for_sql_injection(code, "safe")
+        self.assertEqual(outcome, "ok")
+
+    def test_no_false_positive_on_boolean(self):
+        """Should NOT flag boolean concatenation"""
+        code = '''
+        boolean active = true;
+        String query = "SELECT * FROM users WHERE active = " + active;
+        '''
+        outcome, confidence = analyze_for_sql_injection(code, "safe")
+        # FIXED: Analyzer now recognizes primitive types as safe
+        self.assertEqual(outcome, "ok")
+
+    def test_no_false_positive_on_all_literals(self):
+        """Should NOT flag when all parts are literals"""
+        code = '''
+        String part1 = "SELECT * FROM users";
+        String part2 = " WHERE id = 42";
+        String query = part1 + part2;
+        '''
+        outcome, confidence = analyze_for_sql_injection(code, "safe")
+        self.assertEqual(outcome, "ok")
+
+    def test_no_false_positive_on_sanitized_input(self):
+        """Should NOT flag strongly sanitized input"""
+        code = '''
+        String cleaned = input.replaceAll("[^0-9]", "");
+        String query = "SELECT * FROM users WHERE id = " + cleaned;
+        '''
+        outcome, confidence = analyze_for_sql_injection(code, "safe")
+        self.assertEqual(outcome, "ok")
+
+
+class TestEdgeCasesLiteralExtraction(unittest.TestCase):
+    """Test edge cases in literal extraction"""
+
+    def test_empty_string_literal(self):
+        """Should identify empty string as literal"""
+        code = 'String x = "";'
+        trusted = extract_literals(code)
+        self.assertIn("x", trusted)
+
+    def test_string_with_spaces(self):
+        """Should handle strings with spaces"""
+        code = 'String greeting = "Hello World";'
+        trusted = extract_literals(code)
+        self.assertIn("greeting", trusted)
+
+    def test_string_with_numbers(self):
+        """Should handle strings containing numbers"""
+        code = 'String code = "ABC123";'
+        trusted = extract_literals(code)
+        self.assertIn("code", trusted)
+
+    def test_multiple_assignments_same_line(self):
+        """Should handle multiple assignments"""
+        code = 'String a = "first", b = "second";'
+        trusted = extract_literals(code)
+        # At least one should be found
+        self.assertTrue(len(trusted) >= 1)
+
+    def test_literal_with_escaped_characters(self):
+        """Should handle common escape sequences"""
+        code = r'String msg = "Line1\nLine2\tTabbed";'
+        trusted = extract_literals(code)
+        self.assertIn("msg", trusted)
+
+
+class TestAnalyzerRobustness(unittest.TestCase):
+    """Test analyzer handles unusual inputs gracefully"""
+
+    def test_very_long_code(self):
+        """Should handle long code without crashing"""
+        code = "String query = \"SELECT * FROM users WHERE id = \" + userId;\n" * 100
+        outcome, confidence = analyze_for_sql_injection(code, "test")
+        # Should complete without error
+        self.assertIsNotNone(outcome)
+        self.assertIsInstance(confidence, int)
+
+    def test_code_with_comments(self):
+        """Should handle Java comments in code"""
+        code = '''
+        // This is a comment
+        String query = "SELECT * FROM users WHERE id = " + userId;
+        /* Multi-line
+           comment */
+        executeQuery(query);
+        '''
+        outcome, confidence = analyze_for_sql_injection(code, "vulnerable")
+        self.assertEqual(outcome, "SQL injection")
+
+    def test_code_with_special_characters(self):
+        """Should handle special SQL characters"""
+        code = '''
+        String query = "SELECT * FROM users WHERE name = '" + userName + "'";
+        '''
+        outcome, confidence = analyze_for_sql_injection(code, "vulnerable")
+        self.assertEqual(outcome, "SQL injection")
+
+    def test_whitespace_variations(self):
+        """Should handle various whitespace patterns"""
+        code = '''String    query="SELECT"+"*"+"FROM users WHERE id = "+userId;'''
+        outcome, confidence = analyze_for_sql_injection(code, "vulnerable")
+        self.assertEqual(outcome, "SQL injection")
 
 
 def run_tests():
@@ -257,6 +382,9 @@ def run_tests():
     suite.addTests(loader.loadTestsFromTestCase(TestHasDangerousStringBuilder))
     suite.addTests(loader.loadTestsFromTestCase(TestAnalyzeForSqlInjection))
     suite.addTests(loader.loadTestsFromTestCase(TestEdgeCases))
+    suite.addTests(loader.loadTestsFromTestCase(TestNegativeCases))
+    suite.addTests(loader.loadTestsFromTestCase(TestEdgeCasesLiteralExtraction))
+    suite.addTests(loader.loadTestsFromTestCase(TestAnalyzerRobustness))
 
     # Run tests
     runner = unittest.TextTestRunner(verbosity=2)

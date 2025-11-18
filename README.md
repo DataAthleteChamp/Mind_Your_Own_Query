@@ -1,5 +1,27 @@
 # JPAMB: Java Program Analysis Micro Benchmarks
 
+## 🚀 Quick Start (TL;DR)
+
+```bash
+# 1. Install dependencies
+curl -LsSf https://astral.sh/uv/install.sh | sh  # Install uv package manager
+# (Restart terminal after install)
+
+# 2. Verify setup
+uv run jpamb checkhealth
+
+# 3. Run tests
+uv run pytest test/                                    # Unit tests
+uv run jpamb test --with-python solutions/my_analyzer.py  # Analyzer tests
+
+# 4. Test on SQL injection detection
+cd sqli-test-suite && python test_runner.py
+```
+
+**Current Status:** ✅ 88% accuracy on SQL injection detection | See [FINAL_ACHIEVEMENTS.md](FINAL_ACHIEVEMENTS.md)
+
+---
+
 ## What is this?
 
 JPAMB is a collection of small Java programs with various behaviors (crashes, infinite loops, normal completion). Your task is to build a program analysis tool that can predict what will happen when these programs run.

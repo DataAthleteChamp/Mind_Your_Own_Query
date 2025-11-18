@@ -1,30 +1,30 @@
-\# SQL Injection Test Suite - Variable-Level Taint Analysis
+# SQL Injection Test Suite - Variable-Level Taint Analysis
 
 
 
-\*\*Team:\*\* DTU Compute Group 4
+**Team:** DTU Compute Group 4
 
-\*\*Project:\*\* Mind Your Own Query
+**Project:** Mind Your Own Query
 
-\*\*Deadline:\*\* December 1, 2025
-
-
-
-\## Team Members
-
-\- Jakub Lukaszewski (s253077)
-
-\- Jakub Piotrowski (s253074)
-
-\- Landon Hassin (s252773)
-
-\- Lawrence M. Ryan (s225243)
-
-\- Matthew Asano (s225134)
+**Deadline:** December 1, 2025
 
 
 
-\## 🎯 Results Summary
+## Team Members
+
+- Jakub Lukaszewski (s253077)
+
+- Jakub Piotrowski (s253074)
+
+- Landon Hassin (s252773)
+
+- Lawrence M. Ryan (s225243)
+
+- Matthew Asano (s225134)
+
+
+
+## 🎯 Results Summary
 
 
 
@@ -32,29 +32,29 @@
 
 |--------|--------|--------|--------|
 
-| \*\*Detection Rate\*\* | \*\*100%\*\* (25/25) | ≥75% | ✅ |
+| **Detection Rate** | **100%** (25/25) | ≥75% | ✅ |
 
-| \*\*False Positive Rate\*\* | \*\*4%\*\* (1/25) | <30% | ✅ |
+| **False Positive Rate** | **4%** (1/25) | <30% | ✅ |
 
-| \*\*Performance\*\* | \*\*0.16s/test\*\* | <60s | ✅ |
+| **Performance** | **0.16s/test** | <60s | ✅ |
 
-| \*\*Overall Accuracy\*\* | \*\*96%\*\* (24/25) | - | ✅ |
-
-
-
-\## 🚀 Quick Start
+| **Overall Accuracy** | **96%** (24/25) | - | ✅ |
 
 
 
-\### Prerequisites
-
-\- Python 3.13+
-
-\- Java JDK 17+
+## 🚀 Quick Start
 
 
 
-\### Running Tests
+### Prerequisites
+
+- Python 3.13+
+
+- Java JDK 17+
+
+
+
+### Running Tests
 
 ```bash
 
@@ -62,55 +62,55 @@ cd sqli-test-suite
 
 
 
-\# Compile Java files (first time only)
+# Compile Java files (first time only)
 
 cd src/main/java
 
-javac jpamb/sqli/\*.java
+javac jpamb/sqli/*.java
 
 cd ../../..
 
 
 
-\# Run all tests
+# Run all tests
 
-python test\_runner.py --jpamb-path . --analyzer my\_analyzer.py
-
-
-
-\# Run single test
-
-python my\_analyzer.py jpamb.sqli.SQLi\_DirectConcat.vulnerable
+python test_runner.py --jpamb-path . --analyzer my_analyzer.py
 
 
 
-\# View HTML report
+# Run single test
 
-start results/report\_20251110\_181220.html
+python my_analyzer.py jpamb.sqli.SQLi_DirectConcat.vulnerable
+
+
+
+# View HTML report
+
+start results/report_20251110_181220.html
 
 ```
 
 
 
-\## 📁 Project Structure
+## 📁 Project Structure
 
 ```
 
 sqli-test-suite/
 
-├── my\_analyzer.py              # Character-level taint analyzer
+├── my_analyzer.py              # Character-level taint analyzer
 
-├── test\_runner.py              # Automated test execution
+├── test_runner.py              # Automated test execution
 
-├── test\_cases.json             # Test metadata (25 cases)
+├── test_cases.json             # Test metadata (25 cases)
 
 ├── src/main/java/jpamb/sqli/   # 25 Java test cases
 
 ├── results/                    # Test results
 
-│   ├── test\_results\_20251110\_181220.json
+│   ├── test_results_20251110_181220.json
 
-│   └── report\_20251110\_181220.html
+│   └── report_20251110_181220.html
 
 └── README.md                   # This file
 
@@ -118,7 +118,7 @@ sqli-test-suite/
 
 
 
-\## 🧪 Test Categories
+## 🧪 Test Categories
 
 
 
@@ -138,23 +138,23 @@ sqli-test-suite/
 
 
 
-\## 💡 Innovation: Variable-Level Positive Tainting
+## 💡 Innovation: Variable-Level Positive Tainting
 
 
 
-Our approach uses a \*\*boolean flag model\*\* where each value has a taint flag:
+Our approach uses a **boolean flag model** where each value has a taint flag:
 
-\- \*\*true = Trusted\*\* (from string literal or sanitized source)
+- **true = Trusted** (from string literal or sanitized source)
 
-\- \*\*false = Untrusted\*\* (from user input)
+- **false = Untrusted** (from user input)
 
 
 
-\*\*Example:\*\*
+**Example:**
 
 ```java
 
-String query = "SELECT \* FROM users WHERE id = " + userId;
+String query = "SELECT * FROM users WHERE id = " + userId;
 
 // Taint: (TRUSTED template) + (UNTRUSTED userId)
 
@@ -166,11 +166,11 @@ String query = "SELECT \* FROM users WHERE id = " + userId;
 
 
 
-\## 📊 Key Features
+## 📊 Key Features
 
 
 
-\### 1. Derived Literal Tracking
+### 1. Derived Literal Tracking
 
 ```java
 
@@ -182,7 +182,7 @@ String trimmed = safe.substring(0, 4);  // Still trusted ✓
 
 
 
-\### 2. Smart Sanitization Detection
+### 2. Smart Sanitization Detection
 
 ```java
 
@@ -192,35 +192,35 @@ String clean = input.replaceAll("\[^0-9]", "");  // Marked as trusted ✓
 
 
 
-\### 3. Control Flow Analysis
+### 3. Control Flow Analysis
 
 Tracks taint through if/else, loops, try/catch, switch statements
 
 
 
-\## 🔬 Test Case Examples
+## 🔬 Test Case Examples
 
 
 
-\### Test 1: Direct Concatenation
+### Test 1: Direct Concatenation
 
 ```java
 
 // VULNERABLE
 
-String query = "SELECT \* FROM users WHERE id = " + userId;  // ❌ Detected
+String query = "SELECT * FROM users WHERE id = " + userId;  // ❌ Detected
 
 
 
 // SAFE
 
-String query = "SELECT \* FROM users WHERE id = 42";  // ✅ OK
+String query = "SELECT * FROM users WHERE id = 42";  // ✅ OK
 
 ```
 
 
 
-\### Test 6: Substring Operations
+### Test 6: Substring Operations
 
 ```java
 
@@ -228,39 +228,39 @@ String query = "SELECT \* FROM users WHERE id = 42";  // ✅ OK
 
 String trimmed = input.substring(0, 10);
 
-String query = "SELECT \* FROM users WHERE name = '" + trimmed + "'";  // ❌ Detected
+String query = "SELECT * FROM users WHERE name = '" + trimmed + "'";  // ❌ Detected
 
 
 
 // SAFE
 
-String safe = "safe\_value";
+String safe = "safe_value";
 
 String trimmed = safe.substring(0, 4);
 
-String query = "SELECT \* FROM users WHERE name = '" + trimmed + "'";  // ✅ OK
+String query = "SELECT * FROM users WHERE name = '" + trimmed + "'";  // ✅ OK
 
 ```
 
 
 
-\## 🎓 For Paper/Presentation
+## 🎓 For Paper/Presentation
 
 
 
-\### Evaluation Text
+### Evaluation Text
 
 > "We evaluated our variable-level positive tainting approach on 25 SQL injection test cases spanning 5 categories. The analyzer achieved 100% detection rate (25/25 vulnerable methods) with only 4% false positive rate (1/25 safe methods), significantly outperforming the <30% target. Analysis completed in an average of 0.16 seconds per test case, demonstrating practical efficiency."
 
 
 
-\### Comparison with Industry
+### Comparison with Industry
 
 | Tool | Detection | False Positives |
 
 |------|-----------|-----------------|
 
-| \*\*Our Approach\*\* | \*\*100%\*\* | \*\*4%\*\* |
+| **Our Approach** | **100%** | **4%** |
 
 | Typical SAST | 70-85% | 40-60% |
 
@@ -268,25 +268,25 @@ String query = "SELECT \* FROM users WHERE name = '" + trimmed + "'";  // ✅ OK
 
 
 
-→ \*\*7.5x better precision\*\* than typical tools
+→ **7.5x better precision** than typical tools
 
 
 
-\## 📝 Usage for Team Members
+## 📝 Usage for Team Members
 
 
 
-\### Review Test Cases
+### Review Test Cases
 
 ```bash
 
-\# View a test case
+# View a test case
 
-code src/main/java/jpamb/sqli/SQLi\_DirectConcat.java
+code src/main/java/jpamb/sqli/SQLi_DirectConcat.java
 
 
 
-\# See all test cases
+# See all test cases
 
 ls src/main/java/jpamb/sqli/
 
@@ -294,43 +294,43 @@ ls src/main/java/jpamb/sqli/
 
 
 
-\### Modify Analyzer
+### Modify Analyzer
 
 ```bash
 
-\# Edit analyzer logic
+# Edit analyzer logic
 
-code my\_analyzer.py
+code my_analyzer.py
 
 
 
-\# Re-run tests
+# Re-run tests
 
-python test\_runner.py --jpamb-path . --analyzer my\_analyzer.py
+python test_runner.py --jpamb-path . --analyzer my_analyzer.py
 
 ```
 
 
 
-\### Add New Test Cases
+### Add New Test Cases
 
 1\. Create new `.java` file in `src/main/java/jpamb/sqli/`
 
-2\. Add metadata to `test\_cases.json`
+2\. Add metadata to `test_cases.json`
 
 3\. Compile and run tests
 
 
 
-\## 🐛 Troubleshooting
+## 🐛 Troubleshooting
 
 
 
-\*\*Java files won't compile?\*\*
+**Java files won't compile?**
 
 ```bash
 
-\# Make sure Java is installed
+# Make sure Java is installed
 
 java -version
 
@@ -338,40 +338,40 @@ javac -version
 
 
 
-\# Compile from correct directory
+# Compile from correct directory
 
 cd src/main/java
 
-javac jpamb/sqli/\*.java
+javac jpamb/sqli/*.java
 
 ```
 
 
 
-\*\*Test runner fails?\*\*
+**Test runner fails?**
 
 ```bash
 
-\# Check you're in sqli-test-suite directory
+# Check you're in sqli-test-suite directory
 
 pwd
 
 
 
-\# Verify files exist
+# Verify files exist
 
-ls my\_analyzer.py test\_runner.py test\_cases.json
+ls my_analyzer.py test_runner.py test_cases.json
 
 ```
 
-\## ⚠️ Known Limitations
+## ⚠️ Known Limitations
 
 Our analyzer achieves excellent results on the current test suite, but has some known limitations:
 
-\### 1. Single-Method Analysis Only
-\- \*\*What it means:\*\* The analyzer only examines one method at a time
-\- \*\*Impact:\*\* Cannot track taint flowing through method calls
-\- \*\*Example:\*\*
+### 1. Single-Method Analysis Only
+- **What it means:** The analyzer only examines one method at a time
+- **Impact:** Cannot track taint flowing through method calls
+- **Example:**
 ```java
 String getUserInput() {
     return request.getParameter("id");  // Tainted
@@ -379,45 +379,45 @@ String getUserInput() {
 
 void buildQuery() {
     String id = getUserInput();  // Taint not tracked here
-    String query = "SELECT \* FROM users WHERE id = " + id;  // May not detect
+    String query = "SELECT * FROM users WHERE id = " + id;  // May not detect
 }
 ```
 
-\### 2. Regex-Based Pattern Matching
-\- \*\*What it means:\*\* Uses regular expressions instead of full Java AST parsing
-\- \*\*Impact:\*\* May miss complex syntax patterns
-\- \*\*Examples that may be missed:\*\*
+### 2. Regex-Based Pattern Matching
+- **What it means:** Uses regular expressions instead of full Java AST parsing
+- **Impact:** May miss complex syntax patterns
+- **Examples that may be missed:**
   - Multi-line string concatenation
   - Ternary expressions: `String x = condition ? "a" : "b";`
   - Method return values: `String x = someMethod("literal");`
 
-\### 3. No Framework Understanding
-\- \*\*What it means:\*\* Doesn't understand ORM or framework abstractions
-\- \*\*Impact:\*\* Cannot analyze Spring, Hibernate, JPA, or other frameworks
+### 3. No Framework Understanding
+- **What it means:** Doesn't understand ORM or framework abstractions
+- **Impact:** Cannot analyze Spring, Hibernate, JPA, or other frameworks
 
-\### 4. No Prepared Statement Validation
-\- \*\*What it means:\*\* Doesn't verify correct usage of PreparedStatement
-\- \*\*Impact:\*\* Won't catch misuse of prepared statements
+### 4. No Prepared Statement Validation
+- **What it means:** Doesn't verify correct usage of PreparedStatement
+- **Impact:** Won't catch misuse of prepared statements
 
-\### 5. Limited to Current Test Complexity
-\- \*\*What it means:\*\* Test cases are 10-30 lines each
-\- \*\*Impact:\*\* Real production code (100+ lines) may behave differently
-\- \*\*100% detection rate may not hold for:\*\*
+### 5. Limited to Current Test Complexity
+- **What it means:** Test cases are 10-30 lines each
+- **Impact:** Real production code (100+ lines) may behave differently
+- **100% detection rate may not hold for:**
   - Complex business logic
   - Nested control flow
   - Advanced obfuscation techniques
 
-\### Recommended Mitigations
-1\. \*\*Use in combination with other tools\*\* (e.g., FindBugs, SpotBugs)
-2\. \*\*Manual code review\*\* for complex inter-procedural flows
-3\. \*\*Runtime testing\*\* with actual SQL injection payloads
-4\. \*\*Consider upgrading to AST-based analysis\*\* for production use
+### Recommended Mitigations
+1\. **Use in combination with other tools** (e.g., FindBugs, SpotBugs)
+2\. **Manual code review** for complex inter-procedural flows
+3\. **Runtime testing** with actual SQL injection payloads
+4\. **Consider upgrading to AST-based analysis** for production use
 
-\## 🔗 References
+## 🔗 References
 
 
 
-\- Original JPAMB: https://github.com/kalhauge/jpamb
+- Original JPAMB: https://github.com/kalhauge/jpamb
 
-\- Our Project Repo: https://github.com/DataAthleteChamp/Mind\_Your\_Own\_Query
+- Our Project Repo: https://github.com/DataAthleteChamp/Mind_Your_Own_Query
 
