@@ -1,31 +1,32 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_TryCatch {
-    // VULNERABLE
-    public static void vulnerable(String input) {
-        String query;
+    public static void vulnerable(String string) {
         try {
-            query = "SELECT * FROM users WHERE id = " + input;
-            executeQuery(query);
-        } catch (Exception e) {
-            query = "SELECT * FROM default WHERE id = " + input;
-            executeQuery(query);
+            String string2 = "SELECT * FROM users WHERE id = " + string;
+            SQLi_TryCatch.executeQuery(string2);
+        }
+        catch (Exception exception) {
+            String string3 = "SELECT * FROM default WHERE id = " + string;
+            SQLi_TryCatch.executeQuery(string3);
         }
     }
-    
-    // SAFE
+
     public static void safe() {
-        String query;
         try {
-            query = "SELECT * FROM users WHERE id = 42";
-            executeQuery(query);
-        } catch (Exception e) {
-            query = "SELECT * FROM default WHERE id = 1";
-            executeQuery(query);
+            String string = "SELECT * FROM users WHERE id = 42";
+            SQLi_TryCatch.executeQuery(string);
+        }
+        catch (Exception exception) {
+            String string = "SELECT * FROM default WHERE id = 1";
+            SQLi_TryCatch.executeQuery(string);
         }
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

@@ -1,21 +1,22 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_Replace {
-    // VULNERABLE
-    public static void vulnerable(String input) {
-        String escaped = input.replace("'", "''");
-        String query = "SELECT * FROM users WHERE name = '" + escaped + "'";
-        executeQuery(query);
+    public static void vulnerable(String string) {
+        String string2 = string.replace("'", "''");
+        String string3 = "SELECT * FROM users WHERE name = '" + string2 + "'";
+        SQLi_Replace.executeQuery(string3);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String base = "SELECT * FROM table_name WHERE x = y";
-        String query = base.replace("table_name", "users");
-        executeQuery(query);
+        String string = "SELECT * FROM table_name WHERE x = y";
+        String string2 = string.replace("table_name", "users");
+        SQLi_Replace.executeQuery(string2);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

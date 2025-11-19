@@ -1,23 +1,22 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_LoginBypass {
-    // VULNERABLE
-    public static void vulnerable(String username, String password) {
-        String query = "SELECT * FROM users WHERE username = '" + username + 
-                       "' AND password = '" + password + "'";
-        executeQuery(query);
+    public static void vulnerable(String string, String string2) {
+        String string3 = "SELECT * FROM users WHERE username = '" + string + "' AND password = '" + string2 + "'";
+        SQLi_LoginBypass.executeQuery(string3);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String username = "admin";
-        String password = "secret123";
-        String query = "SELECT * FROM users WHERE username = '" + username + 
-                       "' AND password = '" + password + "'";
-        executeQuery(query);
+        String string = "admin";
+        String string2 = "secret123";
+        String string3 = "SELECT * FROM users WHERE username = '" + string + "' AND password = '" + string2 + "'";
+        SQLi_LoginBypass.executeQuery(string3);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

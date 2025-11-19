@@ -1,24 +1,25 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_SplitJoin {
-    // VULNERABLE
-    public static void vulnerable(String input) {
-        String[] parts = input.split(",");
-        String first = parts.length > 0 ? parts[0] : "";
-        String query = "SELECT * FROM users WHERE id = " + first;
-        executeQuery(query);
+    public static void vulnerable(String string) {
+        String[] stringArray = string.split(",");
+        String string2 = stringArray.length > 0 ? stringArray[0] : "";
+        String string3 = "SELECT * FROM users WHERE id = " + string2;
+        SQLi_SplitJoin.executeQuery(string3);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String value = "42,43,44";
-        String[] parts = value.split(",");
-        String first = parts[0];
-        String query = "SELECT * FROM users WHERE id = " + first;
-        executeQuery(query);
+        String string = "42,43,44";
+        String[] stringArray = string.split(",");
+        String string2 = stringArray[0];
+        String string3 = "SELECT * FROM users WHERE id = " + string2;
+        SQLi_SplitJoin.executeQuery(string3);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }
