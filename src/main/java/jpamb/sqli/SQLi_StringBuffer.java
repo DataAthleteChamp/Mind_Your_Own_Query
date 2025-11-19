@@ -1,30 +1,31 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_StringBuffer {
-    // VULNERABLE
-    public static void vulnerable(String[] inputs) {
-        StringBuffer sb = new StringBuffer("SELECT * FROM users WHERE id IN (");
-        for (String input : inputs) {
-            sb.append(input).append(", ");
+    public static void vulnerable(String[] stringArray) {
+        StringBuffer stringBuffer = new StringBuffer("SELECT * FROM users WHERE id IN (");
+        for (String string : stringArray) {
+            stringBuffer.append(string).append(", ");
         }
-        sb.append(")");
-        String query = sb.toString();
-        executeQuery(query);
+        stringBuffer.append(")");
+        String string = stringBuffer.toString();
+        SQLi_StringBuffer.executeQuery(string);
     }
-    
-    // SAFE
+
     public static void safe() {
-        StringBuffer sb = new StringBuffer("SELECT * FROM users WHERE id IN (");
-        String[] ids = {"1", "2", "3"};
-        for (String id : ids) {
-            sb.append(id).append(", ");
+        String[] stringArray;
+        StringBuffer stringBuffer = new StringBuffer("SELECT * FROM users WHERE id IN (");
+        for (String string : stringArray = new String[]{"1", "2", "3"}) {
+            stringBuffer.append(string).append(", ");
         }
-        sb.append(")");
-        String query = sb.toString();
-        executeQuery(query);
+        stringBuffer.append(")");
+        String string = stringBuffer.toString();
+        SQLi_StringBuffer.executeQuery(string);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

@@ -1,23 +1,22 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_MultipleSources {
-    // VULNERABLE
-    public static void vulnerable(String httpInput, String fileInput) {
-        String query = "SELECT * FROM users WHERE name = '" + httpInput + 
-                       "' OR email = '" + fileInput + "'";
-        executeQuery(query);
+    public static void vulnerable(String string, String string2) {
+        String string3 = "SELECT * FROM users WHERE name = '" + string + "' OR email = '" + string2 + "'";
+        SQLi_MultipleSources.executeQuery(string3);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String httpInput = "admin";
-        String fileInput = "admin@example.com";
-        String query = "SELECT * FROM users WHERE name = '" + httpInput + 
-                       "' OR email = '" + fileInput + "'";
-        executeQuery(query);
+        String string = "admin";
+        String string2 = "admin@example.com";
+        String string3 = "SELECT * FROM users WHERE name = '" + string + "' OR email = '" + string2 + "'";
+        SQLi_MultipleSources.executeQuery(string3);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

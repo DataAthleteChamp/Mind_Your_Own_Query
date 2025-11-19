@@ -1,22 +1,23 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_Trim {
-    // VULNERABLE
-    public static void vulnerable(String input) {
-        String cleaned = input.trim();
-        String query = "SELECT * FROM users WHERE id = " + cleaned;
-        executeQuery(query);
+    public static void vulnerable(String string) {
+        String string2 = string.trim();
+        String string3 = "SELECT * FROM users WHERE id = " + string2;
+        SQLi_Trim.executeQuery(string3);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String value = "  42  ";
-        String cleaned = value.trim();
-        String query = "SELECT * FROM users WHERE id = " + cleaned;
-        executeQuery(query);
+        String string = "  42  ";
+        String string2 = string.trim();
+        String string3 = "SELECT * FROM users WHERE id = " + string2;
+        SQLi_Trim.executeQuery(string3);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

@@ -1,22 +1,23 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_Substring {
-    // VULNERABLE
-    public static void vulnerable(String input) {
-        String trimmed = input.substring(0, Math.min(10, input.length()));
-        String query = "SELECT * FROM users WHERE name = '" + trimmed + "'";
-        executeQuery(query);
+    public static void vulnerable(String string) {
+        String string2 = string.substring(0, Math.min(10, string.length()));
+        String string3 = "SELECT * FROM users WHERE name = '" + string2 + "'";
+        SQLi_Substring.executeQuery(string3);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String safe = "safe_value_here";
-        String trimmed = safe.substring(0, 4);
-        String query = "SELECT * FROM users WHERE name = '" + trimmed + "'";
-        executeQuery(query);
+        String string = "safe_value_here";
+        String string2 = string.substring(0, 4);
+        String string3 = "SELECT * FROM users WHERE name = '" + string2 + "'";
+        SQLi_Substring.executeQuery(string3);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

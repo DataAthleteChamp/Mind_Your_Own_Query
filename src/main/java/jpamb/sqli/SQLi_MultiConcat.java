@@ -1,20 +1,21 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_MultiConcat {
-    // VULNERABLE
-    public static void vulnerable(String table, String column, String value) {
-        String query = "SELECT " + column + " FROM " + table + " WHERE id = " + value;
-        executeQuery(query);
+    public static void vulnerable(String string, String string2, String string3) {
+        String string4 = "SELECT " + string2 + " FROM " + string + " WHERE id = " + string3;
+        SQLi_MultiConcat.executeQuery(string4);
     }
-    
-    // SAFE
-    public static void safe(String value) {
-        String sanitized = value.replaceAll("[^0-9]", "");
-        String query = "SELECT name FROM users WHERE id = " + sanitized;
-        executeQuery(query);
+
+    public static void safe(String string) {
+        String string2 = string.replaceAll("[^0-9]", "");
+        String string3 = "SELECT name FROM users WHERE id = " + string2;
+        SQLi_MultiConcat.executeQuery(string3);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

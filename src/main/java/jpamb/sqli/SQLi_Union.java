@@ -1,20 +1,21 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_Union {
-    // VULNERABLE
-    public static void vulnerable(String productId) {
-        String query = "SELECT name, price FROM products WHERE id = " + productId;
-        executeQuery(query);
+    public static void vulnerable(String string) {
+        String string2 = "SELECT name, price FROM products WHERE id = " + string;
+        SQLi_Union.executeQuery(string2);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String productId = "42";
-        String query = "SELECT name, price FROM products WHERE id = " + productId;
-        executeQuery(query);
+        String string = "42";
+        String string2 = "SELECT name, price FROM products WHERE id = " + string;
+        SQLi_Union.executeQuery(string2);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

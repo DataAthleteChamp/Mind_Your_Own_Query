@@ -1,20 +1,21 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_OrderBy {
-    // VULNERABLE
-    public static void vulnerable(String sortColumn) {
-        String query = "SELECT * FROM products ORDER BY " + sortColumn;
-        executeQuery(query);
+    public static void vulnerable(String string) {
+        String string2 = "SELECT * FROM products ORDER BY " + string;
+        SQLi_OrderBy.executeQuery(string2);
     }
-    
-    // SAFE
-    public static void safe(String sortColumn) {
-        String column = sortColumn.equals("price") ? "price" : "name";
-        String query = "SELECT * FROM products ORDER BY " + column;
-        executeQuery(query);
+
+    public static void safe(String string) {
+        String string2 = string.equals("price") ? "price" : "name";
+        String string3 = "SELECT * FROM products ORDER BY " + string2;
+        SQLi_OrderBy.executeQuery(string3);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }
