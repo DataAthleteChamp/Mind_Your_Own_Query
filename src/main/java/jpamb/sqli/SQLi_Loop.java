@@ -1,30 +1,33 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_Loop {
-    // VULNERABLE
-    public static void vulnerable(String[] inputs) {
-        String query = "SELECT * FROM users WHERE id IN (";
-        for (int i = 0; i < inputs.length; i++) {
-            query += inputs[i];
-            if (i < inputs.length - 1) query += ", ";
+    public static void vulnerable(String[] stringArray) {
+        Object object = "SELECT * FROM users WHERE id IN (";
+        for (int i = 0; i < stringArray.length; ++i) {
+            object = (String)object + stringArray[i];
+            if (i >= stringArray.length - 1) continue;
+            object = (String)object + ", ";
         }
-        query += ")";
-        executeQuery(query);
+        object = (String)object + ")";
+        SQLi_Loop.executeQuery((String)object);
     }
-    
-    // SAFE
+
     public static void safe() {
-        String query = "SELECT * FROM users WHERE id IN (";
-        String[] ids = {"42", "43", "44"};
-        for (int i = 0; i < ids.length; i++) {
-            query += ids[i];
-            if (i < ids.length - 1) query += ", ";
+        Object object = "SELECT * FROM users WHERE id IN (";
+        String[] stringArray = new String[]{"42", "43", "44"};
+        for (int i = 0; i < stringArray.length; ++i) {
+            object = (String)object + stringArray[i];
+            if (i >= stringArray.length - 1) continue;
+            object = (String)object + ", ";
         }
-        query += ")";
-        executeQuery(query);
+        object = (String)object + ")";
+        SQLi_Loop.executeQuery((String)object);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }

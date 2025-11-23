@@ -1,25 +1,26 @@
+/*
+ * Decompiled with CFR 0.152.
+ */
 package jpamb.sqli;
 
 public class SQLi_StringBuilder {
-    // VULNERABLE
-    public static void vulnerable(String input) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SELECT * FROM users WHERE id = ");
-        sb.append(input);
-        String query = sb.toString();
-        executeQuery(query);
+    public static void vulnerable(String string) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT * FROM users WHERE id = ");
+        stringBuilder.append(string);
+        String string2 = stringBuilder.toString();
+        SQLi_StringBuilder.executeQuery(string2);
     }
-    
-    // SAFE
+
     public static void safe() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("SELECT * FROM users WHERE id = ");
-        sb.append("42");
-        String query = sb.toString();
-        executeQuery(query);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT * FROM users WHERE id = ");
+        stringBuilder.append("42");
+        String string = stringBuilder.toString();
+        SQLi_StringBuilder.executeQuery(string);
     }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+
+    private static void executeQuery(String string) {
+        System.out.println("Executing: " + string);
     }
 }
