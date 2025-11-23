@@ -790,6 +790,15 @@ def analyze_method(methodid: jvm.AbsMethodID) -> bool:
 
 def main():
     """Main entry point"""
+    # Handle info command
+    if len(sys.argv) == 2 and sys.argv[1] == "info":
+        print("Bytecode Taint Analyzer")
+        print("1.0")
+        print("Student Group Name")
+        print("bytecode,taint,sqli")
+        print("no")
+        sys.exit(0)
+
     # Get method signature from command line
     if len(sys.argv) < 2:
         print("Usage: bytecode_taint_analyzer.py <method_signature>", file=sys.stderr)
