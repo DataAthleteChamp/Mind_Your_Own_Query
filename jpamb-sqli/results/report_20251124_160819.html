@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JPAMB SQLi Test Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #333; }
+        .metric { margin: 10px 0; padding: 10px; background: #f0f0f0; }
+        .pass { color: green; }
+        .fail { color: red; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>JPAMB SQL Injection Test Report</h1>
+    <p>Generated: 2025-11-24 16:08:19</p>
+    
+    <h2>Summary Metrics</h2>
+    <div class="metric">
+        <strong>Detection Rate:</strong> 92.2% 
+        <span class="pass">
+            (Target: 75%+)
+        </span>
+    </div>
+    <div class="metric">
+        <strong>False Positive Rate:</strong> 21.2%
+        <span class="pass">
+            (Target: <30%)
+        </span>
+    </div>
+    <div class="metric">
+        <strong>Average Time per Test:</strong> 0.15s
+        <span class="pass">
+            (Target: <60s)
+        </span>
+    </div>
+    
+    <h2>Detailed Results</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Test Name</th>
+            <th>Category</th>
+            <th>Vulnerable Detection</th>
+            <th>Safe (No FP)</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>SQLi_DirectConcat</td>
+            <td>basic_concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>SQLi_MultiConcat</td>
+            <td>basic_concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>SQLi_LiteralMix</td>
+            <td>basic_concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>SQLi_HTTPSource</td>
+            <td>basic_concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>SQLi_OrderBy</td>
+            <td>basic_concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>SQLi_Substring</td>
+            <td>string_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>SQLi_Replace</td>
+            <td>string_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>SQLi_Trim</td>
+            <td>string_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>SQLi_CaseConversion</td>
+            <td>string_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>SQLi_SplitJoin</td>
+            <td>string_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>SQLi_IfElse</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td>SQLi_Loop</td>
+            <td>control_flow</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td>SQLi_TryCatch</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td>SQLi_Switch</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td>SQLi_NestedConditions</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>SQLi_StringBuilder</td>
+            <td>stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>17</td>
+            <td>SQLi_StringBuffer</td>
+            <td>stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>SQLi_StringBuilderMixed</td>
+            <td>stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td>SQLi_LoginBypass</td>
+            <td>real_world</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>SQLi_Union</td>
+            <td>real_world</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>SQLi_TimeBased</td>
+            <td>real_world</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>SQLi_SecondOrder</td>
+            <td>real_world</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>23</td>
+            <td>SQLi_MultipleSources</td>
+            <td>real_world</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>24</td>
+            <td>SQLi_PartialSanitization</td>
+            <td>real_world</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>25</td>
+            <td>SQLi_ComplexNested</td>
+            <td>real_world</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>31</td>
+            <td>SQLi_Concat_31</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>32</td>
+            <td>SQLi_Concat_32</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>33</td>
+            <td>SQLi_Concat_33</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>34</td>
+            <td>SQLi_Concat_34</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>35</td>
+            <td>SQLi_Concat_35</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>36</td>
+            <td>SQLi_Concat_36</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>37</td>
+            <td>SQLi_Concat_37</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>38</td>
+            <td>SQLi_Concat_38</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>39</td>
+            <td>SQLi_Concat_39</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>40</td>
+            <td>SQLi_Concat_40</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>41</td>
+            <td>SQLi_Concat_41</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>42</td>
+            <td>SQLi_Concat_42</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>43</td>
+            <td>SQLi_Concat_43</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>44</td>
+            <td>SQLi_Concat_44</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>45</td>
+            <td>SQLi_Concat_45</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>46</td>
+            <td>SQLi_Concat_46</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>47</td>
+            <td>SQLi_Concat_47</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>48</td>
+            <td>SQLi_Concat_48</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>49</td>
+            <td>SQLi_Concat_49</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>50</td>
+            <td>SQLi_Concat_50</td>
+            <td>concatenation</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>51</td>
+            <td>SQLi_Trim_51</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>52</td>
+            <td>SQLi_Trim_52</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>53</td>
+            <td>SQLi_Trim_53</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>54</td>
+            <td>SQLi_Trim_54</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>55</td>
+            <td>SQLi_Trim_55</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>56</td>
+            <td>SQLi_Trim_56</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>57</td>
+            <td>SQLi_Trim_57</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>58</td>
+            <td>SQLi_Trim_58</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>59</td>
+            <td>SQLi_Trim_59</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>60</td>
+            <td>SQLi_Trim_60</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>61</td>
+            <td>SQLi_Trim_61</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>62</td>
+            <td>SQLi_Trim_62</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>63</td>
+            <td>SQLi_Trim_63</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>64</td>
+            <td>SQLi_Trim_64</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>65</td>
+            <td>SQLi_Trim_65</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>66</td>
+            <td>SQLi_Case_66</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>67</td>
+            <td>SQLi_Case_67</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>68</td>
+            <td>SQLi_Case_68</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>69</td>
+            <td>SQLi_Case_69</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>70</td>
+            <td>SQLi_Case_70</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>71</td>
+            <td>SQLi_Case_71</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>72</td>
+            <td>SQLi_Case_72</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>73</td>
+            <td>SQLi_Case_73</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>74</td>
+            <td>SQLi_Case_74</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>75</td>
+            <td>SQLi_Case_75</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>76</td>
+            <td>SQLi_Case_76</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>77</td>
+            <td>SQLi_Case_77</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>78</td>
+            <td>SQLi_Case_78</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>79</td>
+            <td>SQLi_Case_79</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>80</td>
+            <td>SQLi_Case_80</td>
+            <td>string_ops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>81</td>
+            <td>SQLi_StringBuilder_81</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>82</td>
+            <td>SQLi_StringBuilder_82</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>83</td>
+            <td>SQLi_StringBuilder_83</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>84</td>
+            <td>SQLi_StringBuilder_84</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>85</td>
+            <td>SQLi_StringBuilder_85</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>86</td>
+            <td>SQLi_StringBuilder_86</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>87</td>
+            <td>SQLi_StringBuilder_87</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>88</td>
+            <td>SQLi_StringBuilder_88</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>89</td>
+            <td>SQLi_StringBuilder_89</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>90</td>
+            <td>SQLi_StringBuilder_90</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>91</td>
+            <td>SQLi_StringBuilder_91</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>92</td>
+            <td>SQLi_StringBuilder_92</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>93</td>
+            <td>SQLi_StringBuilder_93</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>94</td>
+            <td>SQLi_StringBuilder_94</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>95</td>
+            <td>SQLi_StringBuilder_95</td>
+            <td>string_builder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>96</td>
+            <td>SQLi_IfElse_96</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>97</td>
+            <td>SQLi_IfElse_97</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>98</td>
+            <td>SQLi_IfElse_98</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>99</td>
+            <td>SQLi_IfElse_99</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>SQLi_IfElse_100</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>101</td>
+            <td>SQLi_IfElse_101</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>102</td>
+            <td>SQLi_IfElse_102</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>103</td>
+            <td>SQLi_IfElse_103</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>104</td>
+            <td>SQLi_IfElse_104</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>105</td>
+            <td>SQLi_IfElse_105</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>106</td>
+            <td>SQLi_IfElse_106</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>107</td>
+            <td>SQLi_IfElse_107</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>108</td>
+            <td>SQLi_IfElse_108</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>109</td>
+            <td>SQLi_IfElse_109</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>110</td>
+            <td>SQLi_IfElse_110</td>
+            <td>control_flow</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>111</td>
+            <td>SQLi_ForLoop_111</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>112</td>
+            <td>SQLi_ForLoop_112</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>113</td>
+            <td>SQLi_ForLoop_113</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>114</td>
+            <td>SQLi_ForLoop_114</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>115</td>
+            <td>SQLi_ForLoop_115</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>116</td>
+            <td>SQLi_ForLoop_116</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>117</td>
+            <td>SQLi_ForLoop_117</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>118</td>
+            <td>SQLi_ForLoop_118</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>119</td>
+            <td>SQLi_ForLoop_119</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>120</td>
+            <td>SQLi_ForLoop_120</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>121</td>
+            <td>SQLi_ForLoop_121</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>122</td>
+            <td>SQLi_ForLoop_122</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>123</td>
+            <td>SQLi_ForLoop_123</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>124</td>
+            <td>SQLi_ForLoop_124</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>125</td>
+            <td>SQLi_ForLoop_125</td>
+            <td>loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>126</td>
+            <td>SQLi_Format_126</td>
+            <td>formatting</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>127</td>
+            <td>SQLi_Format_127</td>
+            <td>formatting</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>128</td>
+            <td>SQLi_Format_128</td>
+            <td>formatting</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>129</td>
+            <td>SQLi_Format_129</td>
+            <td>formatting</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>130</td>
+            <td>SQLi_Format_130</td>
+            <td>formatting</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>131</td>
+            <td>SQLi_BatchQuery</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>132</td>
+            <td>SQLi_CharArray</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>133</td>
+            <td>SQLi_EmptyString</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>134</td>
+            <td>SQLi_Encoded</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>135</td>
+            <td>SQLi_FormatString</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>136</td>
+            <td>SQLi_IndentString</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>137</td>
+            <td>SQLi_Interpolation</td>
+            <td>advanced</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>138</td>
+            <td>SQLi_LambdaBuilder</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>139</td>
+            <td>SQLi_MapBuilder</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>140</td>
+            <td>SQLi_MultiLevelOps</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>141</td>
+            <td>SQLi_NullCoalesce</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>142</td>
+            <td>SQLi_RecursiveBuilder</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>143</td>
+            <td>SQLi_RegexReplace</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>144</td>
+            <td>SQLi_RepeatString</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>145</td>
+            <td>SQLi_StreamJoin</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>146</td>
+            <td>SQLi_StringBuilderCapacity</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>147</td>
+            <td>SQLi_StringBuilderChaining</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>148</td>
+            <td>SQLi_StringBuilderConditional</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>149</td>
+            <td>SQLi_StringBuilderDelete</td>
+            <td>advanced</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>150</td>
+            <td>SQLi_StringBuilderHelper</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>151</td>
+            <td>SQLi_StringBuilderInsert</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>152</td>
+            <td>SQLi_StringBuilderNestedLoop</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>153</td>
+            <td>SQLi_StringBuilderReplace</td>
+            <td>advanced</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>154</td>
+            <td>SQLi_StringBuilderReverse</td>
+            <td>advanced</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>155</td>
+            <td>SQLi_StringBuilderSetChar</td>
+            <td>advanced</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>156</td>
+            <td>SQLi_AdvStringBuilder_insert_156</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>156</td>
+            <td>SQLi_StringJoiner</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>157</td>
+            <td>SQLi_AdvStringBuilder_delete_157</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>157</td>
+            <td>SQLi_TernaryConcat</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>158</td>
+            <td>SQLi_AdvStringBuilder_replace_158</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>158</td>
+            <td>SQLi_TextBlock</td>
+            <td>advanced</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>159</td>
+            <td>SQLi_AdvStringBuilder_reverse_159</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>159</td>
+            <td>SQLi_Unicode</td>
+            <td>advanced</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>160</td>
+            <td>SQLi_AdvStringBuilder_append_160</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>160</td>
+            <td>SQLi_VariableChain</td>
+            <td>advanced</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>161</td>
+            <td>SQLi_AdvStringBuilder_insert_161</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>162</td>
+            <td>SQLi_AdvStringBuilder_delete_162</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>163</td>
+            <td>SQLi_AdvStringBuilder_replace_163</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>164</td>
+            <td>SQLi_AdvStringBuilder_reverse_164</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>165</td>
+            <td>SQLi_AdvStringBuilder_append_165</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>166</td>
+            <td>SQLi_AdvStringBuilder_insert_166</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>167</td>
+            <td>SQLi_AdvStringBuilder_delete_167</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>168</td>
+            <td>SQLi_AdvStringBuilder_replace_168</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>169</td>
+            <td>SQLi_AdvStringBuilder_reverse_169</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>170</td>
+            <td>SQLi_AdvStringBuilder_append_170</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>171</td>
+            <td>SQLi_AdvStringBuilder_insert_171</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>172</td>
+            <td>SQLi_AdvStringBuilder_delete_172</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>173</td>
+            <td>SQLi_AdvStringBuilder_replace_173</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>174</td>
+            <td>SQLi_AdvStringBuilder_reverse_174</td>
+            <td>advanced_stringbuilder</td>
+            <td>✗ ok</td>
+            <td>✓ ok</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>175</td>
+            <td>SQLi_AdvStringBuilder_append_175</td>
+            <td>advanced_stringbuilder</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>176</td>
+            <td>SQLi_MethodChain_176</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>177</td>
+            <td>SQLi_MethodChain_177</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>178</td>
+            <td>SQLi_MethodChain_178</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>179</td>
+            <td>SQLi_MethodChain_179</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>180</td>
+            <td>SQLi_MethodChain_180</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>181</td>
+            <td>SQLi_MethodChain_181</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>182</td>
+            <td>SQLi_MethodChain_182</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>183</td>
+            <td>SQLi_MethodChain_183</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>184</td>
+            <td>SQLi_MethodChain_184</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>185</td>
+            <td>SQLi_MethodChain_185</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>186</td>
+            <td>SQLi_MethodChain_186</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>187</td>
+            <td>SQLi_MethodChain_187</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>188</td>
+            <td>SQLi_MethodChain_188</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>189</td>
+            <td>SQLi_MethodChain_189</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>190</td>
+            <td>SQLi_MethodChain_190</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>191</td>
+            <td>SQLi_MethodChain_191</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>192</td>
+            <td>SQLi_MethodChain_192</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>193</td>
+            <td>SQLi_MethodChain_193</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>194</td>
+            <td>SQLi_MethodChain_194</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>195</td>
+            <td>SQLi_MethodChain_195</td>
+            <td>method_chaining</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>196</td>
+            <td>SQLi_NestedLoop_196</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>197</td>
+            <td>SQLi_NestedLoop_197</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>198</td>
+            <td>SQLi_NestedLoop_198</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>199</td>
+            <td>SQLi_NestedLoop_199</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>SQLi_NestedLoop_200</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>201</td>
+            <td>SQLi_NestedLoop_201</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>202</td>
+            <td>SQLi_NestedLoop_202</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>203</td>
+            <td>SQLi_NestedLoop_203</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>204</td>
+            <td>SQLi_NestedLoop_204</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>205</td>
+            <td>SQLi_NestedLoop_205</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>206</td>
+            <td>SQLi_NestedLoop_206</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>207</td>
+            <td>SQLi_NestedLoop_207</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>208</td>
+            <td>SQLi_NestedLoop_208</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>209</td>
+            <td>SQLi_NestedLoop_209</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>210</td>
+            <td>SQLi_NestedLoop_210</td>
+            <td>nested_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>211</td>
+            <td>SQLi_ArrayManip_211</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>212</td>
+            <td>SQLi_ArrayManip_212</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>213</td>
+            <td>SQLi_ArrayManip_213</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>214</td>
+            <td>SQLi_ArrayManip_214</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>215</td>
+            <td>SQLi_ArrayManip_215</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>216</td>
+            <td>SQLi_ArrayManip_216</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>217</td>
+            <td>SQLi_ArrayManip_217</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>218</td>
+            <td>SQLi_ArrayManip_218</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>219</td>
+            <td>SQLi_ArrayManip_219</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>220</td>
+            <td>SQLi_ArrayManip_220</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>221</td>
+            <td>SQLi_ArrayManip_221</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>222</td>
+            <td>SQLi_ArrayManip_222</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>223</td>
+            <td>SQLi_ArrayManip_223</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>224</td>
+            <td>SQLi_ArrayManip_224</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>225</td>
+            <td>SQLi_ArrayManip_225</td>
+            <td>array_operations</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>226</td>
+            <td>SQLi_CondAssign_226</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>227</td>
+            <td>SQLi_CondAssign_227</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>228</td>
+            <td>SQLi_CondAssign_228</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>229</td>
+            <td>SQLi_CondAssign_229</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>230</td>
+            <td>SQLi_CondAssign_230</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>231</td>
+            <td>SQLi_CondAssign_231</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>232</td>
+            <td>SQLi_CondAssign_232</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>233</td>
+            <td>SQLi_CondAssign_233</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>234</td>
+            <td>SQLi_CondAssign_234</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>235</td>
+            <td>SQLi_CondAssign_235</td>
+            <td>conditional_assignment</td>
+            <td>✓ SQL injection</td>
+            <td>✗ SQL injection</td>
+            <td class="fail">FAIL</td>
+        </tr>
+        <tr>
+            <td>236</td>
+            <td>SQLi_SwitchMulti_236</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>237</td>
+            <td>SQLi_SwitchMulti_237</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>238</td>
+            <td>SQLi_SwitchMulti_238</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>239</td>
+            <td>SQLi_SwitchMulti_239</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>240</td>
+            <td>SQLi_SwitchMulti_240</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>241</td>
+            <td>SQLi_SwitchMulti_241</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>242</td>
+            <td>SQLi_SwitchMulti_242</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>243</td>
+            <td>SQLi_SwitchMulti_243</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>244</td>
+            <td>SQLi_SwitchMulti_244</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>245</td>
+            <td>SQLi_SwitchMulti_245</td>
+            <td>switch_statements</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>246</td>
+            <td>SQLi_WhileLoop_246</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>247</td>
+            <td>SQLi_WhileLoop_247</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>248</td>
+            <td>SQLi_WhileLoop_248</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>249</td>
+            <td>SQLi_WhileLoop_249</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>250</td>
+            <td>SQLi_WhileLoop_250</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>251</td>
+            <td>SQLi_WhileLoop_251</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>252</td>
+            <td>SQLi_WhileLoop_252</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>253</td>
+            <td>SQLi_WhileLoop_253</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>254</td>
+            <td>SQLi_WhileLoop_254</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+        <tr>
+            <td>255</td>
+            <td>SQLi_WhileLoop_255</td>
+            <td>while_loops</td>
+            <td>✓ SQL injection</td>
+            <td>✓ ok</td>
+            <td class="pass">PASS</td>
+        </tr>
+    </table>
+</body>
+</html>
