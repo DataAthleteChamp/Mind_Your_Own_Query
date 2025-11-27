@@ -316,6 +316,228 @@ class AbstractState:
     def __repr__(self):
         return f"<State pc={self.pc} stack={len(self.stack)} locals={len(self.locals)} heap={len(self.heap)}>"
 
+    def copy(self) -> "AbstractState":
+        """Create a deep copy of the state for branch exploration"""
+        return AbstractState(
+            stack=list(self.stack),
+            locals=dict(self.locals),
+            heap=dict(self.heap),
+            pc=self.pc,
+            next_heap_addr=self.next_heap_addr,
+            vulnerability_detected=self.vulnerability_detected
+        )
+
+    @staticmethod
+    def join(state1: "AbstractState", state2: "AbstractState") -> "AbstractState":
+        """
+        Join two abstract states (lattice join operation).
+
+        For taint analysis: if a variable is tainted in ANY predecessor,
+        it must be considered tainted at the join point.
+
+        This is the ⊔ operation: TRUSTED ⊔ UNTRUSTED = UNTRUSTED
+        """
+        # Merge locals: if tainted in either, result is tainted
+        merged_locals = {}
+        all_keys = set(state1.locals.keys()) | set(state2.locals.keys())
+        for key in all_keys:
+            val1 = state1.locals.get(key)
+            val2 = state2.locals.get(key)
+            if val1 is None:
+                merged_locals[key] = val2
+            elif val2 is None:
+                merged_locals[key] = val1
+            elif val1.is_tainted or val2.is_tainted:
+                # Join: if either is tainted, result is tainted
+                merged_locals[key] = TaintValue.untrusted("joined", source="control_flow_join")
+            else:
+                merged_locals[key] = val1
+
+        # For stack: at join points, stacks should be same height
+        # Use conservative approach - if either is tainted, result is tainted
+        merged_stack = []
+        max_len = max(len(state1.stack), len(state2.stack))
+        for i in range(max_len):
+            val1 = state1.stack[i] if i < len(state1.stack) else None
+            val2 = state2.stack[i] if i < len(state2.stack) else None
+            if val1 is None:
+                merged_stack.append(val2)
+            elif val2 is None:
+                merged_stack.append(val1)
+            elif val1.is_tainted or val2.is_tainted:
+                merged_stack.append(TaintValue.untrusted("joined", source="control_flow_join"))
+            else:
+                merged_stack.append(val1)
+
+        # Vulnerability detected if detected in either path
+        vuln = state1.vulnerability_detected or state2.vulnerability_detected
+
+        return AbstractState(
+            stack=merged_stack,
+            locals=merged_locals,
+            heap={**state1.heap, **state2.heap},
+            pc=state1.pc,  # PC at join point
+            next_heap_addr=max(state1.next_heap_addr, state2.next_heap_addr),
+            vulnerability_detected=vuln
+        )
+
+    def __eq__(self, other: "AbstractState") -> bool:
+        """Check if two states are equal (for fixed-point detection)"""
+        if not isinstance(other, AbstractState):
+            return False
+        # Compare taint status of locals
+        if set(self.locals.keys()) != set(other.locals.keys()):
+            return False
+        for key in self.locals:
+            if self.locals[key].is_tainted != other.locals.get(key, TaintValue.trusted("")).is_tainted:
+                return False
+        return True
+
+    def __hash__(self):
+        return hash(tuple((k, v.is_tainted) for k, v in sorted(self.locals.items())))
+
+
+# ============================================================================
+# Control Flow Graph (CFG)
+# ============================================================================
+
+@dataclass
+class BasicBlock:
+    """
+    A basic block in the control flow graph.
+
+    A basic block is a sequence of instructions with:
+    - Single entry point (first instruction)
+    - Single exit point (last instruction)
+    - No branches except at the end
+    """
+    id: int                          # Block identifier (start offset)
+    start_offset: int                # First instruction offset
+    end_offset: int                  # Last instruction offset (inclusive)
+    instructions: List[jvm.Opcode]   # Instructions in this block
+    successors: List[int] = field(default_factory=list)    # Successor block IDs
+    predecessors: List[int] = field(default_factory=list)  # Predecessor block IDs
+
+    def __repr__(self):
+        return f"BB{self.id}[{self.start_offset}-{self.end_offset}] -> {self.successors}"
+
+
+def build_cfg(opcodes: List[jvm.Opcode]) -> Dict[int, BasicBlock]:
+    """
+    Build a Control Flow Graph from bytecode opcodes.
+
+    Algorithm:
+    1. Identify leaders (block start points):
+       - First instruction
+       - Target of any branch
+       - Instruction after any branch
+    2. Create basic blocks between leaders
+    3. Connect blocks with edges based on control flow
+
+    Returns:
+        Dictionary mapping block start offset to BasicBlock
+    """
+    if not opcodes:
+        return {}
+
+    # Build offset -> opcode index mapping
+    offset_to_idx = {op.offset: i for i, op in enumerate(opcodes)}
+
+    # Build index -> offset mapping (for branch targets)
+    # NOTE: In jpamb, branch targets are instruction INDICES, not byte offsets
+    idx_to_offset = {i: op.offset for i, op in enumerate(opcodes)}
+
+    # Step 1: Identify leaders (by instruction index)
+    leaders = {0}  # First instruction is always a leader
+
+    for i, op in enumerate(opcodes):
+        if isinstance(op, (jvm.Goto, jvm.If, jvm.Ifz)):
+            # Target of branch is a leader (target is instruction INDEX)
+            target_idx = op.target
+            if 0 <= target_idx < len(opcodes):
+                leaders.add(target_idx)
+            # Instruction after branch is a leader (fall-through)
+            if i + 1 < len(opcodes):
+                leaders.add(i + 1)
+        elif isinstance(op, jvm.Return):
+            # Instruction after return is a leader (if any)
+            if i + 1 < len(opcodes):
+                leaders.add(i + 1)
+
+    # Step 2: Create basic blocks
+    sorted_leaders = sorted(leaders)
+    blocks: Dict[int, BasicBlock] = {}
+
+    for i, leader_idx in enumerate(sorted_leaders):
+        # Find end of this block
+        if i + 1 < len(sorted_leaders):
+            end_idx = sorted_leaders[i + 1] - 1
+        else:
+            end_idx = len(opcodes) - 1
+
+        block_instructions = opcodes[leader_idx:end_idx + 1]
+        if block_instructions:
+            start_offset = block_instructions[0].offset
+            end_offset = block_instructions[-1].offset
+            blocks[start_offset] = BasicBlock(
+                id=start_offset,
+                start_offset=start_offset,
+                end_offset=end_offset,
+                instructions=block_instructions
+            )
+
+    # Step 3: Connect blocks with edges
+    for offset, block in blocks.items():
+        if not block.instructions:
+            continue
+
+        last_instr = block.instructions[-1]
+        last_idx = offset_to_idx.get(last_instr.offset, -1)
+
+        if isinstance(last_instr, jvm.Goto):
+            # Unconditional jump - only successor is target
+            # Convert target index to offset
+            target_idx = last_instr.target
+            if 0 <= target_idx < len(opcodes):
+                target_offset = idx_to_offset[target_idx]
+                if target_offset in blocks:
+                    block.successors.append(target_offset)
+                    blocks[target_offset].predecessors.append(offset)
+
+        elif isinstance(last_instr, (jvm.If, jvm.Ifz)):
+            # Conditional branch - two successors: target and fall-through
+            # Target (branch taken) - convert index to offset
+            target_idx = last_instr.target
+            if 0 <= target_idx < len(opcodes):
+                target_offset = idx_to_offset[target_idx]
+                if target_offset in blocks:
+                    block.successors.append(target_offset)
+                    blocks[target_offset].predecessors.append(offset)
+            # Fall-through (branch not taken)
+            if last_idx + 1 < len(opcodes):
+                fall_through_offset = opcodes[last_idx + 1].offset
+                if fall_through_offset in blocks:
+                    block.successors.append(fall_through_offset)
+                    blocks[fall_through_offset].predecessors.append(offset)
+
+        elif isinstance(last_instr, jvm.Return):
+            # Return - no successors
+            pass
+
+        else:
+            # Normal instruction - fall through to next block
+            if last_idx + 1 < len(opcodes):
+                fall_through_offset = opcodes[last_idx + 1].offset
+                if fall_through_offset in blocks:
+                    block.successors.append(fall_through_offset)
+                    blocks[fall_through_offset].predecessors.append(offset)
+
+    log.debug(f"Built CFG with {len(blocks)} basic blocks")
+    for offset, block in sorted(blocks.items()):
+        log.debug(f"  {block}")
+
+    return blocks
+
 
 # ============================================================================
 # Method Signature Matching
@@ -337,13 +559,12 @@ class MethodMatcher:
         "java.net.URLConnection.getInputStream",
     }
 
-    # SQL execution sinks
+    # SQL execution sinks (fully qualified JDBC methods only)
     SINKS = {
         "java.sql.Statement.execute",
         "java.sql.Statement.executeQuery",
         "java.sql.Statement.executeUpdate",
         "java.sql.Connection.prepareStatement",
-        "executeQuery",  # Simple name for test cases
     }
 
     # Methods that preserve taint (string operations)
@@ -361,37 +582,36 @@ class MethodMatcher:
 
     @classmethod
     def is_source(cls, method: jvm.AbsMethodID) -> bool:
-        """Check if method is an untrusted source"""
+        """Check if method is an untrusted source (fully qualified signatures only)"""
         method_str = str(method)
-        method_name = method.extension.name
-        # Check full method signatures
-        if any(source in method_str for source in cls.SOURCES):
-            return True
-        # Also check simple method names (for test cases)
-        if method_name == "getParameter":
-            return True
-        return False
+        # Normalize slashes to dots for comparison (bytecode uses java/lang/String, we use java.lang.String)
+        method_str_normalized = method_str.replace("/", ".")
+        return any(source in method_str_normalized for source in cls.SOURCES)
 
     @classmethod
     def is_sink(cls, method: jvm.AbsMethodID) -> bool:
         """Check if method is a SQL sink"""
         method_str = str(method)
-        method_name = method.extension.name
-        return (any(sink in method_str for sink in cls.SINKS) or
-                method_name in cls.SINKS)
+        # Normalize slashes to dots for comparison (bytecode uses java/sql/Statement, we use java.sql.Statement)
+        method_str_normalized = method_str.replace("/", ".")
+        return any(sink in method_str_normalized for sink in cls.SINKS)
 
     @classmethod
     def is_taint_preserving(cls, method: jvm.AbsMethodID) -> bool:
         """Check if method preserves taint"""
         method_str = str(method)
-        return any(op in method_str for op in cls.TAINT_PRESERVING)
+        # Normalize slashes to dots for comparison
+        method_str_normalized = method_str.replace("/", ".")
+        return any(op in method_str_normalized for op in cls.TAINT_PRESERVING)
 
     @classmethod
     def is_string_builder_tostring(cls, method: jvm.AbsMethodID) -> bool:
         """Check if method is StringBuilder.toString()"""
         method_str = str(method)
-        return ("StringBuilder.toString" in method_str or
-                "StringBuffer.toString" in method_str)
+        # Normalize slashes to dots for comparison
+        method_str_normalized = method_str.replace("/", ".")
+        return ("StringBuilder.toString" in method_str_normalized or
+                "StringBuffer.toString" in method_str_normalized)
 
 
 # ============================================================================
@@ -602,8 +822,8 @@ def transfer_invoke_static(opcode: jvm.InvokeStatic, state: AbstractState) -> Ab
     args = [state.pop() for _ in range(param_count)]
     args.reverse()
 
-    # Check if it's a sink (executeQuery, execute, etc.)
-    if MethodMatcher.is_sink(method) or method_name in ["executeQuery", "execute"]:
+    # Check if it's a sink (fully qualified JDBC methods only)
+    if MethodMatcher.is_sink(method):
         # Check if ANY argument is tainted
         if any(arg.is_tainted for arg in args):
             log.warning(f"    → SQL SINK called with TAINTED data!")
@@ -613,16 +833,16 @@ def transfer_invoke_static(opcode: jvm.InvokeStatic, state: AbstractState) -> Ab
             log.debug(f"    → SQL sink with safe data")
         state.push(TaintValue.trusted("void"))
 
-    # Check if it's a source (getParameter, etc.)
-    elif MethodMatcher.is_source(method) or method_name == "getParameter":
-        source_type = "http_request" if "getParameter" in method_name else "user_input"
+    # Check if it's a source (fully qualified signatures only)
+    elif MethodMatcher.is_source(method):
+        source_type = detector.get_source_type(method_str)
         result = TaintValue.untrusted("user_input", source=source_type)
         log.debug(f"    → SOURCE method returns UNTRUSTED ({source_type})")
         state.push(result)
 
-    # Unknown static method - conservative
+    # Unknown static method - conservative: preserve taint
     else:
-        log.debug(f"    → Unknown static method")
+        log.debug(f"    → Unknown static method, preserving taint conservatively")
         if any(arg.is_tainted for arg in args):
             state.push(TaintValue.untrusted("unknown"))
         else:
@@ -651,6 +871,68 @@ def transfer_invoke_special(opcode: jvm.InvokeSpecial, state: AbstractState) -> 
 
     # For constructors, just push the object reference back
     state.push(obj_ref)
+    state.pc += 1
+    return state
+
+
+def transfer_invoke_interface(opcode: jvm.InvokeInterface, state: AbstractState) -> AbstractState:
+    """
+    Handle invokeinterface instruction.
+
+    Used when calling methods on interfaces (e.g., java.sql.Statement).
+    Similar to invokevirtual but for interface types.
+    """
+    method = opcode.method
+    method_str = str(method)
+    method_name = method.extension.name
+    param_count = len(method.extension.params)
+
+    log.debug(f"  INVOKE_INTERFACE {method_name}")
+
+    # Pop arguments (in reverse order)
+    args = [state.pop() for _ in range(param_count)]
+    args.reverse()
+
+    # Pop object reference (for instance methods)
+    obj_ref = state.pop()
+
+    # Check if it's a sink (e.g., Statement.executeQuery)
+    if MethodMatcher.is_sink(method):
+        # Check if ANY argument is tainted
+        if any(arg.is_tainted for arg in args):
+            log.warning(f"    → SQL SINK called with TAINTED data!")
+            log.warning(f"       VULNERABILITY DETECTED: {method_name}")
+            state.vulnerability_detected = True
+        else:
+            log.debug(f"    → SQL sink with safe data")
+        state.push(TaintValue.trusted("result"))
+
+    # Source methods
+    elif MethodMatcher.is_source(method):
+        source_type = detector.get_source_type(method_str)
+        result = TaintValue.untrusted("user_input", source=source_type)
+        log.debug(f"    → SOURCE method returns UNTRUSTED ({source_type})")
+        state.push(result)
+
+    # Taint-preserving operations
+    elif MethodMatcher.is_taint_preserving(method):
+        all_values = [obj_ref] + args
+        if any(v.is_tainted for v in all_values):
+            combined = TaintTransfer.concat(*[v.tainted_value for v in all_values])
+            result = TaintValue.from_tainted(combined)
+            state.push(result)
+        else:
+            state.push(TaintValue.trusted("result"))
+
+    # Unknown method - conservative: preserve taint
+    else:
+        log.debug(f"    → Unknown interface method, preserving taint conservatively")
+        all_values = [obj_ref] + args
+        if any(v.is_tainted for v in all_values):
+            state.push(TaintValue.untrusted("unknown"))
+        else:
+            state.push(TaintValue.trusted("unknown"))
+
     state.pc += 1
     return state
 
@@ -695,6 +977,69 @@ def transfer_pop(opcode, state: AbstractState) -> AbstractState:
     return state
 
 
+def transfer_array_load(opcode: jvm.ArrayLoad, state: AbstractState) -> AbstractState:
+    """
+    Handle array load instruction (aaload, iaload, etc.).
+
+    Sound array abstraction: if the array is tainted, loaded element is tainted.
+    This is a conservative over-approximation (treats all elements as having same taint).
+    """
+    # Pop index and array reference
+    index = state.pop()
+    array_ref = state.pop()
+
+    log.debug(f"  ARRAY_LOAD from {array_ref}[{index}]")
+
+    # If array is tainted, loaded element is tainted
+    if array_ref.is_tainted:
+        result = TaintValue.untrusted("array_element", source="array_load")
+        log.debug(f"    → Loaded TAINTED element from tainted array")
+    else:
+        result = TaintValue.trusted("array_element", source="array_load")
+        log.debug(f"    → Loaded TRUSTED element from trusted array")
+
+    state.push(result)
+    state.pc += 1
+    return state
+
+
+def transfer_array_store(opcode: jvm.ArrayStore, state: AbstractState) -> AbstractState:
+    """
+    Handle array store instruction (aastore, iastore, etc.).
+
+    Sound array abstraction: if stored value is tainted, array becomes tainted.
+    Note: This is a simplification - proper analysis would track array elements separately.
+    """
+    # Pop value, index, and array reference
+    value = state.pop()
+    index = state.pop()
+    array_ref = state.pop()
+
+    log.debug(f"  ARRAY_STORE {value} into {array_ref}[{index}]")
+
+    # If value is tainted, we should mark the array as tainted
+    # For now, we don't track arrays in heap, so this is a no-op
+    # The array's taint status is preserved in its reference
+
+    state.pc += 1
+    return state
+
+
+def transfer_array_length(opcode: jvm.ArrayLength, state: AbstractState) -> AbstractState:
+    """
+    Handle arraylength instruction.
+
+    Array length is always an integer, never tainted (it's metadata, not data).
+    """
+    array_ref = state.pop()
+    log.debug(f"  ARRAY_LENGTH of {array_ref}")
+
+    # Array length is never tainted (it's an integer derived from array structure)
+    state.push(TaintValue.trusted(0, source="array_length"))
+    state.pc += 1
+    return state
+
+
 def transfer_return(opcode: jvm.Return, state: AbstractState) -> Optional[AbstractState]:
     """
     Handle return instruction.
@@ -709,9 +1054,92 @@ def transfer_return(opcode: jvm.Return, state: AbstractState) -> Optional[Abstra
 # Main Analysis
 # ============================================================================
 
+def transfer_block(block: BasicBlock, state: AbstractState) -> AbstractState:
+    """
+    Apply transfer functions for all instructions in a basic block.
+
+    Args:
+        block: The basic block to analyze
+        state: The abstract state at block entry
+
+    Returns:
+        The abstract state at block exit
+    """
+    current_state = state.copy()
+
+    for opcode in block.instructions:
+        log.debug(f"  [{opcode.offset:3d}] {opcode}")
+
+        try:
+            match opcode:
+                case jvm.Push():
+                    current_state = transfer_push(opcode, current_state)
+                case jvm.Load():
+                    current_state = transfer_load(opcode, current_state)
+                case jvm.Store():
+                    current_state = transfer_store(opcode, current_state)
+                case jvm.New():
+                    current_state = transfer_new(opcode, current_state)
+                case jvm.Dup():
+                    current_state = transfer_dup(opcode, current_state)
+                case jvm.Pop():
+                    current_state = transfer_pop(opcode, current_state)
+                case jvm.ArrayLoad():
+                    current_state = transfer_array_load(opcode, current_state)
+                case jvm.ArrayStore():
+                    current_state = transfer_array_store(opcode, current_state)
+                case jvm.ArrayLength():
+                    current_state = transfer_array_length(opcode, current_state)
+                case jvm.InvokeVirtual():
+                    current_state = transfer_invoke_virtual(opcode, current_state)
+                case jvm.InvokeStatic():
+                    current_state = transfer_invoke_static(opcode, current_state)
+                case jvm.InvokeSpecial():
+                    current_state = transfer_invoke_special(opcode, current_state)
+                case jvm.InvokeDynamic():
+                    current_state = transfer_invoke_dynamic(opcode, current_state)
+                case jvm.InvokeInterface():
+                    current_state = transfer_invoke_interface(opcode, current_state)
+                case jvm.Return():
+                    # Return doesn't change taint state, just signals end
+                    pass
+                case jvm.Goto():
+                    # Goto doesn't change state, CFG handles control flow
+                    pass
+                case jvm.If() | jvm.Ifz():
+                    # Conditional branches: pop comparison values, CFG handles flow
+                    # For If: pops two values
+                    # For Ifz: pops one value
+                    if isinstance(opcode, jvm.If):
+                        if len(current_state.stack) >= 2:
+                            current_state.pop()
+                            current_state.pop()
+                    else:  # Ifz
+                        if len(current_state.stack) >= 1:
+                            current_state.pop()
+                case _:
+                    # Unknown opcode - skip conservatively
+                    opcode_str = str(opcode)
+                    if 'pop' in opcode_str.lower():
+                        current_state = transfer_pop(opcode, current_state)
+                    else:
+                        log.debug(f"    → Unhandled opcode type: {type(opcode).__name__}")
+
+        except Exception as e:
+            log.error(f"Error processing opcode {opcode}: {e}")
+
+    return current_state
+
+
 def analyze_method(methodid: jvm.AbsMethodID) -> bool:
     """
-    Analyze method using bytecode taint analysis.
+    Analyze method using CFG-based worklist algorithm.
+
+    This implements a proper forward data-flow analysis:
+    1. Build CFG from bytecode
+    2. Initialize entry block with initial state
+    3. Use worklist to propagate taint until fixed point
+    4. Report vulnerability if tainted data reaches sink
 
     Returns True if SQL injection vulnerability detected, False otherwise.
     """
@@ -723,22 +1151,98 @@ def analyze_method(methodid: jvm.AbsMethodID) -> bool:
     suite = Suite()
     opcodes = list(suite.method_opcodes(methodid))
 
+    if not opcodes:
+        return False
+
     log.debug(f"Method has {len(opcodes)} opcodes\n")
 
-    # Initialize state
+    # Build CFG
+    cfg = build_cfg(opcodes)
+
+    if not cfg:
+        # Fallback to sequential analysis if CFG building fails
+        log.warning("CFG building failed, falling back to sequential analysis")
+        return analyze_method_sequential(methodid, opcodes)
+
+    # Find entry block (offset 0 or first block)
+    entry_offset = min(cfg.keys())
+
+    # Initialize abstract states for each block
+    # IN[b] = state at entry to block b
+    # OUT[b] = state at exit from block b
+    IN: Dict[int, Optional[AbstractState]] = {offset: None for offset in cfg}
+    OUT: Dict[int, Optional[AbstractState]] = {offset: None for offset in cfg}
+
+    # Initialize entry block with initial state (all params UNTRUSTED)
+    initial_state = AbstractState.initial(methodid)
+    IN[entry_offset] = initial_state
+
+    # Worklist algorithm
+    worklist = [entry_offset]
+    iterations = 0
+    max_iterations = 1000
+    vulnerability_detected = False
+
+    log.debug(f"Starting worklist analysis with {len(cfg)} blocks")
+
+    while worklist and iterations < max_iterations:
+        iterations += 1
+        block_offset = worklist.pop(0)
+        block = cfg[block_offset]
+
+        log.debug(f"\nProcessing block {block_offset} (iteration {iterations})")
+
+        # Compute IN[block] = join of all predecessor OUT states
+        if block.predecessors:
+            pred_states = [OUT[p] for p in block.predecessors if OUT[p] is not None]
+            if pred_states:
+                if len(pred_states) == 1:
+                    IN[block_offset] = pred_states[0].copy()
+                else:
+                    # Join all predecessor states
+                    joined = pred_states[0].copy()
+                    for ps in pred_states[1:]:
+                        joined = AbstractState.join(joined, ps)
+                    IN[block_offset] = joined
+
+        # If no input state yet, skip (will be processed when predecessor is done)
+        if IN[block_offset] is None:
+            continue
+
+        # Apply transfer functions for the block
+        old_out = OUT[block_offset]
+        new_out = transfer_block(block, IN[block_offset])
+        OUT[block_offset] = new_out
+
+        # Check if vulnerability detected in this block
+        if new_out.vulnerability_detected:
+            vulnerability_detected = True
+            log.debug(f"  Vulnerability detected in block {block_offset}!")
+
+        # If OUT changed, add successors to worklist
+        if old_out is None or old_out != new_out:
+            for succ in block.successors:
+                if succ not in worklist:
+                    worklist.append(succ)
+                    log.debug(f"  Added successor {succ} to worklist")
+
+    log.debug(f"\nAnalysis completed in {iterations} iterations")
+    log.debug(f"Vulnerability detected: {vulnerability_detected}")
+
+    return vulnerability_detected
+
+
+def analyze_method_sequential(methodid: jvm.AbsMethodID, opcodes: List[jvm.Opcode]) -> bool:
+    """
+    Fallback sequential analysis (original implementation).
+
+    Used when CFG building fails or for simple straight-line code.
+    """
     state = AbstractState.initial(methodid)
 
-    # Interpret bytecode
-    max_iterations = 1000
-    for iteration in range(max_iterations):
-        if state.pc >= len(opcodes):
-            log.debug("Reached end of bytecode")
-            break
+    for opcode in opcodes:
+        log.debug(f"[{opcode.offset:3d}] {opcode}")
 
-        opcode = opcodes[state.pc]
-        log.debug(f"[{state.pc:3d}] {opcode}")
-
-        # Transfer function based on opcode type
         try:
             match opcode:
                 case jvm.Push():
@@ -753,6 +1257,12 @@ def analyze_method(methodid: jvm.AbsMethodID) -> bool:
                     state = transfer_dup(opcode, state)
                 case jvm.Pop():
                     state = transfer_pop(opcode, state)
+                case jvm.ArrayLoad():
+                    state = transfer_array_load(opcode, state)
+                case jvm.ArrayStore():
+                    state = transfer_array_store(opcode, state)
+                case jvm.ArrayLength():
+                    state = transfer_array_length(opcode, state)
                 case jvm.InvokeVirtual():
                     state = transfer_invoke_virtual(opcode, state)
                 case jvm.InvokeStatic():
@@ -761,30 +1271,16 @@ def analyze_method(methodid: jvm.AbsMethodID) -> bool:
                     state = transfer_invoke_special(opcode, state)
                 case jvm.InvokeDynamic():
                     state = transfer_invoke_dynamic(opcode, state)
+                case jvm.InvokeInterface():
+                    state = transfer_invoke_interface(opcode, state)
                 case jvm.Return():
-                    result = transfer_return(opcode, state)
-                    if result is None:
-                        break
-                    state = result
+                    break
                 case _:
-                    # Unhandled opcode - try to handle common ones manually
-                    opcode_str = str(opcode)
-                    if 'pop' in opcode_str.lower():
-                        # Pop opcode: discard top of stack
-                        state = transfer_pop(opcode, state)
-                    else:
-                        # Unknown opcode - skip it (conservative)
-                        log.debug(f"  → Unhandled opcode type, skipping")
-                        state.pc += 1
-
-            if state is None:
-                break
+                    pass
 
         except Exception as e:
             log.error(f"Error processing opcode {opcode}: {e}")
-            break
 
-    # Check if vulnerability was detected
     return getattr(state, 'vulnerability_detected', False)
 
 
@@ -794,7 +1290,7 @@ def main():
     if len(sys.argv) == 2 and sys.argv[1] == "info":
         print("Bytecode Taint Analyzer")
         print("1.0")
-        print("Student Group Name")
+        print("DTU Compute - Group 4")
         print("bytecode,taint,sqli")
         print("no")
         sys.exit(0)

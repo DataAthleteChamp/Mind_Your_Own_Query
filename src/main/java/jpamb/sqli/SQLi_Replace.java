@@ -3,20 +3,23 @@
  */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_Replace {
-    public static void vulnerable(String string) {
+    public static void vulnerable(String string) throws SQLException {
         String string2 = string.replace("'", "''");
         String string3 = "SELECT * FROM users WHERE name = '" + string2 + "'";
-        SQLi_Replace.executeQuery(string3);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(string3);
     }
 
-    public static void safe() {
+    public static void safe() throws SQLException {
         String string = "SELECT * FROM table_name WHERE x = y";
         String string2 = string.replace("table_name", "users");
-        SQLi_Replace.executeQuery(string2);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
+        stmt.executeQuery(string2);
     }
 }

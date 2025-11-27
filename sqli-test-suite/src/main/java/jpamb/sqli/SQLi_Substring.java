@@ -1,22 +1,23 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_Substring {
-    // VULNERABLE
-    public static void vulnerable(String input) {
+    // VULNERABLE - Tainted input flows through substring() to sink
+    public static void vulnerable(String input) throws SQLException {
         String trimmed = input.substring(0, Math.min(10, input.length()));
         String query = "SELECT * FROM users WHERE name = '" + trimmed + "'";
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);
     }
 
-    // SAFE
-    public static void safe() {
+    // SAFE - Substring of a literal string
+    public static void safe() throws SQLException {
         String safe = "safe_value_here";
         String trimmed = safe.substring(0, 4);
         String query = "SELECT * FROM users WHERE name = '" + trimmed + "'";
-        executeQuery(query);
-    }
-
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);
     }
 }

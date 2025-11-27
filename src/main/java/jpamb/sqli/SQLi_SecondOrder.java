@@ -3,23 +3,30 @@
  */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_SecondOrder {
-    public static void vulnerable(String string) {
+    public static void vulnerable(String string) throws SQLException {
         String string2 = "INSERT INTO users (username) VALUES ('" + string + "')";
-        SQLi_SecondOrder.executeQuery(string2);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(string2);
         String string3 = "SELECT * FROM logs WHERE user = '" + string + "'";
-        SQLi_SecondOrder.executeQuery(string3);
+        // use existing stmt
+
+        stmt.executeQuery(string3);
     }
 
-    public static void safe() {
+    public static void safe() throws SQLException {
         String string = "admin";
         String string2 = "INSERT INTO users (username) VALUES ('" + string + "')";
-        SQLi_SecondOrder.executeQuery(string2);
-        String string3 = "SELECT * FROM logs WHERE user = '" + string + "'";
-        SQLi_SecondOrder.executeQuery(string3);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
+        stmt.executeQuery(string2);
+        String string3 = "SELECT * FROM logs WHERE user = '" + string + "'";
+        // use existing stmt
+
+        stmt.executeQuery(string3);
     }
 }

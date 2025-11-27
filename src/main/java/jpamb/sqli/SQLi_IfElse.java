@@ -3,18 +3,21 @@
  */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_IfElse {
-    public static void vulnerable(String string, boolean bl) {
+    public static void vulnerable(String string, boolean bl) throws SQLException {
         String string2 = bl ? "SELECT * FROM users WHERE id = " + string : "SELECT * FROM admins WHERE id = " + string;
-        SQLi_IfElse.executeQuery(string2);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(string2);
     }
 
-    public static void safe(boolean bl) {
+    public static void safe(boolean bl) throws SQLException {
         String string = bl ? "SELECT * FROM users WHERE id = 42" : "SELECT * FROM users WHERE id = 43";
-        SQLi_IfElse.executeQuery(string);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
+        stmt.executeQuery(string);
     }
 }

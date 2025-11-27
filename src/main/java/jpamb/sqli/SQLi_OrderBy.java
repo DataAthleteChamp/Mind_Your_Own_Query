@@ -3,19 +3,22 @@
  */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_OrderBy {
-    public static void vulnerable(String string) {
+    public static void vulnerable(String string) throws SQLException {
         String string2 = "SELECT * FROM products ORDER BY " + string;
-        SQLi_OrderBy.executeQuery(string2);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(string2);
     }
 
-    public static void safe(String string) {
+    public static void safe(String string) throws SQLException {
         String string2 = string.equals("price") ? "price" : "name";
         String string3 = "SELECT * FROM products ORDER BY " + string2;
-        SQLi_OrderBy.executeQuery(string3);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
+        stmt.executeQuery(string3);
     }
 }

@@ -1,10 +1,15 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_StringBuilderHelper {
     // VULNERABLE
-    public static void vulnerable(String input) {
+    public static void vulnerable(String input) throws SQLException {
         String query = buildQuery(input);
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     private static String buildQuery(String filter) {
@@ -14,18 +19,16 @@ public class SQLi_StringBuilderHelper {
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String query = buildSafeQuery();
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     private static String buildSafeQuery() {
         StringBuilder sb = new StringBuilder("SELECT * FROM users WHERE status = ");
         sb.append("'active'");
         return sb.toString();
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
     }
 }

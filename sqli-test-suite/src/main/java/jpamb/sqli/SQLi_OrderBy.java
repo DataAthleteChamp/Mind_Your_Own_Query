@@ -1,20 +1,21 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_OrderBy {
-    // VULNERABLE
-    public static void vulnerable(String sortColumn) {
+    // VULNERABLE - Tainted sortColumn flows directly to ORDER BY clause
+    public static void vulnerable(String sortColumn) throws SQLException {
         String query = "SELECT * FROM products ORDER BY " + sortColumn;
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);
     }
-    
-    // SAFE
-    public static void safe(String sortColumn) {
+
+    // SAFE - Whitelist validation, only "price" or "name" allowed
+    public static void safe(String sortColumn) throws SQLException {
         String column = sortColumn.equals("price") ? "price" : "name";
         String query = "SELECT * FROM products ORDER BY " + column;
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);
     }
 }

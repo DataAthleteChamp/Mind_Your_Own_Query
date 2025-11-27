@@ -1,23 +1,26 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_LoginBypass {
     // VULNERABLE
-    public static void vulnerable(String username, String password) {
+    public static void vulnerable(String username, String password) throws SQLException {
         String query = "SELECT * FROM users WHERE username = '" + username +
                        "' AND password = '" + password + "'";
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String username = "admin";
         String password = "secret123";
         String query = "SELECT * FROM users WHERE username = '" + username +
                        "' AND password = '" + password + "'";
-        executeQuery(query);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        stmt.executeQuery(query);
     }
 }

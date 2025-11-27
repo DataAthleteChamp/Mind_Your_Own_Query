@@ -1,8 +1,11 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_StringBuilderNestedLoop {
     // VULNERABLE
-    public static void vulnerable(String[][] conditions) {
+    public static void vulnerable(String[][] conditions) throws SQLException {
         StringBuilder sb = new StringBuilder("SELECT * FROM users WHERE ");
         for (int i = 0; i < conditions.length; i++) {
             if (i > 0) sb.append(" OR ");
@@ -14,11 +17,13 @@ public class SQLi_StringBuilderNestedLoop {
             sb.append(")");
         }
         String query = sb.toString();
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         StringBuilder sb = new StringBuilder("SELECT * FROM users WHERE ");
         String[][] conditions = {{"admin", "active"}, {"user", "pending"}};
         for (int i = 0; i < conditions.length; i++) {
@@ -31,10 +36,8 @@ public class SQLi_StringBuilderNestedLoop {
             sb.append(")");
         }
         String query = sb.toString();
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

@@ -1,23 +1,26 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_MultipleSources {
     // VULNERABLE
-    public static void vulnerable(String httpInput, String fileInput) {
+    public static void vulnerable(String httpInput, String fileInput) throws SQLException {
         String query = "SELECT * FROM users WHERE name = '" + httpInput + 
                        "' OR email = '" + fileInput + "'";
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String httpInput = "admin";
         String fileInput = "admin@example.com";
         String query = "SELECT * FROM users WHERE name = '" + httpInput + 
                        "' OR email = '" + fileInput + "'";
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

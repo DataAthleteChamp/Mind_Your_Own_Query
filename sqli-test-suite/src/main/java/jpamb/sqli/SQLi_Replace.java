@@ -1,21 +1,22 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_Replace {
-    // VULNERABLE
-    public static void vulnerable(String input) {
+    // VULNERABLE - Quote escaping is insufficient (taint preserved through replace)
+    public static void vulnerable(String input) throws SQLException {
         String escaped = input.replace("'", "''");
         String query = "SELECT * FROM users WHERE name = '" + escaped + "'";
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);
     }
-    
-    // SAFE
-    public static void safe() {
+
+    // SAFE - Replace on literal strings only
+    public static void safe() throws SQLException {
         String base = "SELECT * FROM table_name WHERE x = y";
         String query = base.replace("table_name", "users");
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);
     }
 }

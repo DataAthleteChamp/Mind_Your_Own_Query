@@ -3,24 +3,27 @@
  */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_StringBuilder {
-    public static void vulnerable(String string) {
+    public static void vulnerable(String string) throws SQLException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT * FROM users WHERE id = ");
         stringBuilder.append(string);
         String string2 = stringBuilder.toString();
-        SQLi_StringBuilder.executeQuery(string2);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(string2);
     }
 
-    public static void safe() {
+    public static void safe() throws SQLException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT * FROM users WHERE id = ");
         stringBuilder.append("42");
         String string = stringBuilder.toString();
-        SQLi_StringBuilder.executeQuery(string);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
+        stmt.executeQuery(string);
     }
 }

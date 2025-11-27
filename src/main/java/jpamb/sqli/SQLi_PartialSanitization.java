@@ -3,20 +3,23 @@
  */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_PartialSanitization {
-    public static void vulnerable(String string) {
+    public static void vulnerable(String string) throws SQLException {
         String string2 = string.replace("'", "\\'");
         String string3 = "SELECT * FROM users WHERE name = '" + string2 + "'";
-        SQLi_PartialSanitization.executeQuery(string3);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(string3);
     }
 
-    public static void safe(String string) {
+    public static void safe(String string) throws SQLException {
         String string2 = string.replaceAll("[^a-zA-Z0-9]", "");
         String string3 = "SELECT * FROM users WHERE name = '" + string2 + "'";
-        SQLi_PartialSanitization.executeQuery(string3);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
+        stmt.executeQuery(string3);
     }
 }

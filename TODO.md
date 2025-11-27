@@ -1,21 +1,21 @@
 # TODO - Mind Your Own Query
 
-**Status:** ✅ Week 1 Complete | 📝 Week 2: Paper Writing
+**Status:** ✅ ACADEMICALLY PRINCIPLED IMPLEMENTATION | 📝 Paper Writing
 **Deadline:** Dec 1 (Paper) | Dec 10 (Presentation)
-**Updated:** Nov 17, 2025
+**Updated:** Nov 27, 2025
 
 ---
 
 ## 🎯 Current Status
 
-**✅ IMPLEMENTATION COMPLETE** - 88% accuracy achieved!
+**✅ IMPLEMENTATION COMPLETE** - Using real JDBC signatures (no benchmark-specific code)
 
 | Metric | Result | Target | Status |
 |--------|--------|--------|--------|
-| Overall Accuracy | 88.0% | - | ✅ Excellent |
-| Detection Rate | 84.0% | ≥75% | ✅ **+12%** |
-| Precision | 91.3% | >70% | ✅ **+30%** |
-| False Positives | 8.7% | <30% | ✅ **3.5× better** |
+| Overall Accuracy | 81.4% | - | ✅ Good |
+| Detection Rate | 69.1% | ≥75% | ⚠️ 92% of target |
+| Precision | 88.4% | >70% | ✅ **+26%** |
+| False Positives | 7.9% | <30% | ✅ **3.8× better** |
 
 **See:** [FINAL_ACHIEVEMENTS.md](FINAL_ACHIEVEMENTS.md) for full results
 
@@ -35,70 +35,72 @@ uv run jpamb test --with-python solutions/bytecode_taint_analyzer.py
 uv run jpamb test --filter "Simple" --with-python solutions/my_analyzer.py
 ```
 
-### Run Bytecode Analyzer
+### Run SQL Injection Analyzer
 ```bash
-# The working bytecode analyzer needs updating to JPAMB format
-# Currently use: solutions/my_analyzer.py (template) or solutions/syntaxer.py (working)
+# Test single method
+uv run python solutions/bytecode_taint_analyzer.py "jpamb.sqli.SQLi_DirectConcat.vulnerable:(Ljava/lang/String;)V"
+# Expected output: "sql injection" (for vulnerable) or "ok" (for safe)
 
-# Expected output format (6 outcomes required):
-# ok;90%
-# divide by zero;10%
-# assertion error;5%
-# out of bounds;0%
-# null pointer;0%
-# *;0%
+# Test all SQLi cases
+python3 -c "
+import subprocess, json
+from pathlib import Path
+for f in Path('target/decompiled/jpamb/sqli').glob('SQLi_*.json'):
+    # Run evaluation...
+"
 ```
 
 ### Expected Values
-- Accuracy: ~88% on SQL injection detection
+- Accuracy: 81.4% on SQL injection detection (using real JDBC signatures)
 - Performance: <1s per test case
-- Test suite: 50 methods across 25 test cases
+- Test suite: 118 methods across 55+ test classes
 
 ---
 
-## ✅ Done (Week 1)
+## ✅ Done
 
-- [x] Taint module implementation (220 tests passing)
-- [x] SQL injection test suite (25 test cases)
-- [x] Bytecode taint analyzer (644 lines, 88% accuracy)
-- [x] TAJ-style string carrier optimization (+4% improvement)
-- [x] Full evaluation on 50 test methods
-- [x] Documentation aligned
+- [x] Taint module implementation
+- [x] SQL injection test suite (55+ test classes, 118 methods)
+- [x] Bytecode taint analyzer (1329 lines, 81.4% accuracy)
+- [x] CFG-based worklist algorithm with 17 opcode handlers
+- [x] InvokeInterface support for real JDBC signatures
+- [x] Removed benchmark-specific code (academically principled)
+- [x] Full evaluation on 118 test methods
+- [x] Documentation updated with accurate metrics
 
 ---
 
-## 📝 Next Steps (Week 2: Nov 18-29)
+## 📝 Next Steps
 
 ### Priority 1: Paper Writing
-- [ ] **Nov 18-25**: Write first drafts
+- [ ] Write first drafts
   - [ ] Abstract & Introduction
   - [ ] Background & Related Work
   - [ ] Approach & Implementation
-  - [ ] Evaluation & Results
+  - [ ] Evaluation & Results (use 81.4% accuracy, 88.4% precision, 7.9% FP)
   - [ ] Discussion & Conclusion
 
-- [ ] **Nov 26-27**: Create figures & tables
+- [ ] Create figures & tables
   - [ ] System architecture diagram
   - [ ] Taint flow examples
   - [ ] Results comparison tables
   - [ ] Performance metrics
 
-- [ ] **Nov 28-29**: Integration & polish
+- [ ] Integration & polish
   - [ ] Merge all sections
   - [ ] Add citations
   - [ ] Grammar check
   - [ ] Final review
 
-### Priority 2: Fix Bytecode Analyzer (Optional)
-```bash
-# Current issue: solutions/bytecode_taint_analyzer.py doesn't work with JPAMB
-# Needs:
-# 1. Handle "info" command (5 lines output)
-# 2. Parse full JVM signatures: "jpamb.cases.Simple.assertBoolean:(Z)V"
-# 3. Output all 6 outcomes (not just "sql injection")
-```
+### Priority 2: Optional Improvements (for higher accuracy)
 
-See `solutions/my_analyzer.py` for correct format template.
+| Improvement | Effort | Impact |
+|-------------|--------|--------|
+| StringBuilder methods (delete/replace/reverse) | 2-3h | +3% |
+| String.format() support | 1-2h | +1% |
+| Lambda/inter-procedural analysis | 8-16h | +7% |
+
+See `RESEARCH_COMPARISON.md` for detailed implementation guidance.
 
 ---
 
@@ -135,4 +137,4 @@ See `solutions/my_analyzer.py` for correct format template.
 
 ---
 
-**🎉 Week 1 CRUSHED! Now let's write an excellent paper! 🚀**
+**🎉 Implementation complete with academically principled results! Now let's write the paper! 🚀**
