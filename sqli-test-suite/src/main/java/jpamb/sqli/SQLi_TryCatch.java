@@ -1,31 +1,38 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_TryCatch {
     // VULNERABLE
-    public static void vulnerable(String input) {
+    public static void vulnerable(String input) throws SQLException {
         String query;
         try {
             query = "SELECT * FROM users WHERE id = " + input;
-            executeQuery(query);
+            Statement stmt = DatabaseHelper.getStatement();
+
+            stmt.executeQuery(query);
         } catch (Exception e) {
             query = "SELECT * FROM default WHERE id = " + input;
-            executeQuery(query);
+            Statement stmt = DatabaseHelper.getStatement();
+
+            stmt.executeQuery(query);
         }
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String query;
         try {
             query = "SELECT * FROM users WHERE id = 42";
-            executeQuery(query);
+            Statement stmt = DatabaseHelper.getStatement();
+
+            stmt.executeQuery(query);
         } catch (Exception e) {
             query = "SELECT * FROM default WHERE id = 1";
-            executeQuery(query);
+            Statement stmt = DatabaseHelper.getStatement();
+
+            stmt.executeQuery(query);
         }
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
     }
 }

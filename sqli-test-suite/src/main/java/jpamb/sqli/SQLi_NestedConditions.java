@@ -1,8 +1,11 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_NestedConditions {
     // VULNERABLE
-    public static void vulnerable(String input, boolean a, boolean b) {
+    public static void vulnerable(String input, boolean a, boolean b) throws SQLException {
         String query = "SELECT * FROM users WHERE ";
         if (a) {
             if (b) {
@@ -13,11 +16,13 @@ public class SQLi_NestedConditions {
         } else {
             query += "email = '" + input + "'";
         }
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe(boolean a, boolean b) {
+    public static void safe(boolean a, boolean b) throws SQLException {
         String query = "SELECT * FROM users WHERE ";
         if (a) {
             if (b) {
@@ -28,10 +33,8 @@ public class SQLi_NestedConditions {
         } else {
             query += "email = 'test@example.com'";
         }
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

@@ -1,8 +1,11 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_ComplexNested {
     // VULNERABLE
-    public static void vulnerable(String input) {
+    public static void vulnerable(String input) throws SQLException {
         String trimmed = input.trim();
         String upper = trimmed.toUpperCase();
         String[] parts = upper.split(" ");
@@ -10,11 +13,13 @@ public class SQLi_ComplexNested {
         String escaped = first.replace("'", "''");
         
         String query = "SELECT * FROM users WHERE name = '" + escaped + "'";
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String input = "  admin user  ";
         String trimmed = input.trim();
         String upper = trimmed.toUpperCase();
@@ -22,10 +27,8 @@ public class SQLi_ComplexNested {
         String first = parts[0];
         
         String query = "SELECT * FROM users WHERE name = '" + first + "'";
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

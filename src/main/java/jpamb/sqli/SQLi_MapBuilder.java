@@ -1,11 +1,14 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 import java.util.Map;
 import java.util.HashMap;
 
 public class SQLi_MapBuilder {
     // VULNERABLE
-    public static void vulnerable(Map<String, String> filters) {
+    public static void vulnerable(Map<String, String> filters) throws SQLException {
         StringBuilder sb = new StringBuilder("SELECT * FROM users WHERE ");
         int count = 0;
         for (Map.Entry<String, String> entry : filters.entrySet()) {
@@ -14,11 +17,13 @@ public class SQLi_MapBuilder {
             count++;
         }
         String query = sb.toString();
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         Map<String, String> filters = new HashMap<>();
         filters.put("status", "active");
         filters.put("role", "admin");
@@ -31,10 +36,8 @@ public class SQLi_MapBuilder {
             count++;
         }
         String query = sb.toString();
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

@@ -18,7 +18,7 @@ uv run jpamb test --with-python solutions/my_analyzer.py  # Analyzer tests
 cd sqli-test-suite && python test_runner.py
 ```
 
-**Current Status:** ✅ 88% accuracy on SQL injection detection | See [FINAL_ACHIEVEMENTS.md](FINAL_ACHIEVEMENTS.md)
+**Current Status:** ✅ 81.4% accuracy on SQL injection detection (118 tests, real JDBC signatures) | See [FINAL_ACHIEVEMENTS.md](FINAL_ACHIEVEMENTS.md)
 
 ---
 

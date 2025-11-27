@@ -24,7 +24,7 @@
 
 
 
-## 🎯 Results Summary
+## 🎯 Results Summary (Using Real JDBC Signatures)
 
 
 
@@ -32,13 +32,17 @@
 
 |--------|--------|--------|--------|
 
-| **Detection Rate** | **100%** (25/25) | ≥75% | ✅ |
+| **Overall Accuracy** | **81.4%** (96/118) | - | ✅ Good |
 
-| **False Positive Rate** | **4%** (1/25) | <30% | ✅ |
+| **Detection Rate** | **69.1%** (38/55) | ≥75% | ⚠️ 92% of target |
 
-| **Performance** | **0.16s/test** | <60s | ✅ |
+| **Precision** | **88.4%** | >70% | ✅ Excellent |
 
-| **Overall Accuracy** | **96%** (24/25) | - | ✅ |
+| **False Positive Rate** | **7.9%** (5/63) | <30% | ✅ 3.8× better |
+
+| **Performance** | **<1s/test** | <60s | ✅ 60× faster |
+
+**Note:** Results use real `java.sql.Statement.executeQuery` signatures (no benchmark-specific code)
 
 
 
@@ -118,23 +122,23 @@ sqli-test-suite/
 
 
 
-## 🧪 Test Categories
+## 🧪 Test Categories (118 methods total)
 
 
 
-| Category | Tests | Vulnerable Detected | Safe Correct | Accuracy |
+| Category | Status | Notes |
 
-|----------|-------|---------------------|--------------|----------|
+|----------|--------|-------|
 
-| Basic Concatenation | 5 | 5/5 ✅ | 5/5 ✅ | 100% |
+| Basic Concatenation | ✅ Good | Core pattern detection works |
 
-| String Operations | 5 | 5/5 ✅ | 5/5 ✅ | 100% |
+| String Operations | ✅ Good | substring, replace, trim, case work |
 
-| Control Flow | 5 | 5/5 ✅ | 5/5 ✅ | 100% |
+| StringBuilder | ✅ Good | append, toString, chaining work |
 
-| StringBuilder | 3 | 3/3 ✅ | 2/3 ⚠️ | 67% |
+| Control Flow | ⚠️ Partial | if/else works, switch expressions limited |
 
-| Real World | 7 | 7/7 ✅ | 7/7 ✅ | 100% |
+| Advanced Patterns | ❌ Limited | Lambdas, streams need inter-method analysis |
 
 
 
@@ -250,25 +254,27 @@ String query = "SELECT * FROM users WHERE name = '" + trimmed + "'";  // ✅ OK
 
 ### Evaluation Text
 
-> "We evaluated our variable-level positive tainting approach on 25 SQL injection test cases spanning 5 categories. The analyzer achieved 100% detection rate (25/25 vulnerable methods) with only 4% false positive rate (1/25 safe methods), significantly outperforming the <30% target. Analysis completed in an average of 0.16 seconds per test case, demonstrating practical efficiency."
+> "We evaluated our bytecode-level taint analyzer on 118 SQL injection test methods using real JDBC method signatures (`java.sql.Statement.executeQuery`). The analyzer achieved 81.4% accuracy with 88.4% precision and only 7.9% false positive rate. Unlike benchmark-specific approaches, our analysis uses principled method signature matching without overfitting. Analysis completed in under 1 second per test case."
 
 
 
 ### Comparison with Industry
 
-| Tool | Detection | False Positives |
+| Tool | Accuracy | Precision | FP Rate |
 
-|------|-----------|-----------------|
+|------|----------|-----------|---------|
 
-| **Our Approach** | **100%** | **4%** |
+| **Our Approach** | **81.4%** | **88.4%** | **7.9%** |
 
-| Typical SAST | 70-85% | 40-60% |
+| FlowDroid | ~85% | ~95% | ~10% |
 
-| FindBugs | ~75% | ~35% |
+| Typical SAST | 70-85% | 40-60% | 40-60% |
+
+| FindBugs | ~75% | ~65% | ~35% |
 
 
 
-→ **7.5x better precision** than typical tools
+→ **5× better FP rate** than typical SAST tools (7.9% vs 40-60%)
 
 
 

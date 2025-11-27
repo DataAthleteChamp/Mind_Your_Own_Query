@@ -1,22 +1,25 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_CaseConversion {
     // VULNERABLE
-    public static void vulnerable(String input) {
+    public static void vulnerable(String input) throws SQLException {
         String upper = input.toUpperCase();
         String query = "SELECT * FROM users WHERE name = '" + upper + "'";
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String value = "admin";
         String upper = value.toUpperCase();
         String query = "SELECT * FROM users WHERE role = '" + upper + "'";
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }
