@@ -1,21 +1,24 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_HTTPSource {
     // VULNERABLE - Simulates HTTP request parameter
-    public static void vulnerable(String requestParam) {
+    public static void vulnerable(String requestParam) throws SQLException {
         String userId = requestParam;
         String query = "SELECT * FROM users WHERE id = " + userId;
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String userId = "42";
         String query = "SELECT * FROM users WHERE id = " + userId;
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

@@ -1,32 +1,32 @@
-/*
- * Decompiled with CFR 0.152.
- */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_TryCatch {
-    public static void vulnerable(String string) {
+    public static void vulnerable(String string) throws SQLException {
         try {
             String string2 = "SELECT * FROM users WHERE id = " + string;
-            SQLi_TryCatch.executeQuery(string2);
+            Statement stmt = DatabaseHelper.getStatement();
+            stmt.executeQuery(string2);
         }
         catch (Exception exception) {
-            String string3 = "SELECT * FROM default WHERE id = " + string;
-            SQLi_TryCatch.executeQuery(string3);
+            String string3 = "SELECT * FROM default_table WHERE id = " + string;
+            Statement stmt = DatabaseHelper.getStatement();
+            stmt.executeQuery(string3);
         }
     }
 
-    public static void safe() {
+    public static void safe() throws SQLException {
         try {
-            String string = "SELECT * FROM users WHERE id = 42";
-            SQLi_TryCatch.executeQuery(string);
+            String query = "SELECT * FROM users WHERE id = 42";
+            Statement stmt = DatabaseHelper.getStatement();
+            stmt.executeQuery(query);
         }
         catch (Exception exception) {
-            String string = "SELECT * FROM default WHERE id = 1";
-            SQLi_TryCatch.executeQuery(string);
+            String query = "SELECT * FROM default_table WHERE id = 1";
+            Statement stmt = DatabaseHelper.getStatement();
+            stmt.executeQuery(query);
         }
-    }
-
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
     }
 }

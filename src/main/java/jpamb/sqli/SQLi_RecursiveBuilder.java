@@ -1,10 +1,15 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_RecursiveBuilder {
     // VULNERABLE
-    public static void vulnerable(String input, int depth) {
+    public static void vulnerable(String input, int depth) throws SQLException {
         String query = buildRecursive(input, depth);
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     private static String buildRecursive(String input, int depth) {
@@ -15,9 +20,11 @@ public class SQLi_RecursiveBuilder {
     }
     
     // SAFE
-    public static void safe(int depth) {
+    public static void safe(int depth) throws SQLException {
         String query = buildSafeRecursive(depth);
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     private static String buildSafeRecursive(int depth) {
@@ -25,9 +32,5 @@ public class SQLi_RecursiveBuilder {
             return "SELECT * FROM users WHERE id = 42";
         }
         return buildSafeRecursive(depth - 1) + " AND level = " + depth;
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
     }
 }

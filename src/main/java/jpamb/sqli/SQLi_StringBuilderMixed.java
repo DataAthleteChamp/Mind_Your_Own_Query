@@ -3,8 +3,11 @@
  */
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_StringBuilderMixed {
-    public static void vulnerable(String string) {
+    public static void vulnerable(String string) throws SQLException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT * FROM ");
         stringBuilder.append("users");
@@ -12,20 +15,20 @@ public class SQLi_StringBuilderMixed {
         stringBuilder.append(string);
         stringBuilder.append("'");
         String string2 = stringBuilder.toString();
-        SQLi_StringBuilderMixed.executeQuery(string2);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(string2);
     }
 
-    public static void safe() {
+    public static void safe() throws SQLException {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT * FROM ");
         stringBuilder.append("users");
         stringBuilder.append(" WHERE id = ");
         stringBuilder.append("42");
         String string = stringBuilder.toString();
-        SQLi_StringBuilderMixed.executeQuery(string);
-    }
+        Statement stmt = DatabaseHelper.getStatement();
 
-    private static void executeQuery(String string) {
-        System.out.println("Executing: " + string);
+        stmt.executeQuery(string);
     }
 }

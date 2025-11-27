@@ -1,19 +1,20 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_DirectConcat {
-    // VULNERABLE
-    public static void vulnerable(String userId) {
+    // VULNERABLE - Tainted userId flows to Statement.executeQuery()
+    public static void vulnerable(String userId) throws SQLException {
         String query = "SELECT * FROM users WHERE id = " + userId;
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);  // SINK: java.sql.Statement.executeQuery
     }
 
-    // SAFE
-    public static void safe() {
+    // SAFE - No tainted data, only literals
+    public static void safe() throws SQLException {
         String query = "SELECT * FROM users WHERE id = 42";
-        executeQuery(query);
-    }
-
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+        stmt.executeQuery(query);  // SINK: java.sql.Statement.executeQuery
     }
 }

@@ -1,21 +1,24 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_EmptyString {
     // VULNERABLE
-    public static void vulnerable(String input) {
+    public static void vulnerable(String input) throws SQLException {
         String filter = input.isEmpty() ? "1=1" : "name = '" + input + "'";
         String query = "SELECT * FROM users WHERE " + filter;
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe(String input) {
+    public static void safe(String input) throws SQLException {
         String filter = input.isEmpty() ? "1=1" : "id = 42";
         String query = "SELECT * FROM users WHERE " + filter;
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

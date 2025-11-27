@@ -1,8 +1,11 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_StringBuilderChaining {
     // VULNERABLE
-    public static void vulnerable(String user, String pass) {
+    public static void vulnerable(String user, String pass) throws SQLException {
         String query = new StringBuilder()
             .append("SELECT * FROM users WHERE username = '")
             .append(user)
@@ -10,11 +13,13 @@ public class SQLi_StringBuilderChaining {
             .append(pass)
             .append("'")
             .toString();
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe() {
+    public static void safe() throws SQLException {
         String query = new StringBuilder()
             .append("SELECT * FROM users WHERE username = '")
             .append("admin")
@@ -22,10 +27,8 @@ public class SQLi_StringBuilderChaining {
             .append("hashed_password")
             .append("'")
             .toString();
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }

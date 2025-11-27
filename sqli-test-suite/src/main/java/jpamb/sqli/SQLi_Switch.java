@@ -1,8 +1,11 @@
 package jpamb.sqli;
 
+import java.sql.Statement;
+import java.sql.SQLException;
+
 public class SQLi_Switch {
     // VULNERABLE
-    public static void vulnerable(String input, int option) {
+    public static void vulnerable(String input, int option) throws SQLException {
         String query;
         switch (option) {
             case 1:
@@ -14,11 +17,13 @@ public class SQLi_Switch {
             default:
                 query = "SELECT * FROM guests WHERE id = " + input;
         }
-        executeQuery(query);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
     
     // SAFE
-    public static void safe(int option) {
+    public static void safe(int option) throws SQLException {
         String query;
         switch (option) {
             case 1:
@@ -30,10 +35,8 @@ public class SQLi_Switch {
             default:
                 query = "SELECT * FROM guests WHERE id = 1";
         }
-        executeQuery(query);
-    }
-    
-    private static void executeQuery(String q) {
-        System.out.println("Executing: " + q);
+        Statement stmt = DatabaseHelper.getStatement();
+
+        stmt.executeQuery(query);
     }
 }
