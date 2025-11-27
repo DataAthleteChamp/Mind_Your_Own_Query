@@ -1,0 +1,908 @@
+{
+    "description":  "100 advanced SQL injection test cases (hard difficulty)",
+    "id_range":  "156-255",
+    "version":  "2.0",
+    "test_cases":  [
+                       {
+                           "id":  156,
+                           "name":  "SQLi_AdvStringBuilder_insert_156",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_156.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_156.safe"
+                       },
+                       {
+                           "id":  157,
+                           "name":  "SQLi_AdvStringBuilder_delete_157",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_157.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_157.safe"
+                       },
+                       {
+                           "id":  158,
+                           "name":  "SQLi_AdvStringBuilder_replace_158",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_158.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_158.safe"
+                       },
+                       {
+                           "id":  159,
+                           "name":  "SQLi_AdvStringBuilder_reverse_159",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_159.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_159.safe"
+                       },
+                       {
+                           "id":  160,
+                           "name":  "SQLi_AdvStringBuilder_append_160",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_160.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_160.safe"
+                       },
+                       {
+                           "id":  161,
+                           "name":  "SQLi_AdvStringBuilder_insert_161",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_161.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_161.safe"
+                       },
+                       {
+                           "id":  162,
+                           "name":  "SQLi_AdvStringBuilder_delete_162",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_162.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_162.safe"
+                       },
+                       {
+                           "id":  163,
+                           "name":  "SQLi_AdvStringBuilder_replace_163",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_163.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_163.safe"
+                       },
+                       {
+                           "id":  164,
+                           "name":  "SQLi_AdvStringBuilder_reverse_164",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_164.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_164.safe"
+                       },
+                       {
+                           "id":  165,
+                           "name":  "SQLi_AdvStringBuilder_append_165",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_165.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_165.safe"
+                       },
+                       {
+                           "id":  166,
+                           "name":  "SQLi_AdvStringBuilder_insert_166",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_166.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_166.safe"
+                       },
+                       {
+                           "id":  167,
+                           "name":  "SQLi_AdvStringBuilder_delete_167",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_167.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_167.safe"
+                       },
+                       {
+                           "id":  168,
+                           "name":  "SQLi_AdvStringBuilder_replace_168",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_168.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_168.safe"
+                       },
+                       {
+                           "id":  169,
+                           "name":  "SQLi_AdvStringBuilder_reverse_169",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_169.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_169.safe"
+                       },
+                       {
+                           "id":  170,
+                           "name":  "SQLi_AdvStringBuilder_append_170",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_170.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_170.safe"
+                       },
+                       {
+                           "id":  171,
+                           "name":  "SQLi_AdvStringBuilder_insert_171",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_171.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_insert_171.safe"
+                       },
+                       {
+                           "id":  172,
+                           "name":  "SQLi_AdvStringBuilder_delete_172",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_172.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_delete_172.safe"
+                       },
+                       {
+                           "id":  173,
+                           "name":  "SQLi_AdvStringBuilder_replace_173",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_173.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_replace_173.safe"
+                       },
+                       {
+                           "id":  174,
+                           "name":  "SQLi_AdvStringBuilder_reverse_174",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_174.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_reverse_174.safe"
+                       },
+                       {
+                           "id":  175,
+                           "name":  "SQLi_AdvStringBuilder_append_175",
+                           "description":  "Advanced advanced_stringbuilder pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_175.vulnerable",
+                           "category":  "advanced_stringbuilder",
+                           "safe_method":  "jpamb.sqli.SQLi_AdvStringBuilder_append_175.safe"
+                       },
+                       {
+                           "id":  176,
+                           "name":  "SQLi_MethodChain_176",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_176.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_176.safe"
+                       },
+                       {
+                           "id":  177,
+                           "name":  "SQLi_MethodChain_177",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_177.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_177.safe"
+                       },
+                       {
+                           "id":  178,
+                           "name":  "SQLi_MethodChain_178",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_178.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_178.safe"
+                       },
+                       {
+                           "id":  179,
+                           "name":  "SQLi_MethodChain_179",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_179.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_179.safe"
+                       },
+                       {
+                           "id":  180,
+                           "name":  "SQLi_MethodChain_180",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_180.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_180.safe"
+                       },
+                       {
+                           "id":  181,
+                           "name":  "SQLi_MethodChain_181",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_181.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_181.safe"
+                       },
+                       {
+                           "id":  182,
+                           "name":  "SQLi_MethodChain_182",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_182.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_182.safe"
+                       },
+                       {
+                           "id":  183,
+                           "name":  "SQLi_MethodChain_183",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_183.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_183.safe"
+                       },
+                       {
+                           "id":  184,
+                           "name":  "SQLi_MethodChain_184",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_184.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_184.safe"
+                       },
+                       {
+                           "id":  185,
+                           "name":  "SQLi_MethodChain_185",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_185.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_185.safe"
+                       },
+                       {
+                           "id":  186,
+                           "name":  "SQLi_MethodChain_186",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_186.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_186.safe"
+                       },
+                       {
+                           "id":  187,
+                           "name":  "SQLi_MethodChain_187",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_187.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_187.safe"
+                       },
+                       {
+                           "id":  188,
+                           "name":  "SQLi_MethodChain_188",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_188.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_188.safe"
+                       },
+                       {
+                           "id":  189,
+                           "name":  "SQLi_MethodChain_189",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_189.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_189.safe"
+                       },
+                       {
+                           "id":  190,
+                           "name":  "SQLi_MethodChain_190",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_190.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_190.safe"
+                       },
+                       {
+                           "id":  191,
+                           "name":  "SQLi_MethodChain_191",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_191.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_191.safe"
+                       },
+                       {
+                           "id":  192,
+                           "name":  "SQLi_MethodChain_192",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_192.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_192.safe"
+                       },
+                       {
+                           "id":  193,
+                           "name":  "SQLi_MethodChain_193",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_193.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_193.safe"
+                       },
+                       {
+                           "id":  194,
+                           "name":  "SQLi_MethodChain_194",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_194.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_194.safe"
+                       },
+                       {
+                           "id":  195,
+                           "name":  "SQLi_MethodChain_195",
+                           "description":  "Advanced method_chaining pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MethodChain_195.vulnerable",
+                           "category":  "method_chaining",
+                           "safe_method":  "jpamb.sqli.SQLi_MethodChain_195.safe"
+                       },
+                       {
+                           "id":  196,
+                           "name":  "SQLi_NestedLoop_196",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_196.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_196.safe"
+                       },
+                       {
+                           "id":  197,
+                           "name":  "SQLi_NestedLoop_197",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_197.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_197.safe"
+                       },
+                       {
+                           "id":  198,
+                           "name":  "SQLi_NestedLoop_198",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_198.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_198.safe"
+                       },
+                       {
+                           "id":  199,
+                           "name":  "SQLi_NestedLoop_199",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_199.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_199.safe"
+                       },
+                       {
+                           "id":  200,
+                           "name":  "SQLi_NestedLoop_200",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_200.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_200.safe"
+                       },
+                       {
+                           "id":  201,
+                           "name":  "SQLi_NestedLoop_201",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_201.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_201.safe"
+                       },
+                       {
+                           "id":  202,
+                           "name":  "SQLi_NestedLoop_202",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_202.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_202.safe"
+                       },
+                       {
+                           "id":  203,
+                           "name":  "SQLi_NestedLoop_203",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_203.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_203.safe"
+                       },
+                       {
+                           "id":  204,
+                           "name":  "SQLi_NestedLoop_204",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_204.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_204.safe"
+                       },
+                       {
+                           "id":  205,
+                           "name":  "SQLi_NestedLoop_205",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_205.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_205.safe"
+                       },
+                       {
+                           "id":  206,
+                           "name":  "SQLi_NestedLoop_206",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_206.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_206.safe"
+                       },
+                       {
+                           "id":  207,
+                           "name":  "SQLi_NestedLoop_207",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_207.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_207.safe"
+                       },
+                       {
+                           "id":  208,
+                           "name":  "SQLi_NestedLoop_208",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_208.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_208.safe"
+                       },
+                       {
+                           "id":  209,
+                           "name":  "SQLi_NestedLoop_209",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_209.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_209.safe"
+                       },
+                       {
+                           "id":  210,
+                           "name":  "SQLi_NestedLoop_210",
+                           "description":  "Advanced nested_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedLoop_210.vulnerable",
+                           "category":  "nested_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedLoop_210.safe"
+                       },
+                       {
+                           "id":  211,
+                           "name":  "SQLi_ArrayManip_211",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_211.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_211.safe"
+                       },
+                       {
+                           "id":  212,
+                           "name":  "SQLi_ArrayManip_212",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_212.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_212.safe"
+                       },
+                       {
+                           "id":  213,
+                           "name":  "SQLi_ArrayManip_213",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_213.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_213.safe"
+                       },
+                       {
+                           "id":  214,
+                           "name":  "SQLi_ArrayManip_214",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_214.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_214.safe"
+                       },
+                       {
+                           "id":  215,
+                           "name":  "SQLi_ArrayManip_215",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_215.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_215.safe"
+                       },
+                       {
+                           "id":  216,
+                           "name":  "SQLi_ArrayManip_216",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_216.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_216.safe"
+                       },
+                       {
+                           "id":  217,
+                           "name":  "SQLi_ArrayManip_217",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_217.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_217.safe"
+                       },
+                       {
+                           "id":  218,
+                           "name":  "SQLi_ArrayManip_218",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_218.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_218.safe"
+                       },
+                       {
+                           "id":  219,
+                           "name":  "SQLi_ArrayManip_219",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_219.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_219.safe"
+                       },
+                       {
+                           "id":  220,
+                           "name":  "SQLi_ArrayManip_220",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_220.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_220.safe"
+                       },
+                       {
+                           "id":  221,
+                           "name":  "SQLi_ArrayManip_221",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_221.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_221.safe"
+                       },
+                       {
+                           "id":  222,
+                           "name":  "SQLi_ArrayManip_222",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_222.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_222.safe"
+                       },
+                       {
+                           "id":  223,
+                           "name":  "SQLi_ArrayManip_223",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_223.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_223.safe"
+                       },
+                       {
+                           "id":  224,
+                           "name":  "SQLi_ArrayManip_224",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_224.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_224.safe"
+                       },
+                       {
+                           "id":  225,
+                           "name":  "SQLi_ArrayManip_225",
+                           "description":  "Advanced array_operations pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ArrayManip_225.vulnerable",
+                           "category":  "array_operations",
+                           "safe_method":  "jpamb.sqli.SQLi_ArrayManip_225.safe"
+                       },
+                       {
+                           "id":  226,
+                           "name":  "SQLi_CondAssign_226",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_226.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_226.safe"
+                       },
+                       {
+                           "id":  227,
+                           "name":  "SQLi_CondAssign_227",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_227.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_227.safe"
+                       },
+                       {
+                           "id":  228,
+                           "name":  "SQLi_CondAssign_228",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_228.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_228.safe"
+                       },
+                       {
+                           "id":  229,
+                           "name":  "SQLi_CondAssign_229",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_229.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_229.safe"
+                       },
+                       {
+                           "id":  230,
+                           "name":  "SQLi_CondAssign_230",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_230.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_230.safe"
+                       },
+                       {
+                           "id":  231,
+                           "name":  "SQLi_CondAssign_231",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_231.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_231.safe"
+                       },
+                       {
+                           "id":  232,
+                           "name":  "SQLi_CondAssign_232",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_232.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_232.safe"
+                       },
+                       {
+                           "id":  233,
+                           "name":  "SQLi_CondAssign_233",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_233.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_233.safe"
+                       },
+                       {
+                           "id":  234,
+                           "name":  "SQLi_CondAssign_234",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_234.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_234.safe"
+                       },
+                       {
+                           "id":  235,
+                           "name":  "SQLi_CondAssign_235",
+                           "description":  "Advanced conditional_assignment pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CondAssign_235.vulnerable",
+                           "category":  "conditional_assignment",
+                           "safe_method":  "jpamb.sqli.SQLi_CondAssign_235.safe"
+                       },
+                       {
+                           "id":  236,
+                           "name":  "SQLi_SwitchMulti_236",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_236.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_236.safe"
+                       },
+                       {
+                           "id":  237,
+                           "name":  "SQLi_SwitchMulti_237",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_237.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_237.safe"
+                       },
+                       {
+                           "id":  238,
+                           "name":  "SQLi_SwitchMulti_238",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_238.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_238.safe"
+                       },
+                       {
+                           "id":  239,
+                           "name":  "SQLi_SwitchMulti_239",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_239.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_239.safe"
+                       },
+                       {
+                           "id":  240,
+                           "name":  "SQLi_SwitchMulti_240",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_240.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_240.safe"
+                       },
+                       {
+                           "id":  241,
+                           "name":  "SQLi_SwitchMulti_241",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_241.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_241.safe"
+                       },
+                       {
+                           "id":  242,
+                           "name":  "SQLi_SwitchMulti_242",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_242.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_242.safe"
+                       },
+                       {
+                           "id":  243,
+                           "name":  "SQLi_SwitchMulti_243",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_243.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_243.safe"
+                       },
+                       {
+                           "id":  244,
+                           "name":  "SQLi_SwitchMulti_244",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_244.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_244.safe"
+                       },
+                       {
+                           "id":  245,
+                           "name":  "SQLi_SwitchMulti_245",
+                           "description":  "Advanced switch_statements pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SwitchMulti_245.vulnerable",
+                           "category":  "switch_statements",
+                           "safe_method":  "jpamb.sqli.SQLi_SwitchMulti_245.safe"
+                       },
+                       {
+                           "id":  246,
+                           "name":  "SQLi_WhileLoop_246",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_246.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_246.safe"
+                       },
+                       {
+                           "id":  247,
+                           "name":  "SQLi_WhileLoop_247",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_247.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_247.safe"
+                       },
+                       {
+                           "id":  248,
+                           "name":  "SQLi_WhileLoop_248",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_248.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_248.safe"
+                       },
+                       {
+                           "id":  249,
+                           "name":  "SQLi_WhileLoop_249",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_249.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_249.safe"
+                       },
+                       {
+                           "id":  250,
+                           "name":  "SQLi_WhileLoop_250",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_250.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_250.safe"
+                       },
+                       {
+                           "id":  251,
+                           "name":  "SQLi_WhileLoop_251",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_251.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_251.safe"
+                       },
+                       {
+                           "id":  252,
+                           "name":  "SQLi_WhileLoop_252",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_252.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_252.safe"
+                       },
+                       {
+                           "id":  253,
+                           "name":  "SQLi_WhileLoop_253",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_253.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_253.safe"
+                       },
+                       {
+                           "id":  254,
+                           "name":  "SQLi_WhileLoop_254",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_254.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_254.safe"
+                       },
+                       {
+                           "id":  255,
+                           "name":  "SQLi_WhileLoop_255",
+                           "description":  "Advanced while_loops pattern",
+                           "difficulty":  "hard",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_WhileLoop_255.vulnerable",
+                           "category":  "while_loops",
+                           "safe_method":  "jpamb.sqli.SQLi_WhileLoop_255.safe"
+                       }
+                   ],
+    "total_cases":  100
+}

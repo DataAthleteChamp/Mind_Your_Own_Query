@@ -1,0 +1,1057 @@
+{
+    "total_cases":  130,
+    "description":  "Complete SQL Injection test suite: 30 original + 100 new cases",
+    "version":  "2.0",
+    "test_cases":  [
+                       {
+                           "id":  1,
+                           "name":  "SQLi_DirectConcat",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_DirectConcat.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_DirectConcat.safe",
+                           "category":  "basic_concatenation",
+                           "description":  "Basic string concatenation with user input",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  2,
+                           "name":  "SQLi_MultiConcat",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MultiConcat.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_MultiConcat.safe",
+                           "category":  "basic_concatenation",
+                           "description":  "Multiple concatenations with different inputs",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  3,
+                           "name":  "SQLi_LiteralMix",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_LiteralMix.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_LiteralMix.safe",
+                           "category":  "basic_concatenation",
+                           "description":  "Concatenation through intermediate variables",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  4,
+                           "name":  "SQLi_HTTPSource",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_HTTPSource.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_HTTPSource.safe",
+                           "category":  "basic_concatenation",
+                           "description":  "User input from HTTP request parameter",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  5,
+                           "name":  "SQLi_OrderBy",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_OrderBy.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_OrderBy.safe",
+                           "category":  "basic_concatenation",
+                           "description":  "ORDER BY clause injection",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  6,
+                           "name":  "SQLi_Substring",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Substring.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_Substring.safe",
+                           "category":  "string_operations",
+                           "description":  "Substring operation preserving taint",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  7,
+                           "name":  "SQLi_Replace",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Replace.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_Replace.safe",
+                           "category":  "string_operations",
+                           "description":  "Replace operation preserving taint",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  8,
+                           "name":  "SQLi_Trim",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim.safe",
+                           "category":  "string_operations",
+                           "description":  "Trim operation preserving taint",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  9,
+                           "name":  "SQLi_CaseConversion",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_CaseConversion.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_CaseConversion.safe",
+                           "category":  "string_operations",
+                           "description":  "Case conversion preserving taint",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  10,
+                           "name":  "SQLi_SplitJoin",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SplitJoin.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_SplitJoin.safe",
+                           "category":  "string_operations",
+                           "description":  "Split and array operations",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  11,
+                           "name":  "SQLi_IfElse",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse.safe",
+                           "category":  "control_flow",
+                           "description":  "Conditional branches with taint",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  12,
+                           "name":  "SQLi_Loop",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Loop.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_Loop.safe",
+                           "category":  "control_flow",
+                           "description":  "Loop concatenation accumulating taint",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  13,
+                           "name":  "SQLi_TryCatch",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_TryCatch.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_TryCatch.safe",
+                           "category":  "control_flow",
+                           "description":  "Exception handling with taint",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  14,
+                           "name":  "SQLi_Switch",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Switch.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_Switch.safe",
+                           "category":  "control_flow",
+                           "description":  "Switch statement with multiple paths",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  15,
+                           "name":  "SQLi_NestedConditions",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_NestedConditions.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_NestedConditions.safe",
+                           "category":  "control_flow",
+                           "description":  "Complex nested control flow",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  16,
+                           "name":  "SQLi_StringBuilder",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder.safe",
+                           "category":  "stringbuilder",
+                           "description":  "StringBuilder append operations",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  17,
+                           "name":  "SQLi_StringBuffer",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuffer.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuffer.safe",
+                           "category":  "stringbuilder",
+                           "description":  "StringBuffer with loop",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  18,
+                           "name":  "SQLi_StringBuilderMixed",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilderMixed.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilderMixed.safe",
+                           "category":  "stringbuilder",
+                           "description":  "Mixed StringBuilder operations",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  19,
+                           "name":  "SQLi_LoginBypass",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_LoginBypass.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_LoginBypass.safe",
+                           "category":  "real_world",
+                           "description":  "Classic authentication bypass",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  20,
+                           "name":  "SQLi_Union",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Union.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_Union.safe",
+                           "category":  "real_world",
+                           "description":  "UNION-based SQL injection",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  21,
+                           "name":  "SQLi_TimeBased",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_TimeBased.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_TimeBased.safe",
+                           "category":  "real_world",
+                           "description":  "Time-based blind SQL injection",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  22,
+                           "name":  "SQLi_SecondOrder",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_SecondOrder.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_SecondOrder.safe",
+                           "category":  "real_world",
+                           "description":  "Second-order SQL injection",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  23,
+                           "name":  "SQLi_MultipleSources",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_MultipleSources.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_MultipleSources.safe",
+                           "category":  "real_world",
+                           "description":  "Multiple untrusted input sources",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  24,
+                           "name":  "SQLi_PartialSanitization",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_PartialSanitization.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_PartialSanitization.safe",
+                           "category":  "real_world",
+                           "description":  "Incomplete sanitization attempt",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  25,
+                           "name":  "SQLi_ComplexNested",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ComplexNested.vulnerable",
+                           "safe_method":  "jpamb.sqli.SQLi_ComplexNested.safe",
+                           "category":  "real_world",
+                           "description":  "Complex chain of string operations",
+                           "expected_vulnerable":  true,
+                           "expected_safe":  false
+                       },
+                       {
+                           "id":  31,
+                           "name":  "SQLi_Concat_31",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_31.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_31.safe"
+                       },
+                       {
+                           "id":  32,
+                           "name":  "SQLi_Concat_32",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_32.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_32.safe"
+                       },
+                       {
+                           "id":  33,
+                           "name":  "SQLi_Concat_33",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_33.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_33.safe"
+                       },
+                       {
+                           "id":  34,
+                           "name":  "SQLi_Concat_34",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_34.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_34.safe"
+                       },
+                       {
+                           "id":  35,
+                           "name":  "SQLi_Concat_35",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_35.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_35.safe"
+                       },
+                       {
+                           "id":  36,
+                           "name":  "SQLi_Concat_36",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_36.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_36.safe"
+                       },
+                       {
+                           "id":  37,
+                           "name":  "SQLi_Concat_37",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_37.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_37.safe"
+                       },
+                       {
+                           "id":  38,
+                           "name":  "SQLi_Concat_38",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_38.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_38.safe"
+                       },
+                       {
+                           "id":  39,
+                           "name":  "SQLi_Concat_39",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_39.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_39.safe"
+                       },
+                       {
+                           "id":  40,
+                           "name":  "SQLi_Concat_40",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_40.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_40.safe"
+                       },
+                       {
+                           "id":  41,
+                           "name":  "SQLi_Concat_41",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_41.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_41.safe"
+                       },
+                       {
+                           "id":  42,
+                           "name":  "SQLi_Concat_42",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_42.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_42.safe"
+                       },
+                       {
+                           "id":  43,
+                           "name":  "SQLi_Concat_43",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_43.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_43.safe"
+                       },
+                       {
+                           "id":  44,
+                           "name":  "SQLi_Concat_44",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_44.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_44.safe"
+                       },
+                       {
+                           "id":  45,
+                           "name":  "SQLi_Concat_45",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_45.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_45.safe"
+                       },
+                       {
+                           "id":  46,
+                           "name":  "SQLi_Concat_46",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_46.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_46.safe"
+                       },
+                       {
+                           "id":  47,
+                           "name":  "SQLi_Concat_47",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_47.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_47.safe"
+                       },
+                       {
+                           "id":  48,
+                           "name":  "SQLi_Concat_48",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_48.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_48.safe"
+                       },
+                       {
+                           "id":  49,
+                           "name":  "SQLi_Concat_49",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_49.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_49.safe"
+                       },
+                       {
+                           "id":  50,
+                           "name":  "SQLi_Concat_50",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Concat_50.vulnerable",
+                           "category":  "concatenation",
+                           "safe_method":  "jpamb.sqli.SQLi_Concat_50.safe"
+                       },
+                       {
+                           "id":  51,
+                           "name":  "SQLi_Trim_51",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_51.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_51.safe"
+                       },
+                       {
+                           "id":  52,
+                           "name":  "SQLi_Trim_52",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_52.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_52.safe"
+                       },
+                       {
+                           "id":  53,
+                           "name":  "SQLi_Trim_53",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_53.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_53.safe"
+                       },
+                       {
+                           "id":  54,
+                           "name":  "SQLi_Trim_54",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_54.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_54.safe"
+                       },
+                       {
+                           "id":  55,
+                           "name":  "SQLi_Trim_55",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_55.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_55.safe"
+                       },
+                       {
+                           "id":  56,
+                           "name":  "SQLi_Trim_56",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_56.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_56.safe"
+                       },
+                       {
+                           "id":  57,
+                           "name":  "SQLi_Trim_57",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_57.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_57.safe"
+                       },
+                       {
+                           "id":  58,
+                           "name":  "SQLi_Trim_58",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_58.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_58.safe"
+                       },
+                       {
+                           "id":  59,
+                           "name":  "SQLi_Trim_59",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_59.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_59.safe"
+                       },
+                       {
+                           "id":  60,
+                           "name":  "SQLi_Trim_60",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_60.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_60.safe"
+                       },
+                       {
+                           "id":  61,
+                           "name":  "SQLi_Trim_61",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_61.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_61.safe"
+                       },
+                       {
+                           "id":  62,
+                           "name":  "SQLi_Trim_62",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_62.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_62.safe"
+                       },
+                       {
+                           "id":  63,
+                           "name":  "SQLi_Trim_63",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_63.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_63.safe"
+                       },
+                       {
+                           "id":  64,
+                           "name":  "SQLi_Trim_64",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_64.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_64.safe"
+                       },
+                       {
+                           "id":  65,
+                           "name":  "SQLi_Trim_65",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Trim_65.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Trim_65.safe"
+                       },
+                       {
+                           "id":  66,
+                           "name":  "SQLi_Case_66",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_66.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_66.safe"
+                       },
+                       {
+                           "id":  67,
+                           "name":  "SQLi_Case_67",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_67.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_67.safe"
+                       },
+                       {
+                           "id":  68,
+                           "name":  "SQLi_Case_68",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_68.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_68.safe"
+                       },
+                       {
+                           "id":  69,
+                           "name":  "SQLi_Case_69",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_69.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_69.safe"
+                       },
+                       {
+                           "id":  70,
+                           "name":  "SQLi_Case_70",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_70.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_70.safe"
+                       },
+                       {
+                           "id":  71,
+                           "name":  "SQLi_Case_71",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_71.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_71.safe"
+                       },
+                       {
+                           "id":  72,
+                           "name":  "SQLi_Case_72",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_72.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_72.safe"
+                       },
+                       {
+                           "id":  73,
+                           "name":  "SQLi_Case_73",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_73.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_73.safe"
+                       },
+                       {
+                           "id":  74,
+                           "name":  "SQLi_Case_74",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_74.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_74.safe"
+                       },
+                       {
+                           "id":  75,
+                           "name":  "SQLi_Case_75",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_75.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_75.safe"
+                       },
+                       {
+                           "id":  76,
+                           "name":  "SQLi_Case_76",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_76.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_76.safe"
+                       },
+                       {
+                           "id":  77,
+                           "name":  "SQLi_Case_77",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_77.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_77.safe"
+                       },
+                       {
+                           "id":  78,
+                           "name":  "SQLi_Case_78",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_78.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_78.safe"
+                       },
+                       {
+                           "id":  79,
+                           "name":  "SQLi_Case_79",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_79.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_79.safe"
+                       },
+                       {
+                           "id":  80,
+                           "name":  "SQLi_Case_80",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Case_80.vulnerable",
+                           "category":  "string_ops",
+                           "safe_method":  "jpamb.sqli.SQLi_Case_80.safe"
+                       },
+                       {
+                           "id":  81,
+                           "name":  "SQLi_StringBuilder_81",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_81.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_81.safe"
+                       },
+                       {
+                           "id":  82,
+                           "name":  "SQLi_StringBuilder_82",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_82.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_82.safe"
+                       },
+                       {
+                           "id":  83,
+                           "name":  "SQLi_StringBuilder_83",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_83.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_83.safe"
+                       },
+                       {
+                           "id":  84,
+                           "name":  "SQLi_StringBuilder_84",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_84.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_84.safe"
+                       },
+                       {
+                           "id":  85,
+                           "name":  "SQLi_StringBuilder_85",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_85.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_85.safe"
+                       },
+                       {
+                           "id":  86,
+                           "name":  "SQLi_StringBuilder_86",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_86.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_86.safe"
+                       },
+                       {
+                           "id":  87,
+                           "name":  "SQLi_StringBuilder_87",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_87.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_87.safe"
+                       },
+                       {
+                           "id":  88,
+                           "name":  "SQLi_StringBuilder_88",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_88.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_88.safe"
+                       },
+                       {
+                           "id":  89,
+                           "name":  "SQLi_StringBuilder_89",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_89.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_89.safe"
+                       },
+                       {
+                           "id":  90,
+                           "name":  "SQLi_StringBuilder_90",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_90.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_90.safe"
+                       },
+                       {
+                           "id":  91,
+                           "name":  "SQLi_StringBuilder_91",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_91.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_91.safe"
+                       },
+                       {
+                           "id":  92,
+                           "name":  "SQLi_StringBuilder_92",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_92.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_92.safe"
+                       },
+                       {
+                           "id":  93,
+                           "name":  "SQLi_StringBuilder_93",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_93.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_93.safe"
+                       },
+                       {
+                           "id":  94,
+                           "name":  "SQLi_StringBuilder_94",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_94.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_94.safe"
+                       },
+                       {
+                           "id":  95,
+                           "name":  "SQLi_StringBuilder_95",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_StringBuilder_95.vulnerable",
+                           "category":  "string_builder",
+                           "safe_method":  "jpamb.sqli.SQLi_StringBuilder_95.safe"
+                       },
+                       {
+                           "id":  96,
+                           "name":  "SQLi_IfElse_96",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_96.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_96.safe"
+                       },
+                       {
+                           "id":  97,
+                           "name":  "SQLi_IfElse_97",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_97.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_97.safe"
+                       },
+                       {
+                           "id":  98,
+                           "name":  "SQLi_IfElse_98",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_98.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_98.safe"
+                       },
+                       {
+                           "id":  99,
+                           "name":  "SQLi_IfElse_99",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_99.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_99.safe"
+                       },
+                       {
+                           "id":  100,
+                           "name":  "SQLi_IfElse_100",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_100.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_100.safe"
+                       },
+                       {
+                           "id":  101,
+                           "name":  "SQLi_IfElse_101",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_101.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_101.safe"
+                       },
+                       {
+                           "id":  102,
+                           "name":  "SQLi_IfElse_102",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_102.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_102.safe"
+                       },
+                       {
+                           "id":  103,
+                           "name":  "SQLi_IfElse_103",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_103.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_103.safe"
+                       },
+                       {
+                           "id":  104,
+                           "name":  "SQLi_IfElse_104",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_104.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_104.safe"
+                       },
+                       {
+                           "id":  105,
+                           "name":  "SQLi_IfElse_105",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_105.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_105.safe"
+                       },
+                       {
+                           "id":  106,
+                           "name":  "SQLi_IfElse_106",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_106.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_106.safe"
+                       },
+                       {
+                           "id":  107,
+                           "name":  "SQLi_IfElse_107",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_107.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_107.safe"
+                       },
+                       {
+                           "id":  108,
+                           "name":  "SQLi_IfElse_108",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_108.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_108.safe"
+                       },
+                       {
+                           "id":  109,
+                           "name":  "SQLi_IfElse_109",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_109.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_109.safe"
+                       },
+                       {
+                           "id":  110,
+                           "name":  "SQLi_IfElse_110",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_IfElse_110.vulnerable",
+                           "category":  "control_flow",
+                           "safe_method":  "jpamb.sqli.SQLi_IfElse_110.safe"
+                       },
+                       {
+                           "id":  111,
+                           "name":  "SQLi_ForLoop_111",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_111.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_111.safe"
+                       },
+                       {
+                           "id":  112,
+                           "name":  "SQLi_ForLoop_112",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_112.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_112.safe"
+                       },
+                       {
+                           "id":  113,
+                           "name":  "SQLi_ForLoop_113",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_113.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_113.safe"
+                       },
+                       {
+                           "id":  114,
+                           "name":  "SQLi_ForLoop_114",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_114.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_114.safe"
+                       },
+                       {
+                           "id":  115,
+                           "name":  "SQLi_ForLoop_115",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_115.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_115.safe"
+                       },
+                       {
+                           "id":  116,
+                           "name":  "SQLi_ForLoop_116",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_116.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_116.safe"
+                       },
+                       {
+                           "id":  117,
+                           "name":  "SQLi_ForLoop_117",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_117.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_117.safe"
+                       },
+                       {
+                           "id":  118,
+                           "name":  "SQLi_ForLoop_118",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_118.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_118.safe"
+                       },
+                       {
+                           "id":  119,
+                           "name":  "SQLi_ForLoop_119",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_119.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_119.safe"
+                       },
+                       {
+                           "id":  120,
+                           "name":  "SQLi_ForLoop_120",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_120.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_120.safe"
+                       },
+                       {
+                           "id":  121,
+                           "name":  "SQLi_ForLoop_121",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_121.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_121.safe"
+                       },
+                       {
+                           "id":  122,
+                           "name":  "SQLi_ForLoop_122",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_122.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_122.safe"
+                       },
+                       {
+                           "id":  123,
+                           "name":  "SQLi_ForLoop_123",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_123.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_123.safe"
+                       },
+                       {
+                           "id":  124,
+                           "name":  "SQLi_ForLoop_124",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_124.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_124.safe"
+                       },
+                       {
+                           "id":  125,
+                           "name":  "SQLi_ForLoop_125",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_ForLoop_125.vulnerable",
+                           "category":  "loops",
+                           "safe_method":  "jpamb.sqli.SQLi_ForLoop_125.safe"
+                       },
+                       {
+                           "id":  126,
+                           "name":  "SQLi_Format_126",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Format_126.vulnerable",
+                           "category":  "formatting",
+                           "safe_method":  "jpamb.sqli.SQLi_Format_126.safe"
+                       },
+                       {
+                           "id":  127,
+                           "name":  "SQLi_Format_127",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Format_127.vulnerable",
+                           "category":  "formatting",
+                           "safe_method":  "jpamb.sqli.SQLi_Format_127.safe"
+                       },
+                       {
+                           "id":  128,
+                           "name":  "SQLi_Format_128",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Format_128.vulnerable",
+                           "category":  "formatting",
+                           "safe_method":  "jpamb.sqli.SQLi_Format_128.safe"
+                       },
+                       {
+                           "id":  129,
+                           "name":  "SQLi_Format_129",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Format_129.vulnerable",
+                           "category":  "formatting",
+                           "safe_method":  "jpamb.sqli.SQLi_Format_129.safe"
+                       },
+                       {
+                           "id":  130,
+                           "name":  "SQLi_Format_130",
+                           "difficulty":  "medium",
+                           "vulnerable_method":  "jpamb.sqli.SQLi_Format_130.vulnerable",
+                           "category":  "formatting",
+                           "safe_method":  "jpamb.sqli.SQLi_Format_130.safe"
+                       }
+                   ]
+}

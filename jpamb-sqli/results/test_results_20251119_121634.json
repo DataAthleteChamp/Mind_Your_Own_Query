@@ -1,0 +1,1039 @@
+{
+  "timestamp": "20251119_121634",
+  "metrics": {
+    "total_tests": 55,
+    "detection_rate": 43.63636363636363,
+    "false_positive_rate": 23.636363636363637,
+    "accuracy": 20.0,
+    "avg_time_per_test": 0.14460903948003595,
+    "categories": {
+      "basic_concatenation": {
+        "total": 5,
+        "passed": 0
+      },
+      "string_operations": {
+        "total": 5,
+        "passed": 0
+      },
+      "control_flow": {
+        "total": 5,
+        "passed": 0
+      },
+      "stringbuilder": {
+        "total": 3,
+        "passed": 0
+      },
+      "real_world": {
+        "total": 7,
+        "passed": 0
+      },
+      "advanced_stringbuilder": {
+        "total": 10,
+        "passed": 5
+      },
+      "complex_patterns": {
+        "total": 10,
+        "passed": 3
+      },
+      "edge_cases": {
+        "total": 10,
+        "passed": 3
+      }
+    },
+    "vulnerable_detected": 24,
+    "false_positives": 13,
+    "total_passed": 11
+  },
+  "test_results": [
+    {
+      "test_id": 1,
+      "test_name": "SQLi_DirectConcat",
+      "category": "basic_concatenation",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.11866307258605957,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.09976649284362793,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 2,
+      "test_name": "SQLi_MultiConcat",
+      "category": "basic_concatenation",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.08774566650390625,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.0842585563659668,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 3,
+      "test_name": "SQLi_LiteralMix",
+      "category": "basic_concatenation",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07458066940307617,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06426644325256348,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 4,
+      "test_name": "SQLi_HTTPSource",
+      "category": "basic_concatenation",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06864285469055176,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06436038017272949,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 5,
+      "test_name": "SQLi_OrderBy",
+      "category": "basic_concatenation",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06311321258544922,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06549596786499023,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 6,
+      "test_name": "SQLi_Substring",
+      "category": "string_operations",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06407809257507324,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07173657417297363,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 7,
+      "test_name": "SQLi_Replace",
+      "category": "string_operations",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07387423515319824,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06821775436401367,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 8,
+      "test_name": "SQLi_Trim",
+      "category": "string_operations",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07317423820495605,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.08839797973632812,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 9,
+      "test_name": "SQLi_CaseConversion",
+      "category": "string_operations",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06513833999633789,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06868696212768555,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 10,
+      "test_name": "SQLi_SplitJoin",
+      "category": "string_operations",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07382774353027344,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06344723701477051,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 11,
+      "test_name": "SQLi_IfElse",
+      "category": "control_flow",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07663583755493164,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.0704653263092041,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 12,
+      "test_name": "SQLi_Loop",
+      "category": "control_flow",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.0679779052734375,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07616424560546875,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 13,
+      "test_name": "SQLi_TryCatch",
+      "category": "control_flow",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07517242431640625,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07605981826782227,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 14,
+      "test_name": "SQLi_Switch",
+      "category": "control_flow",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07072234153747559,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06608772277832031,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 15,
+      "test_name": "SQLi_NestedConditions",
+      "category": "control_flow",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.0757591724395752,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07748889923095703,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 16,
+      "test_name": "SQLi_StringBuilder",
+      "category": "stringbuilder",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06821346282958984,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06572556495666504,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 17,
+      "test_name": "SQLi_StringBuffer",
+      "category": "stringbuilder",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07611584663391113,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06366467475891113,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 18,
+      "test_name": "SQLi_StringBuilderMixed",
+      "category": "stringbuilder",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06259298324584961,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06441020965576172,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 19,
+      "test_name": "SQLi_LoginBypass",
+      "category": "real_world",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06639933586120605,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06739187240600586,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 20,
+      "test_name": "SQLi_Union",
+      "category": "real_world",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.062225341796875,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07321286201477051,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 21,
+      "test_name": "SQLi_TimeBased",
+      "category": "real_world",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06729245185852051,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07978487014770508,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 22,
+      "test_name": "SQLi_SecondOrder",
+      "category": "real_world",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06946086883544922,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06613492965698242,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 23,
+      "test_name": "SQLi_MultipleSources",
+      "category": "real_world",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06666898727416992,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07141661643981934,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 24,
+      "test_name": "SQLi_PartialSanitization",
+      "category": "real_world",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06680703163146973,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.06380176544189453,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 25,
+      "test_name": "SQLi_ComplexNested",
+      "category": "real_world",
+      "vulnerable_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07241654396057129,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "error",
+        "confidence": 0,
+        "execution_time": 0.07210421562194824,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 26,
+      "test_name": "SQLi_StringBuilderConditional",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.06699204444885254,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.07507443428039551,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 27,
+      "test_name": "SQLi_StringBuilderChaining",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.0921776294708252,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.10473036766052246,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 28,
+      "test_name": "SQLi_StringBuilderHelper",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.0708160400390625,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.06969285011291504,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 29,
+      "test_name": "SQLi_StringBuilderInsert",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.07546305656433105,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.06650805473327637,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 30,
+      "test_name": "SQLi_StringBuilderDelete",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06675219535827637,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.07050299644470215,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 31,
+      "test_name": "SQLi_StringBuilderNestedLoop",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.06923699378967285,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.0711822509765625,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 32,
+      "test_name": "SQLi_StringBuilderReverse",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07625293731689453,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07906556129455566,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 33,
+      "test_name": "SQLi_StringBuilderCapacity",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.07217955589294434,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.06780171394348145,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 34,
+      "test_name": "SQLi_StringBuilderReplace",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07613611221313477,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07603240013122559,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 35,
+      "test_name": "SQLi_StringBuilderSetChar",
+      "category": "advanced_stringbuilder",
+      "vulnerable_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.0745248794555664,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.0700371265411377,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 36,
+      "test_name": "SQLi_MultiLevelOps",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06837582588195801,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.07087087631225586,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 37,
+      "test_name": "SQLi_TernaryConcat",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.0740971565246582,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07062458992004395,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 38,
+      "test_name": "SQLi_FormatString",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.06283974647521973,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.06810140609741211,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 39,
+      "test_name": "SQLi_StreamJoin",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07426166534423828,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06687235832214355,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 40,
+      "test_name": "SQLi_RecursiveBuilder",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.07210946083068848,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.0703887939453125,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 41,
+      "test_name": "SQLi_LambdaBuilder",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.08249807357788086,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06522893905639648,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 42,
+      "test_name": "SQLi_StringJoiner",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06826400756835938,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07477450370788574,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 43,
+      "test_name": "SQLi_BatchQuery",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.0731508731842041,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.06620645523071289,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 44,
+      "test_name": "SQLi_VariableChain",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.0806279182434082,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.0835120677947998,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 45,
+      "test_name": "SQLi_MapBuilder",
+      "category": "complex_patterns",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.06912040710449219,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 95,
+        "execution_time": 0.07467889785766602,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 46,
+      "test_name": "SQLi_EmptyString",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06451606750488281,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06828045845031738,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 47,
+      "test_name": "SQLi_NullCoalesce",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06376504898071289,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07569384574890137,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 48,
+      "test_name": "SQLi_Unicode",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06906533241271973,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06292486190795898,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 49,
+      "test_name": "SQLi_Encoded",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07015872001647949,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.0726158618927002,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 50,
+      "test_name": "SQLi_RegexReplace",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07639646530151367,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 100,
+        "execution_time": 0.07120585441589355,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 51,
+      "test_name": "SQLi_Interpolation",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.07423853874206543,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.08297300338745117,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 52,
+      "test_name": "SQLi_CharArray",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.06771588325500488,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07278656959533691,
+        "correct": false
+      },
+      "passed": false
+    },
+    {
+      "test_id": 53,
+      "test_name": "SQLi_RepeatString",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07329916954040527,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.06976628303527832,
+        "correct": true
+      },
+      "passed": true
+    },
+    {
+      "test_id": 54,
+      "test_name": "SQLi_TextBlock",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.0637049674987793,
+        "correct": false
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.07804346084594727,
+        "correct": true
+      },
+      "passed": false
+    },
+    {
+      "test_id": 55,
+      "test_name": "SQLi_IndentString",
+      "category": "edge_cases",
+      "vulnerable_method": {
+        "outcome": "SQL injection",
+        "confidence": 100,
+        "execution_time": 0.07836079597473145,
+        "correct": true
+      },
+      "safe_method": {
+        "outcome": "ok",
+        "confidence": 70,
+        "execution_time": 0.07037615776062012,
+        "correct": true
+      },
+      "passed": true
+    }
+  ]
+}
