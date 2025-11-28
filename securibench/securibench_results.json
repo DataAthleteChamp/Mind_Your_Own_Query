@@ -1,0 +1,54 @@
+{
+  "timestamp": "2025-11-28T17:42:34.173817",
+  "securibench_root": "C:\\Users\\lando\\securibench-micro",
+  "analyzer": "my_analyzer_securibench.py",
+  "statistics": {
+    "total_tests": 3,
+    "correct": 3,
+    "accuracy": 100.0,
+    "detection_rate": 100.0,
+    "false_positive_rate": 0,
+    "tests_with_vulns": 3,
+    "detected_vulns": 3,
+    "tests_without_vulns": 0,
+    "false_positives": 0
+  },
+  "categories": {
+    "basic": {
+      "total": 3,
+      "correct": 3
+    }
+  },
+  "results": [
+    {
+      "test_name": "Basic19",
+      "package": "securibench.micro.basic",
+      "category": "basic",
+      "expected_vulns": 1,
+      "detected": true,
+      "outcome": "SQL injection",
+      "confidence": 100,
+      "correct": true
+    },
+    {
+      "test_name": "Basic20",
+      "package": "securibench.micro.basic",
+      "category": "basic",
+      "expected_vulns": 1,
+      "detected": true,
+      "outcome": "SQL injection",
+      "confidence": 100,
+      "correct": true
+    },
+    {
+      "test_name": "Basic21",
+      "package": "securibench.micro.basic",
+      "category": "basic",
+      "expected_vulns": 4,
+      "detected": true,
+      "outcome": "SQL injection",
+      "confidence": 100,
+      "correct": true
+    }
+  ]
+}
