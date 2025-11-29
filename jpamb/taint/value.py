@@ -44,7 +44,7 @@ class TaintedValue:
 
     def __repr__(self) -> str:
         """String representation with taint indicator"""
-        taint_mark = "⚠️" if self.is_tainted else "✓"
+        taint_mark = "[TAINTED]" if self.is_tainted else "[SAFE]"
         return f"{taint_mark} {self.value!r} (from {self.source})"
 
     def __str__(self) -> str:

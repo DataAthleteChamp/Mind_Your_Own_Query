@@ -110,7 +110,7 @@ query = TaintTransfer.concat(query_base, user_input)
 
 # Check safety
 if not query.is_safe_for_sql():
-    print(f"⚠️ SQL Injection detected!")
+    print(f"[WARNING] SQL Injection detected!")
     print(f"Tainted data from: {query.source}")
 ```
 
@@ -282,6 +282,6 @@ DTU Compute Group 4:
 
 ## See Also
 
-- [MASTER_PLAN.md](../../MASTER_PLAN.md) - Complete project plan and timeline
 - [project_proposal.md](../../project_proposal.md) - Original project proposal
+- [FINAL_ACHIEVEMENTS.md](../../FINAL_ACHIEVEMENTS.md) - Project results and metrics
 - [JPAMB README](../../README.md) - Main JPAMB framework documentation

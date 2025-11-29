@@ -1,8 +1,0 @@
-# SQL Injection Test Suite - Python Dependencies
-#
-# Currently no external dependencies required
-# Python 3.8+ standard library only
-
-# Future dependencies (if needed):
-# javalang>=0.13.0  # For AST-based Java parsing instead of regex
-# pytest>=7.0.0     # For more advanced testing features

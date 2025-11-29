@@ -14,6 +14,7 @@ Advantages over source-based analysis:
 
 import logging
 import sys
+import traceback
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Set
 from pathlib import Path
@@ -21,7 +22,7 @@ from pathlib import Path
 import jpamb
 from jpamb import jvm
 from jpamb.model import Suite
-from jpamb.taint import TaintedValue, TaintTransfer, SourceSinkDetector
+from jpamb.taint import TaintedValue, TaintTransfer, SourceSinkDetector, UNTRUSTED_SOURCES, SQL_SINKS
 
 # Setup logging
 log = logging.getLogger(__name__)
@@ -29,6 +30,10 @@ logging.basicConfig(level=logging.WARNING)  # Change to WARNING to reduce noise
 
 # Initialize source/sink detector
 detector = SourceSinkDetector.default()
+
+# Constants
+INITIAL_HEAP_ADDRESS = 1000  # Starting address for heap allocation
+MAX_WORKLIST_ITERATIONS = 1000  # Maximum iterations for fixed-point computation
 
 
 # ============================================================================
@@ -117,7 +122,6 @@ def resolve_method_id(method_signature: str, suite: Suite) -> Optional[jvm.AbsMe
 
     except Exception as e:
         log.error(f"Error resolving method: {e}")
-        import traceback
         traceback.print_exc()
         return None
 
@@ -133,6 +137,10 @@ class HeapObject:
 
     Represents objects created with 'new' instruction.
     Tracks taint state and any appended values.
+
+    NOTE: This class is retained for compatibility but is largely superseded by
+    the TAJ-style string carrier approach (see TaintValue.string_carrier).
+    StringBuilder/StringBuffer are now treated as primitives, not heap objects.
     """
     class_name: str
     taint: TaintedValue
@@ -157,7 +165,7 @@ class HeapObject:
         return self.taint
 
     def __repr__(self):
-        taint_marker = "⚠️" if self.taint.is_tainted else "✓"
+        taint_marker = "[TAINTED]" if self.taint.is_tainted else "[SAFE]"
         return f"<{self.class_name} {taint_marker}>"
 
 
@@ -234,7 +242,7 @@ class TaintValue:
         return self.tainted_value.is_tainted
 
     def __repr__(self):
-        marker = "⚠️" if self.is_tainted else "✓"
+        marker = "[TAINTED]" if self.is_tainted else "[SAFE]"
         if self.heap_ref is not None:
             return f"TaintValue({marker} ref={self.heap_ref})"
         return f"TaintValue({marker} {self.tainted_value.value})"
@@ -283,7 +291,7 @@ class AbstractState:
             locals=locals,
             heap={},
             pc=0,
-            next_heap_addr=1000
+            next_heap_addr=INITIAL_HEAP_ADDRESS
         )
 
     def allocate_heap_object(self, class_name: str) -> int:
@@ -549,23 +557,15 @@ class MethodMatcher:
 
     This is the key to bytecode analysis: all string operations become method calls,
     so we just need to match method signatures.
+
+    Sources and sinks are imported from jpamb.taint.sources for consistency.
     """
 
-    # Known untrusted sources
-    SOURCES = {
-        "javax.servlet.http.HttpServletRequest.getParameter",
-        "javax.servlet.http.HttpServletRequest.getHeader",
-        "java.io.BufferedReader.readLine",
-        "java.net.URLConnection.getInputStream",
-    }
+    # Known untrusted sources (from jpamb.taint.sources)
+    SOURCES = UNTRUSTED_SOURCES
 
-    # SQL execution sinks (fully qualified JDBC methods only)
-    SINKS = {
-        "java.sql.Statement.execute",
-        "java.sql.Statement.executeQuery",
-        "java.sql.Statement.executeUpdate",
-        "java.sql.Connection.prepareStatement",
-    }
+    # SQL execution sinks (from jpamb.taint.sources)
+    SINKS = SQL_SINKS
 
     # Methods that preserve taint (string operations)
     TAINT_PRESERVING = {
@@ -967,7 +967,7 @@ def transfer_invoke_dynamic(opcode: jvm.InvokeDynamic, state: AbstractState) -> 
     return state
 
 
-def transfer_pop(opcode, state: AbstractState) -> AbstractState:
+def transfer_pop(opcode: jvm.Pop, state: AbstractState) -> AbstractState:
     """
     Handle pop instruction.
 
@@ -1182,12 +1182,11 @@ def analyze_method(methodid: jvm.AbsMethodID) -> bool:
     # Worklist algorithm
     worklist = [entry_offset]
     iterations = 0
-    max_iterations = 1000
     vulnerability_detected = False
 
     log.debug(f"Starting worklist analysis with {len(cfg)} blocks")
 
-    while worklist and iterations < max_iterations:
+    while worklist and iterations < MAX_WORKLIST_ITERATIONS:
         iterations += 1
         block_offset = worklist.pop(0)
         block = cfg[block_offset]

@@ -74,21 +74,20 @@ Actual  SAFE    250    5    (98.0% specificity)
 
 **Components Built:**
 ```
-1. Abstract Interpreter (~1200 lines)
+1. Abstract Interpreter (~1,300 lines)
    ├─ AbstractState (stack, locals, heap, PC)
    ├─ TaintValue (wrapper for taint + heap ref)
-   ├─ HeapObject (StringBuilder tracking)
+   ├─ TAJ-style string carriers (StringBuilder/StringBuffer)
    ├─ MethodMatcher (sources, sinks - real JDBC signatures)
    └─ CFG-based worklist algorithm
 
-2. Transfer Functions (12+ opcodes)
-   ├─ push, load, store (basic operations)
-   ├─ new, dup (object allocation)
+2. Transfer Functions (18 opcodes)
+   ├─ push, load, store, pop, dup, new (stack/variables/objects)
    ├─ invokevirtual, invokestatic, invokespecial
    ├─ invokedynamic (Java 9+ string concat)
    ├─ invokeinterface (JDBC interface calls)
-   ├─ if/goto (control flow)
-   └─ return
+   ├─ goto, if, ifz, return (control flow)
+   └─ arrayload, arraystore, arraylength (arrays)
 
 3. Taint Propagation
    ├─ All method parameters → UNTRUSTED

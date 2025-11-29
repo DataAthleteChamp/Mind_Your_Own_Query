@@ -70,7 +70,7 @@ ACADEMIC_AUDIT.md                     # May need review
 
 The analyzer is well-structured with:
 - CFG-based worklist algorithm (proper dataflow analysis)
-- 17 opcode handlers (covers common JVM operations)
+- 18 opcode handlers (covers common JVM operations)
 - TAJ-style string carrier pattern (efficient StringBuilder handling)
 - Real JDBC signatures (no test-specific matching)
 
@@ -193,8 +193,8 @@ The analyzer is well-structured with:
 - Source/sink detection
 
 #### 4. Implementation (1 page)
-- 1300 lines Python + JPAMB framework
-- 17 opcode handlers
+- 1,300 lines Python + JPAMB framework
+- 18 opcode handlers
 - Key design decisions
 
 #### 5. Evaluation (2.5 pages)
