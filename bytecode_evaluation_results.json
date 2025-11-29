@@ -1,15 +1,15 @@
 {
   "metrics": {
     "total": 50,
-    "correct": 25,
-    "tp": 0,
-    "tn": 25,
-    "fp": 0,
-    "fn": 25,
-    "accuracy": 50.0,
-    "precision": 0,
-    "recall": 0.0,
-    "f1": 0
+    "correct": 45,
+    "tp": 22,
+    "tn": 23,
+    "fp": 2,
+    "fn": 3,
+    "accuracy": 90.0,
+    "precision": 91.66666666666666,
+    "recall": 88.0,
+    "f1": 89.79591836734694
   },
   "results": [
     {
@@ -18,9 +18,9 @@
       "method_signature": "jpamb.sqli.SQLi_DirectConcat.vulnerable",
       "category": "basic_concatenation",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 1,
@@ -38,9 +38,9 @@
       "method_signature": "jpamb.sqli.SQLi_MultiConcat.vulnerable",
       "category": "basic_concatenation",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 2,
@@ -48,9 +48,9 @@
       "method_signature": "jpamb.sqli.SQLi_MultiConcat.safe",
       "category": "basic_concatenation",
       "expected_vulnerable": false,
-      "detected_vulnerable": false,
-      "correct": true,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": false,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 3,
@@ -58,9 +58,9 @@
       "method_signature": "jpamb.sqli.SQLi_LiteralMix.vulnerable",
       "category": "basic_concatenation",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 3,
@@ -78,9 +78,9 @@
       "method_signature": "jpamb.sqli.SQLi_HTTPSource.vulnerable",
       "category": "basic_concatenation",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 4,
@@ -98,9 +98,9 @@
       "method_signature": "jpamb.sqli.SQLi_OrderBy.vulnerable",
       "category": "basic_concatenation",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 5,
@@ -118,9 +118,9 @@
       "method_signature": "jpamb.sqli.SQLi_Substring.vulnerable",
       "category": "string_operations",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 6,
@@ -138,9 +138,9 @@
       "method_signature": "jpamb.sqli.SQLi_Replace.vulnerable",
       "category": "string_operations",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 7,
@@ -158,9 +158,9 @@
       "method_signature": "jpamb.sqli.SQLi_Trim.vulnerable",
       "category": "string_operations",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 8,
@@ -178,9 +178,9 @@
       "method_signature": "jpamb.sqli.SQLi_CaseConversion.vulnerable",
       "category": "string_operations",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 9,
@@ -198,9 +198,9 @@
       "method_signature": "jpamb.sqli.SQLi_SplitJoin.vulnerable",
       "category": "string_operations",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 10,
@@ -218,9 +218,9 @@
       "method_signature": "jpamb.sqli.SQLi_IfElse.vulnerable",
       "category": "control_flow",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 11,
@@ -258,9 +258,9 @@
       "method_signature": "jpamb.sqli.SQLi_TryCatch.vulnerable",
       "category": "control_flow",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 13,
@@ -318,9 +318,9 @@
       "method_signature": "jpamb.sqli.SQLi_StringBuilder.vulnerable",
       "category": "stringbuilder",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 16,
@@ -338,9 +338,9 @@
       "method_signature": "jpamb.sqli.SQLi_StringBuffer.vulnerable",
       "category": "stringbuilder",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 17,
@@ -358,9 +358,9 @@
       "method_signature": "jpamb.sqli.SQLi_StringBuilderMixed.vulnerable",
       "category": "stringbuilder",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 18,
@@ -378,9 +378,9 @@
       "method_signature": "jpamb.sqli.SQLi_LoginBypass.vulnerable",
       "category": "real_world",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 19,
@@ -398,9 +398,9 @@
       "method_signature": "jpamb.sqli.SQLi_Union.vulnerable",
       "category": "real_world",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 20,
@@ -418,9 +418,9 @@
       "method_signature": "jpamb.sqli.SQLi_TimeBased.vulnerable",
       "category": "real_world",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 21,
@@ -438,9 +438,9 @@
       "method_signature": "jpamb.sqli.SQLi_SecondOrder.vulnerable",
       "category": "real_world",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 22,
@@ -458,9 +458,9 @@
       "method_signature": "jpamb.sqli.SQLi_MultipleSources.vulnerable",
       "category": "real_world",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 23,
@@ -478,9 +478,9 @@
       "method_signature": "jpamb.sqli.SQLi_PartialSanitization.vulnerable",
       "category": "real_world",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 24,
@@ -488,9 +488,9 @@
       "method_signature": "jpamb.sqli.SQLi_PartialSanitization.safe",
       "category": "real_world",
       "expected_vulnerable": false,
-      "detected_vulnerable": false,
-      "correct": true,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": false,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 25,
@@ -498,9 +498,9 @@
       "method_signature": "jpamb.sqli.SQLi_ComplexNested.vulnerable",
       "category": "real_world",
       "expected_vulnerable": true,
-      "detected_vulnerable": false,
-      "correct": false,
-      "actual_result": "ok;90%"
+      "detected_vulnerable": true,
+      "correct": true,
+      "actual_result": "sql injection;90%"
     },
     {
       "test_id": 25,

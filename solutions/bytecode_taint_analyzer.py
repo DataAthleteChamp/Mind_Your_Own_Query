@@ -576,6 +576,8 @@ class MethodMatcher:
         "java.lang.String.substring",
         "java.lang.String.replace",
         "java.lang.String.replaceAll",
+        "java.lang.String.format",          # String.format() preserves taint
+        "java.lang.String.join",            # String.join() preserves taint
         "java.lang.StringBuilder.append",
         "java.lang.StringBuffer.append",
     }

@@ -52,3 +52,10 @@ target/
 *.bak
 *.backup
 .~*
+
+benchmarks/
+spotbugs-plugins/
+spotbugs_results.txt
+results/
+latest_evaluation_results.json
+.DS_Store

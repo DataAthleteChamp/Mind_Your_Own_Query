@@ -36,3 +36,9 @@ result
 .DS_Store
 .DS_Store
 target/
+benchmarks/
+  spotbugs-plugins/
+  spotbugs_results.txt
+  results/
+  latest_evaluation_results.json
+  .DS_Store
